@@ -1,10 +1,18 @@
+# @Author: Jay
+# @Date:   2018-11-01T09:25:56+09:00
+# @Filename: print_tf_variables_from_saver_data_00.py
+# @Last modified by:   JeeYz
+# @Last modified time: 2018-11-02T14:00:13+09:00
+# @Copyright: JayY
+
+
 
 import tensorflow as tf
 import io
 
 num_lines = 0
 word_vector_size = 300
-with open('result_03.txt', 'r', encoding='utf-8') as f:
+with open('d:/Programming/result_03.txt', 'r', encoding='utf-8') as f:
     data = f.readlines()
     num_lines = len(data)
 
@@ -18,6 +26,6 @@ init = tf.global_variables_initializer()
 
 with tf.Session() as session:
     session.run(init)
-    saver.restore(session, tf.train.latest_checkpoint('skip_gram'))
+    saver.restore(session, tf.train.latest_checkpoint('d:/Programming/skip_gram'))
     session.run(print_word_vector)
     print(session.run(X_input))

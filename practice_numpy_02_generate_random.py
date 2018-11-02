@@ -1,7 +1,16 @@
+# @Author: JayY <JeeYz>
+# @Date:   2018-10-30T09:36:58+09:00
+# @Filename: practice_numpy_02_generate_random.py
+# @Last modified by:   JeeYz
+# @Last modified time: 2018-11-02T14:00:08+09:00
+# @Copyright: JayY
+
+
+
 # practice numpy again
 # mainly, i had practiced for making random number with numpy library
 # and practicing to multiply
-# make dot product 
+# make dot product
 # generate random matrix with several ways
 
 import tensorflow as tf

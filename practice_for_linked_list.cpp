@@ -1,13 +1,24 @@
+/**
+ * @Author: JayY <JeeYz>
+ * @Date:   2018-05-23T10:08:31+09:00
+ * @Filename: practice_for_linked_list.cpp
+ * @Last modified by:   JeeYz
+ * @Last modified time: 2018-11-02T14:00:02+09:00
+ * @Copyright: JayY
+ */
+
+
+
 #include<stdio.h>
 #include <stdlib.h>
-typedef struct listNode *listPointer;				// ³ëµåÀÇ ÁÖ¼Ò°ªÀ» °¡Áö´Â listPointer Á¤ÀÇ
-typedef struct listNode {							// intÇü µ¥ÀÌÅÍ¿Í link¸¦ °¡Áö´Â ³ëµå Á¤ÀÇ
+typedef struct listNode *listPointer;				// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ö¼Ò°ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ listPointer ï¿½ï¿½ï¿½ï¿½
+typedef struct listNode {							// intï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Í¿ï¿½ linkï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 	int data;
 	listPointer link;
 }listNode;
 
 
-listPointer create3() {								// ³ëµå 3°³¸¦ ¸¸µé°í °¢°¢ 10,20,30°ª ÀÔ·ÂÈÄ ¼­·Î ¿¬°á
+listPointer create3() {								// ï¿½ï¿½ï¿½ï¿½ 3ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ 10,20,30ï¿½ï¿½ ï¿½Ô·ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 	listPointer first, second, third;
 	first = (listPointer)malloc(sizeof(listNode));
 	second = (listPointer)malloc(sizeof(listNode));
@@ -22,9 +33,9 @@ listPointer create3() {								// ³ëµå 3°³¸¦ ¸¸µé°í °¢°¢ 10,20,30°ª ÀÔ·ÂÈÄ ¼­·Î 
 	return first;
 }
 
-//				¼÷ Á¦  ºÎ ºÐ 
+//				ï¿½ï¿½ ï¿½ï¿½  ï¿½ï¿½ ï¿½ï¿½
 
-listPointer search_last_node(listPointer ptr)		// Ã¹ ³ëµå¸¦ ÀÔ·Â¹Þ°í ptrÀÌ³ª ptr->link°¡ NULLÀÌ¸é °¢ data¸¦ Ãâ·Â¹Ø ¸®½ºÆ®ÀÇ ¸¶Áö¸· ÁÖ¼Ò°ªÀ» ¹ÝÈ¯
+listPointer search_last_node(listPointer ptr)		// Ã¹ ï¿½ï¿½ï¿½å¸¦ ï¿½Ô·Â¹Þ°ï¿½ ptrï¿½Ì³ï¿½ ptr->linkï¿½ï¿½ NULLï¿½Ì¸ï¿½ ï¿½ï¿½ dataï¿½ï¿½ ï¿½ï¿½ï¿½Â¹ï¿½ ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ö¼Ò°ï¿½ï¿½ï¿½ ï¿½ï¿½È¯
 {
 	if (ptr == NULL) {
 		return NULL;
@@ -40,9 +51,9 @@ listPointer search_last_node(listPointer ptr)		// Ã¹ ³ëµå¸¦ ÀÔ·Â¹Þ°í ptrÀÌ³ª ptr
 		}
 	}	//****************************
 }
-//              ¼÷ Á¦  ºÎ ºÐ
+//              ï¿½ï¿½ ï¿½ï¿½  ï¿½ï¿½ ï¿½ï¿½
 
-int main()								//¸ÞÀÎÇÔ¼ö, ³ëµå 3°³¸¦ »ý¼º, ¸¶Áö¸· ³ëµå¸¦ Ã£¾Æ¼­ listPointer¿¡ ÀúÀå
+int main()								//ï¿½ï¿½ï¿½ï¿½ï¿½Ô¼ï¿½, ï¿½ï¿½ï¿½ï¿½ 3ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½, ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½å¸¦ Ã£ï¿½Æ¼ï¿½ listPointerï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 {
 	listPointer start;
 	listPointer last;

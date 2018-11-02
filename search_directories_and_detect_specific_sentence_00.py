@@ -1,3 +1,11 @@
+# @Author: JayY <JeeYz>
+# @Date:   2018-10-30T09:53:24+09:00
+# @Filename: search_directories_and_detect_specific_sentence_00.py
+# @Last modified by:   JeeYz
+# @Last modified time: 2018-11-02T14:00:17+09:00
+# @Copyright: JayY
+
+
 
 import os
 

@@ -1,3 +1,11 @@
+# @Author: JayY <JeeYz>
+# @Date:   2018-11-01T11:51:33+09:00
+# @Filename: practice_python_basic_00.py
+# @Last modified by:   JeeYz
+# @Last modified time: 2018-11-02T14:00:10+09:00
+# @Copyright: JayY
+
+
 
 # this file is just python practicing
 # practicing for basic garammar of python
