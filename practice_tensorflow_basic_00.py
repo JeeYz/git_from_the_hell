@@ -1,8 +1,8 @@
 # @Author: JayY <JeeYz>
 # @Date:   2018-10-30T09:36:58+09:00
 # @Filename: practice_tensorflow_basic_00.py
-# @Last modified by:   JeeYz
-# @Last modified time: 2018-11-02T14:00:12+09:00
+# @Last modified by:   JayY
+# @Last modified time: 2018-11-06T15:15:26+09:00
 # @Copyright: JayY
 
 
