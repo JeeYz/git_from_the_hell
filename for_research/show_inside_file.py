@@ -2,7 +2,7 @@
 # @Date:   2018-11-05T14:02:53+09:00
 # @Filename: show_inside_file.py
 # @Last modified by:   JayY
-# @Last modified time: 2018-11-16T16:51:25+09:00
+# @Last modified time: 2018-11-20T13:47:56+09:00
 # @Copyright: JayY
 
 # it is just for show inside file
@@ -16,6 +16,8 @@ import time
 import copy
 import os
 
+data_dir_path = 'd:/Programming/Language_Model'
+
 filename00 = './data/korean_wiki/korean_wiki_raw_data_words.txt'
 filename01 = './data/korean_wiki/korean_wiki_raw_data_poses.txt'
 filename02 = './data/korean_wiki/korean_wiki_result_words_00.txt'
@@ -27,10 +29,41 @@ filename04 = './data/korean_wiki/korean_wiki_result_words_02_huff_nodes.txt'
 filename05 = './data/korean_wiki/korean_wiki_result_data_for_training_full.txt'
 filename06 = './data/korean_wiki/korean_wiki_result_data_for_training_full_nce.txt'
 
-filename07 = './data/korean_news/korean_news_result_sents_00.txt'
-filename08 = './data/korean_news/korean_news_result_poses_00.txt'
+filename07 = './data/korean_news/korean_news_result_words_00.txt'
+filename08 = './data/korean_news/korean_news_result_sents_00.txt'
 
 
+def checking_lines(filename_r):
+    with open(filename_r, 'r', encoding='utf-8') as f:
+        line_para = 0
+        pausing_lines = 100
+        while True:
+            line = f.readline().split()
+            if not line: break
+            if len(line) != 2:
+                print(line)
+
+#============**** excution ****===============
+checking_lines(filename07)
+# ============================================
+
+def read_files(filename_r):
+    with open(filename_r, 'r', encoding='utf-8') as f:
+        line_para = 0
+        pausing_lines = 100
+        while True:
+            line = f.readline()
+            if not line: break
+            print(line)
+            if line_para == pausing_lines:
+                print("hello, time sleep~!")
+                time.sleep(10000)
+            line_para += 1
+
+#============**** excution ****===============
+# read_files(filename07)
+# read_files(filename08)
+# ============================================
 
 def checking_number_of_files(filename_r1, filename_r2):
     with open(filename_r1, 'r', encoding='utf-8') as f1, open(filename_r2, 'r', encoding='utf-8') as f2:
@@ -43,7 +76,9 @@ def checking_number_of_files(filename_r1, filename_r2):
                 print(line2)
                 print('===========================')
 
+#============**** excution ****===============
 # checking_number_of_files(filename07, filename08)
+# ============================================
 
 def check_train_data_file_nce(filename_r):
     with open(filename_r, 'r', encoding='utf-8') as f:
@@ -67,7 +102,7 @@ def count_lines_of_file(filename_r):
     print('total number of lines: ', count)
 
 #============**** excution ****===============
-# count_lines_of_file(filename05)
+# count_lines_of_file(filename08)
 # ============================================
 
 def checking_well_made_or_not(filename_r):
