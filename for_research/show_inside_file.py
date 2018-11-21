@@ -2,7 +2,7 @@
 # @Date:   2018-11-05T14:02:53+09:00
 # @Filename: show_inside_file.py
 # @Last modified by:   JayY
-# @Last modified time: 2018-11-20T13:47:56+09:00
+# @Last modified time: 2018-11-20T15:28:17+09:00
 # @Copyright: JayY
 
 # it is just for show inside file
@@ -37,12 +37,17 @@ def checking_lines(filename_r):
     with open(filename_r, 'r', encoding='utf-8') as f:
         line_para = 0
         pausing_lines = 100
+        pos_list = list()
         while True:
             line = f.readline().split()
             if not line: break
+            if line[1] not in pos_list:
+                pos_list.append(line[1])
             if len(line) != 2:
                 print(line)
-
+        pos_list = sorted(pos_list)
+        print(pos_list)
+        
 #============**** excution ****===============
 checking_lines(filename07)
 # ============================================
