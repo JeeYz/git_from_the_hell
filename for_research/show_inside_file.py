@@ -2,7 +2,7 @@
 # @Date:   2018-11-05T14:02:53+09:00
 # @Filename: show_inside_file.py
 # @Last modified by:   JayY
-# @Last modified time: 2018-11-20T15:28:17+09:00
+# @Last modified time: 2018-11-21T11:29:43+09:00
 # @Copyright: JayY
 
 # it is just for show inside file
@@ -18,19 +18,21 @@ import os
 
 data_dir_path = 'd:/Programming/Language_Model'
 
-filename00 = './data/korean_wiki/korean_wiki_raw_data_words.txt'
-filename01 = './data/korean_wiki/korean_wiki_raw_data_poses.txt'
-filename02 = './data/korean_wiki/korean_wiki_result_words_00.txt'
+filename00 = 'd:/Programming/Language_Model/data/korean_wiki/korean_wiki_raw_data_words.txt'
+filename01 = 'd:/Programming/Language_Model/data/korean_wiki/korean_wiki_raw_data_poses.txt'
+filename02 = 'd:/Programming/Language_Model/data/korean_wiki/korean_wiki_result_words_00.txt'
 
-filename_pos = './data/korean_wiki/abstracted_pos_list.txt'
+filename_pos = 'd:/Programming/Language_Model/data/korean_wiki/abstracted_pos_list.txt'
 
-filename03 = './data/korean_wiki/korean_wiki_result_words_02_huff_words.txt'
-filename04 = './data/korean_wiki/korean_wiki_result_words_02_huff_nodes.txt'
-filename05 = './data/korean_wiki/korean_wiki_result_data_for_training_full.txt'
-filename06 = './data/korean_wiki/korean_wiki_result_data_for_training_full_nce.txt'
+filename03 = 'd:/Programming/Language_Model/data/korean_wiki/korean_wiki_result_words_02_huff_words.txt'
+filename04 = 'd:/Programming/Language_Model/data/korean_wiki/korean_wiki_result_words_02_huff_nodes.txt'
+filename05 = 'd:/Programming/Language_Model/data/korean_wiki/korean_wiki_result_data_for_training_full.txt'
+filename06 = 'd:/Programming/Language_Model/data/korean_wiki/korean_wiki_result_data_for_training_full_nce.txt'
 
-filename07 = './data/korean_news/korean_news_result_words_00.txt'
-filename08 = './data/korean_news/korean_news_result_sents_00.txt'
+filename07 = 'd:/Programming/Language_Model/data/korean_news/korean_news_result_words_00.txt'
+filename08 = 'd:/Programming/Language_Model/data/korean_news/korean_news_result_sents_00.txt'
+
+
 
 
 def checking_lines(filename_r):
@@ -47,9 +49,9 @@ def checking_lines(filename_r):
                 print(line)
         pos_list = sorted(pos_list)
         print(pos_list)
-        
+
 #============**** excution ****===============
-checking_lines(filename07)
+# checking_lines(filename07)
 # ============================================
 
 def read_files(filename_r):
