@@ -2,7 +2,7 @@
 # @Date:   2018-11-05T14:02:53+09:00
 # @Filename: show_inside_file.py
 # @Last modified by:   JayY
-# @Last modified time: 2018-11-21T11:29:43+09:00
+# @Last modified time: 2018-11-26T16:54:05+09:00
 # @Copyright: JayY
 
 # it is just for show inside file
@@ -31,9 +31,43 @@ filename06 = 'd:/Programming/Language_Model/data/korean_wiki/korean_wiki_result_
 
 filename07 = 'd:/Programming/Language_Model/data/korean_news/korean_news_result_words_00.txt'
 filename08 = 'd:/Programming/Language_Model/data/korean_news/korean_news_result_sents_00.txt'
+filename09 = 'd:/Programming/Language_Model/data/korean_news/korean_news_result_words_01.txt'
+filename10 = 'd:/Programming/Language_Model/data/korean_news/korean_news_result_words_02.txt'
+filename11 = 'd:/Programming/Language_Model/data/korean_news/korean_news_result_words_05.txt'
+
+filename12 = 'd:/Programming/Language_Model/data/korean_news/korean_news_data_for_training_full_nce.txt'
 
 
 
+def checking_words_lines(filename_r):
+    with open(filename_r, 'r', encoding='utf-8') as f:
+        line_para = 0
+        while True:
+            line = f.readline().split()
+            if not line:break
+            if len(line) != 4:
+                print(line, '\t', line_para)
+            line_para += 1
+#============**** excution ****===============
+# checking_words_lines(filename10)
+# ============================================
+
+def checking_word(filename_r):
+    with open(filename_r, 'r', encoding='utf-8') as f:
+        line_para = 0
+        while True:
+            line = f.readline().split()
+            # print(line, '\t', line_para)
+            if not line:break
+            if line[0] == '##pad_start':
+                print('hello, world~! ----> ', line_para, '\t', line)
+                # time.sleep(10000)
+            line_para += 1
+        print(line_para)
+
+#============**** excution ****===============
+# checking_word(filename10)
+# ============================================
 
 def checking_lines(filename_r):
     with open(filename_r, 'r', encoding='utf-8') as f:
@@ -205,12 +239,12 @@ def showing_inside_file(filename):
     with open(filename, 'r', encoding='utf-8') as f:
         while True:
             line = f.readline()
-            print(line)
-            if 'pad_s_000' in line:
+            if not line:break
+            # print(line)
+            if "None" in line:
                 print(line)
 
-#============**** excution ****===============
-# showing_inside_file(filename05)
-# ============================================
 
-# checking_correctness(filename02)
+#============**** excution ****===============
+showing_inside_file(filename12)
+# ============================================
