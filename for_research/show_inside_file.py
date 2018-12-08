@@ -2,7 +2,7 @@
 # @Date:   2018-11-05T14:02:53+09:00
 # @Filename: show_inside_file.py
 # @Last modified by:   JayY
-# @Last modified time: 2018-11-26T16:54:05+09:00
+# @Last modified time: 2018-12-08T10:57:54+09:00
 # @Copyright: JayY
 
 # it is just for show inside file
@@ -37,6 +37,16 @@ filename11 = 'd:/Programming/Language_Model/data/korean_news/korean_news_result_
 
 filename12 = 'd:/Programming/Language_Model/data/korean_news/korean_news_data_for_training_full_nce.txt'
 
+filename13 = 'd:/Programming/Language_Model/data/sejong/written/changed_sentence_Data_01.txt'
+filename14 = 'd:/Programming/Language_Model/data/sejong/written/result_11.txt'
+
+filename15 = 'd:/Programming/Language_Model/data/korean_wiki/korean_wiki_result_words_00_before_reducing.txt'
+filename16 = 'd:/Programming/Language_Model/data/korean_wiki/korean_wiki_temp_data_sents_adding_pad.txt'
+
+filename17 = 'd:/Programming/Language_Model/data/korean_news/korean_news_result_sents_03.txt'
+filename18 = 'd:/Programming/Language_Model/data/korean_news/korean_news_result_words_04.txt'
+
+
 
 
 def checking_words_lines(filename_r):
@@ -45,11 +55,12 @@ def checking_words_lines(filename_r):
         while True:
             line = f.readline().split()
             if not line:break
-            if len(line) != 4:
-                print(line, '\t', line_para)
+            # if len(line) != 4:
+            #     print(line, '\t', line_para)
             line_para += 1
+        print(line_para)
 #============**** excution ****===============
-# checking_words_lines(filename10)
+checking_words_lines(filename17)
 # ============================================
 
 def checking_word(filename_r):
@@ -103,7 +114,7 @@ def read_files(filename_r):
 
 #============**** excution ****===============
 # read_files(filename07)
-# read_files(filename08)
+# read_files(filename17)
 # ============================================
 
 def checking_number_of_files(filename_r1, filename_r2):
@@ -164,13 +175,6 @@ def checking_well_made_or_not(filename_r):
 
 #============**** excution ****===============
 # checking_well_made_or_not(filename05)
-# ============================================
-
-
-def checking_files_of_huff():
-    pass
-
-#============**** excution ****===============
 # ============================================
 
 def checking_correctness(filename):
@@ -240,11 +244,11 @@ def showing_inside_file(filename):
         while True:
             line = f.readline()
             if not line:break
-            # print(line)
-            if "None" in line:
-                print(line)
+            print(line)
+            # if "None" in line:
+            #     print(line)
 
 
 #============**** excution ****===============
-showing_inside_file(filename12)
+# showing_inside_file(filename11)
 # ============================================
