@@ -1,7 +1,7 @@
 # @Author: JeeY
 # @Date:   2019-02-01T00:34:28+09:00
-# @Last modified by:   JY
-# @Last modified time: 2019-02-11T09:39:13+09:00
+# @Last modified by:   J.Y.
+# @Last modified time: 2019-03-11T02:46:07+09:00
 # @License: JY
 # @Copyright: JY
 
@@ -9,9 +9,12 @@
 # @Author: JY
 # @Date:   2019-01-24T10:29:08+09:00
 # @Filename: generate_raw_data_for_ETRI_parsing_02.py
-# @Last modified by:   JY
-# @Last modified time: 2019-02-11T09:39:13+09:00
+# @Last modified by:   J.Y.
+# @Last modified time: 2019-03-11T02:46:07+09:00
 # @Copyright: JeeY
+
+''' Success Version '''
+''' generating raw data for dependency parsing '''
 
 import time
 

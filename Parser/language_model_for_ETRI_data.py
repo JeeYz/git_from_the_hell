@@ -1,14 +1,18 @@
 # @Author: JY
 # @Date:   2019-01-30T10:17:23+09:00
 # @Filename: language_model_for_ETRI_data.py
-# @Last modified by:   JY
-# @Last modified time: 2019-01-30T15:53:05+09:00
+# @Last modified by:   J.Y.
+# @Last modified time: 2019-03-11T02:45:18+09:00
 # @Copyright: JeeY
 
 ######## ########## ############
 # this file is for ETRI data
 # making parsing
 ################################
+
+##################
+# embedding program
+##################
 
 import math
 import tensorflow as tf

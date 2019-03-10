@@ -1,9 +1,11 @@
 # @Author: JY
 # @Date:   2019-01-24T10:29:08+09:00
 # @Filename: generate_raw_data_for_ETRI_parsing_02.py
-# @Last modified by:   JeeY
-# @Last modified time: 2019-02-01T00:34:12+09:00
+# @Last modified by:   J.Y.
+# @Last modified time: 2019-03-11T02:46:38+09:00
 # @Copyright: JeeY
+
+""" Failed """
 
 import time
 

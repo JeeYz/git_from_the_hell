@@ -1,10 +1,11 @@
 # @Author: JY
 # @Date:   2019-01-15T16:22:38+09:00
 # @Filename: generate_raw_data_for_ETRI_parsing_01.py
-# @Last modified by:   JY
-# @Last modified time: 2019-01-24T10:39:57+09:00
+# @Last modified by:   J.Y.
+# @Last modified time: 2019-03-11T02:46:46+09:00
 # @Copyright: JeeY
 
+""" Failed """
 
 file_path_00 = 'd:/Programming/Exercise_RNN/'
 file_path_01 = 'd:/Programming/Corpus/'
