@@ -1,8 +1,8 @@
 ﻿# @Author: JY
 # @Date:   2019-01-08T15:21:07+09:00
 # @Filename: e_01.py
-# @Last modified by:   JY
-# @Last modified time: 2019-02-19T16:14:21+09:00
+# @Last modified by:   J.Y.
+# @Last modified time: 2019-03-11T00:43:36+09:00
 # @Copyright: JeeY
 
 
@@ -108,7 +108,7 @@ with tf.Session() as sess:
         print('Epoch:', '%04d' % (epoch + 1),
               'Avg. cost =', '{:.3f}'.format(total_cost / total_batch))
 
-    print('理?? ?猷!')
+    print('complete!')
 
 #########
 # Test
@@ -120,7 +120,7 @@ test_batch_size = len(mnist.test.images)
 test_xs = mnist.test.images.reshape(test_batch_size, time_steps, n_input)
 test_ys = mnist.test.labels
 
-print('???:', sess.run(accuracy,
+print('accuracy:', sess.run(accuracy,
                        feed_dict={X: test_xs, Y: test_ys}))
 
 
