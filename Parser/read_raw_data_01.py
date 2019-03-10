@@ -1,10 +1,14 @@
 ﻿# @Author: JY
 # @Date:   2019-01-14T15:13:53+09:00
 # @Filename: read_raw_data_01.py
-# @Last modified by:   JY
-# @Last modified time: 2019-01-15T11:46:49+09:00
+# @Last modified by:   J.Y.
+# @Last modified time: 2019-03-11T02:38:28+09:00
 # @Copyright: JeeY
 
+'''
+read raw data file hantec??
+ETRI file??
+'''
 
 import os
 
