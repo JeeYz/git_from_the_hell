@@ -2,7 +2,7 @@
 # @Date:   2019-03-04T14:42:22+09:00
 # @Project: NLP
 # @Last modified by:   J.Y.
-# @Last modified time: 2019-03-11T10:04:01+09:00
+# @Last modified time: 2019-03-11T17:18:52+09:00
 # @License: JeeY
 # @Copyright: J.Y. JeeY
 
@@ -71,7 +71,9 @@ while True:
     print('%03d' %para)
     para += 1
 
-
+for i in range(10):
+    line = '--> ' + '%02d number' % i
+    print(line)
 
 
 
