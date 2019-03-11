@@ -2,7 +2,7 @@
 # @Date:   2019-03-04T14:42:22+09:00
 # @Project: NLP
 # @Last modified by:   J.Y.
-# @Last modified time: 2019-03-09T03:58:38+09:00
+# @Last modified time: 2019-03-11T10:04:01+09:00
 # @License: JeeY
 # @Copyright: J.Y. JeeY
 
@@ -65,6 +65,11 @@ for i,j in enumerate(list8, 1):
 print(list7)
 print(list8)
 
+para = 0
+while True:
+    if para > 10:break
+    print('%03d' %para)
+    para += 1
 
 
 
