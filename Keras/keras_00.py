@@ -1,7 +1,7 @@
 # @Author: J.Y.
 # @Date:   2019-02-26T04:47:06+09:00
 # @Last modified by:   J.Y.
-# @Last modified time: 2019-03-12T02:07:57+09:00
+# @Last modified time: 2019-03-14T09:34:58+09:00
 # @License: J.Y. JeeYz
 # @Copyright: J.Y. JeeYz
 
@@ -25,13 +25,16 @@ test_images = test_images.astype('float32')/255
 
 from keras.utils import to_categorical
 
+## making one hot representation
 train_labels = to_categorical(train_labels)
 test_labels = to_categorical(test_labels)
 
-network.fit(train_images, train_labels, epochs=5, batch_size=128)
+## execution of train data
+network.fit(train_images, train_labels, epochs=20, batch_size=128)
 
-
-
+## test session
+test_loss, test_acc = network.evaluate(test_images, test_labels)
+print('test_acc: ', test_acc)
 
 
 
