@@ -1,7 +1,7 @@
 # @Author: J.Y.
 # @Date:   2019-03-10T16:47:15+09:00
 # @Last modified by:   J.Y.
-# @Last modified time: 2019-03-15T07:17:42+09:00
+# @Last modified time: 2019-03-15T07:20:53+09:00
 # @License: J.Y. JeeYz
 # @Copyright: J.Y. JeeYz
 
@@ -16,12 +16,12 @@ import e_38_module_1 as mod1
 import e_56_module_2 as mod2
 import e_57_module_3 as mod3
 
-filename0 = 'raw_train_dataset_06.train'
-filename1 = 'raw_train_dataset_07.train'
+filename0 = 'd:/Program_Data/raw_train_dataset_06.train'
+filename1 = 'd:/Program_Data/raw_train_dataset_07.train'
 
-filename4 = 'result_raw_words_list_00.words'
-filename5 = 'result_modified_pos_data_05.pos'
-filename6 = 'temp_result_09.temp'
+filename4 = 'd:/Program_Data/result_raw_words_list_00.words'
+filename5 = 'd:/Program_Data/result_modified_pos_data_05.pos'
+filename6 = 'd:/Program_Data/temp_result_09.temp'
 
 word_dict = mod3.making_dictionary_of_words(filename4)
 pos_dict = mod3.making_pos_dictionary(filename5)
