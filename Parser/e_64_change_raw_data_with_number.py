@@ -1,7 +1,7 @@
 # @Author: J.Y.
 # @Date:   2019-03-10T16:47:15+09:00
 # @Last modified by:   J.Y.
-# @Last modified time: 2019-03-11T09:38:18+09:00
+# @Last modified time: 2019-03-15T07:17:42+09:00
 # @License: J.Y. JeeYz
 # @Copyright: J.Y. JeeYz
 
@@ -16,8 +16,8 @@ import e_38_module_1 as mod1
 import e_56_module_2 as mod2
 import e_57_module_3 as mod3
 
-filename0 = 'raw_train_dataset_01.train'
-filename1 = 'raw_train_dataset_02.train'
+filename0 = 'raw_train_dataset_06.train'
+filename1 = 'raw_train_dataset_07.train'
 
 filename4 = 'result_raw_words_list_00.words'
 filename5 = 'result_modified_pos_data_05.pos'
