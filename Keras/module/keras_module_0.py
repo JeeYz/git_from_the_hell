@@ -2,7 +2,7 @@
 # @Date:   2019-03-14T09:44:24+09:00
 # @Project: NLP
 # @Last modified by:   J.Y.
-# @Last modified time: 2019-03-14T15:10:43+09:00
+# @Last modified time: 2019-03-14T15:21:53+09:00
 # @License: JeeY
 # @Copyright: J.Y. JeeY
 
@@ -52,7 +52,6 @@ def make_arc_list(fname):
 def generate_train_data(filetuple, batch_size):
     words_matrix = make_word_list(filepath + file_word)
     pos_matrix = make_pos_list(filepath + file_pos)
-    arc_matrix = make_arc_list(filepath + file_arc)
 
     train_vector = list()
     train_label = list()
@@ -70,13 +69,11 @@ def generate_train_data(filetuple, batch_size):
                         continue
                     if num1 < 18:
                         pass
-
+                        
                     elif num1 < 36 and 18 <= num1:
                         pass
 
-                    elif 36 <= num1:
-                        pass
-
+                train_label.append(line[-1])
 
     return (train_vector, train_label)
 
