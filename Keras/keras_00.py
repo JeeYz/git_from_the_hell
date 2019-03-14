@@ -1,7 +1,7 @@
 # @Author: J.Y.
 # @Date:   2019-02-26T04:47:06+09:00
 # @Last modified by:   J.Y.
-# @Last modified time: 2019-03-14T09:41:11+09:00
+# @Last modified time: 2019-03-14T12:05:11+09:00
 # @License: J.Y. JeeYz
 # @Copyright: J.Y. JeeYz
 
@@ -17,6 +17,9 @@ network.add(layers.Dense(10, activation='softmax'))
 
 network.compile(optimizer='rmsprop', loss='categorical_crossentropy', metrics=['accuracy'])
 
+network.summary()
+# print(train_images)
+
 train_images = train_images.reshape((60000, 28*28))
 train_images = train_images.astype('float32')/255
 
@@ -30,8 +33,8 @@ train_labels = to_categorical(train_labels)
 test_labels = to_categorical(test_labels)
 
 ## execution of train data
-network.fit(train_images, train_labels, epochs=20, batch_size=128)
-
+network.fit(train_images, train_labels, epochs=10, batch_size=128)
+# print(train_images)
 ## test session
 test_loss, test_acc = network.evaluate(test_images, test_labels)
 print('test_acc: ', test_acc)
