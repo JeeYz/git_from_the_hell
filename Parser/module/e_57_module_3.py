@@ -2,9 +2,12 @@
 # @Date:   2019-03-08T11:11:55+09:00
 # @Project: NLP
 # @Last modified by:   J.Y.
-# @Last modified time: 2019-03-10T18:51:03+09:00
+# @Last modified time: 2019-03-15T10:31:56+09:00
 # @License: JeeY
 # @Copyright: J.Y. JeeY
+
+file1 = 'd:/Program_Data/result_raw_words_list_00.words'
+file2 = 'd:/Program_Data/result_pos_temp_01.pos'
 
 def making_dictionary_of_words(file):
     words_dict = dict()
@@ -45,7 +48,15 @@ def making_arc_dictionary(file):
             index_num += 1
     return arc_dict
 
-
+def return_data_of_words(para):
+    words_dict = making_dictionary_of_words(file1)
+    pos_dict = making_pos_dictionary(file2)
+    if para == 1:
+        return words_dict
+    elif para == 2:
+        return words_dict, pos_dict
+    # else:
+    #     return words_dict, pos_dict, arc_dict
 
 
 
