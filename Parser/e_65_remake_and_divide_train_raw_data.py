@@ -2,12 +2,12 @@
 # @Date:   2019-03-11T09:39:15+09:00
 # @Project: NLP
 # @Last modified by:   J.Y.
-# @Last modified time: 2019-03-12T11:33:32+09:00
+# @Last modified time: 2019-03-15T16:03:32+09:00
 # @License: JeeY
 # @Copyright: J.Y. JeeY
 
 filepath = 'd:/Program_Data/'
-filename0 = 'raw_train_dataset_02.train'
+filename0 = 'raw_train_dataset_08.train'
 
 filename = filepath + filename0
 
@@ -24,7 +24,7 @@ with open(filename, 'r', encoding='utf-8') as f:
         if switch == 1:
             switch = 0
             sent_num += 1
-            if sent_num%5000 == 0:
+            if sent_num%8000 == 0:
                 file_1 = filepath + 'result_train_dataset_%02d.train' %file_num
                 with open(file_1, 'w', encoding='utf-8') as fw:
                     for i in full_data:

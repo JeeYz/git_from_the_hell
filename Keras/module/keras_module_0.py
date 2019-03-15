@@ -2,7 +2,7 @@
 # @Date:   2019-03-14T09:44:24+09:00
 # @Project: NLP
 # @Last modified by:   J.Y.
-# @Last modified time: 2019-03-14T15:21:53+09:00
+# @Last modified time: 2019-03-15T16:03:39+09:00
 # @License: JeeY
 # @Copyright: J.Y. JeeY
 
@@ -69,14 +69,13 @@ def generate_train_data(filetuple, batch_size):
                         continue
                     if num1 < 18:
                         pass
-                        
+
                     elif num1 < 36 and 18 <= num1:
                         pass
 
                 train_label.append(line[-1])
 
     return (train_vector, train_label)
-
 
 
 
