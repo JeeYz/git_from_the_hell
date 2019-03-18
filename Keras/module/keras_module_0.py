@@ -2,7 +2,7 @@
 # @Date:   2019-03-14T09:44:24+09:00
 # @Project: NLP
 # @Last modified by:   J.Y.
-# @Last modified time: 2019-03-15T16:03:39+09:00
+# @Last modified time: 2019-03-18T11:32:55+09:00
 # @License: JeeY
 # @Copyright: J.Y. JeeY
 
@@ -49,34 +49,33 @@ def make_arc_list(fname):
     arc_matrix = np.eye(len(temp)+1)
     return arc_matrix
 
-def generate_train_data(filetuple, batch_size):
+def generate_train_data(filename, batch_size):
     words_matrix = make_word_list(filepath + file_word)
     pos_matrix = make_pos_list(filepath + file_pos)
 
     train_vector = list()
     train_label = list()
 
-    for i in filetuple:
-        with open(i, 'r', encoding='utf-8') as f:
-            while True:
-                line = f.readline()
-                if not line:break
-                line = line.split()
-                num1 = 0
-                for j in line[:-1]:
-                    if j == '##':
-                        num1 += 1
-                        continue
-                    if num1 < 18:
-                        pass
+    full_train_vectors = list()
 
-                    elif num1 < 36 and 18 <= num1:
-                        pass
+    with open(filename, 'r', encoding='utf-8') as f:
+        while True:
+            line = f.readline()
+            if not line:break
+            line = line.split()
+            num1 = 0
+            for j in line[:-1]:
+                if j == '##':
+                    num1 += 1
+                    continue
+                if num1 < 18:
+                    train_vector.append(words_matrix[int(j)])
+                elif num1 < 36 and 18 <= num1:
+                    train_vector.append(pos_matrix[int(j)])
+            full_train_vectors.append(train_vector)
+            train_label.append(line[-1])
 
-                train_label.append(line[-1])
-
-    return (train_vector, train_label)
-
+    return (full_train_vectors, train_label)
 
 
 

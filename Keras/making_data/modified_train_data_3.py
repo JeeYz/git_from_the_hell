@@ -2,7 +2,7 @@
 # @Date:   2019-03-14T15:32:13+09:00
 # @Project: NLP
 # @Last modified by:   J.Y.
-# @Last modified time: 2019-03-15T10:56:24+09:00
+# @Last modified time: 2019-03-18T11:38:35+09:00
 # @License: JeeY
 # @Copyright: J.Y. JeeY
 
@@ -33,8 +33,8 @@ open(fpath + filename1, 'a', encoding='utf-8') as f2:
 
             if '조사' in line[-1] and line[-1] != '일반보조사':
                 if len(line) > 5:
-                    new_line.append(line[-4])
-                    new_line.append(line[-3])
+                    new_line.append(line[3])
+                    new_line.append(line[4])
                     new_line.append(line[-2])
                     new_line.append(line[-1])
                 else:
@@ -44,10 +44,10 @@ open(fpath + filename1, 'a', encoding='utf-8') as f2:
                     new_line.append(line[-1])
             else:
                 if len(line) > 5:
+                    new_line.append(line[3])
+                    new_line.append(line[4])
                     new_line.append(line[-2])
                     new_line.append(line[-1])
-                    new_line.append('NULL')
-                    new_line.append('NULL')
                 else:
                     new_line.append(line[-2])
                     new_line.append(line[-1])

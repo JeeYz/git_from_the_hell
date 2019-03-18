@@ -1,7 +1,7 @@
 # @Author: J.Y.
 # @Date:   2019-03-10T16:47:15+09:00
 # @Last modified by:   J.Y.
-# @Last modified time: 2019-03-15T11:02:23+09:00
+# @Last modified time: 2019-03-18T11:48:48+09:00
 # @License: J.Y. JeeYz
 # @Copyright: J.Y. JeeYz
 
@@ -52,6 +52,7 @@ open(filename1, 'w', encoding='utf-8') as f2:
                 elif switch == 1:
                     m_line.append(str(pos_dict[i]))
                 else:
+                    # print(line)
                     m_line.append(str(arc_dict[i]))
 
         if line[-1] == 'shift':
