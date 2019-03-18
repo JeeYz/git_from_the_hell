@@ -2,7 +2,7 @@
 # @Date:   2019-03-14T09:44:24+09:00
 # @Project: NLP
 # @Last modified by:   J.Y.
-# @Last modified time: 2019-03-18T11:32:55+09:00
+# @Last modified time: 2019-03-18T17:22:04+09:00
 # @License: JeeY
 # @Copyright: J.Y. JeeY
 
@@ -10,11 +10,11 @@ import numpy as np
 
 filepath = 'd:/Program_Data/'
 file_word = 'result_raw_words_list_00.words'
-file_pos = 'result_post_temp_01.pos'
+file_pos = 'result_pos_temp_01.pos'
 file_arc = 'temp_result_09.temp'
 
 np.random.seed(1)
-wordvec_size = 128
+wordvec_size = 64
 
 def make_word_list(fname):
     temp = list()
@@ -53,16 +53,17 @@ def generate_train_data(filename, batch_size):
     words_matrix = make_word_list(filepath + file_word)
     pos_matrix = make_pos_list(filepath + file_pos)
 
-    train_vector = list()
-    train_label = list()
-
     full_train_vectors = list()
 
     with open(filename, 'r', encoding='utf-8') as f:
         while True:
+            train_vector = list()
+            train_label = list()
+
             line = f.readline()
             if not line:break
             line = line.split()
+            if line == []:continue
             num1 = 0
             for j in line[:-1]:
                 if j == '##':
