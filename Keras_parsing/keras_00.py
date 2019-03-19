@@ -1,7 +1,7 @@
 # @Author: J.Y.
 # @Date:   2019-02-26T04:47:06+09:00
 # @Last modified by:   J.Y.
-# @Last modified time: 2019-03-18T17:40:47+09:00
+# @Last modified time: 2019-03-19T12:29:54+09:00
 # @License: J.Y. JeeYz
 # @Copyright: J.Y. JeeYz
 
@@ -19,6 +19,8 @@ network.compile(optimizer='rmsprop', loss='categorical_crossentropy', metrics=['
 
 network.summary()
 # print(train_images)
+
+print(type(train_images))
 
 train_images = train_images.reshape((60000, 28*28))
 train_images = train_images.astype('float32')/255
