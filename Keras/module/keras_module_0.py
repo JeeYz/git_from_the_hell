@@ -2,7 +2,7 @@
 # @Date:   2019-03-14T09:44:24+09:00
 # @Project: NLP
 # @Last modified by:   J.Y.
-# @Last modified time: 2019-03-18T17:22:04+09:00
+# @Last modified time: 2019-03-18T17:35:40+09:00
 # @License: JeeY
 # @Copyright: J.Y. JeeY
 
@@ -14,7 +14,7 @@ file_pos = 'result_pos_temp_01.pos'
 file_arc = 'temp_result_09.temp'
 
 np.random.seed(1)
-wordvec_size = 64
+wordvec_size = 128
 
 def make_word_list(fname):
     temp = list()
@@ -74,8 +74,14 @@ def generate_train_data(filename, batch_size):
                 elif num1 < 36 and 18 <= num1:
                     train_vector.append(pos_matrix[int(j)])
             full_train_vectors.append(train_vector)
-            train_label.append(line[-1])
 
+            if int(line[-1]) == 0:
+                train_label.append([1, 0, 0])
+            elif int(line[-1]) == 1:
+                train_label.append([0, 1, 0])
+            elif int(line[-1]) == 2:
+                train_label.append([0, 0, 1])
+    print('data load complete!!')
     return (full_train_vectors, train_label)
 
 
