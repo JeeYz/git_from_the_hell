@@ -2,12 +2,14 @@
 # @Date:   2019-03-14T09:56:12+09:00
 # @Project: NLP
 # @Last modified by:   J.Y.
-# @Last modified time: 2019-03-17T00:28:36+09:00
+# @Last modified time: 2019-03-19T14:27:35+09:00
 # @License: JeeY
 # @Copyright: J.Y. JeeY
 
 import numpy as np
 import time
+import sys
+sys.path.append(r'./module/')
 import keras_module_0 as k0
 
 list0 = [1, 2, 3, 4, 5]
@@ -23,7 +25,9 @@ for i in range(10000):
     print('Number : %d' % i, end='\r')
     # time.sleep(0.1)
 
-
+print('\n')
+for i in range(10, 20):
+    print(i)
 
 
 

@@ -2,7 +2,7 @@
 # @Date:   2019-03-14T09:44:24+09:00
 # @Project: NLP
 # @Last modified by:   J.Y.
-# @Last modified time: 2019-03-18T17:35:40+09:00
+# @Last modified time: 2019-03-19T14:30:30+09:00
 # @License: JeeY
 # @Copyright: J.Y. JeeY
 
@@ -49,7 +49,7 @@ def make_arc_list(fname):
     arc_matrix = np.eye(len(temp)+1)
     return arc_matrix
 
-def generate_train_data(filename, batch_size):
+def generate_train_data(filename):
     words_matrix = make_word_list(filepath + file_word)
     pos_matrix = make_pos_list(filepath + file_pos)
 
@@ -82,11 +82,29 @@ def generate_train_data(filename, batch_size):
             elif int(line[-1]) == 2:
                 train_label.append([0, 0, 1])
     print('data load complete!!')
-    return (full_train_vectors, train_label)
+    return full_train_vectors, train_label
 
+def gain_train_data_num(fname):
+    num1 = 0
+    with open(fname, 'r', encoding='utf-8') as f:
+        while True:
+            line = f.readline()
+            if not line:break
+            line = line.split()
+            if line == []:continue
+            num1 += 1
+    return num1
 
-
-
+def divide_train_data(x_data, y_data, num, batch_size, max):
+    if batch_size*(num+1) <= max:
+        for i in range(num*batch_size, batch_size*(num+1)):
+            x_list.append(x_data[i])
+            y_list.append(y_data[i])
+    else:
+        for i in range(num*batch_size, max):
+            x_list.append(x_data[i])
+            y_list.append(y_data[i])
+    return x_list, y_list
 
 if __name__ == "__main__":
     print('hello, world~!')
