@@ -2,7 +2,7 @@
 # @Date:   2019-03-14T09:56:12+09:00
 # @Project: NLP
 # @Last modified by:   J.Y.
-# @Last modified time: 2019-03-19T14:27:35+09:00
+# @Last modified time: 2019-03-19T14:59:59+09:00
 # @License: JeeY
 # @Copyright: J.Y. JeeY
 
@@ -30,7 +30,9 @@ for i in range(10, 20):
     print(i)
 
 
-
+a = np.array([0, 1, 0])
+print(a)
+print(type(a))
 
 
 
