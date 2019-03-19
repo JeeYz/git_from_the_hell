@@ -2,7 +2,7 @@
 # @Date:   2019-03-14T09:44:24+09:00
 # @Project: NLP
 # @Last modified by:   J.Y.
-# @Last modified time: 2019-03-19T15:00:39+09:00
+# @Last modified time: 2019-03-19T16:06:57+09:00
 # @License: JeeY
 # @Copyright: J.Y. JeeY
 
@@ -69,17 +69,18 @@ def generate_train_data(filename):
                     num1 += 1
                     continue
                 if num1 < 18:
-                    train_vector.append(words_matrix[int(j)])
+                    train_vector.append(list(words_matrix[int(j)]))
                 elif num1 < 36 and 18 <= num1:
-                    train_vector.append(pos_matrix[int(j)])
+                    train_vector.append(list(pos_matrix[int(j)]))
+
             full_train_vectors.append(train_vector)
 
             if int(line[-1]) == 0:
-                train_label.append(np.array([1, 0, 0]))
+                train_label.append([1, 0, 0])
             elif int(line[-1]) == 1:
-                train_label.append(np.array([0, 1, 0]))
+                train_label.append([0, 1, 0])
             elif int(line[-1]) == 2:
-                train_label.append(np.array([0, 0, 1]))
+                train_label.append([0, 0, 1])
             num1 += 1
     print('data load complete!!')
     full_train_vectors = np.array(full_train_vectors)

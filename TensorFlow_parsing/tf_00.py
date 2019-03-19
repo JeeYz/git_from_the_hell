@@ -2,7 +2,7 @@
 # @Date:   2019-03-19T12:33:32+09:00
 # @Project: NLP
 # @Last modified by:   J.Y.
-# @Last modified time: 2019-03-19T15:00:40+09:00
+# @Last modified time: 2019-03-19T16:45:21+09:00
 # @License: JeeY
 # @Copyright: J.Y. JeeY
 
@@ -35,7 +35,7 @@ output_size = 3
 tf.set_random_seed(1)
 
 input_X = tf.placeholder(tf.float32, [None, input_vector_size])
-arc_Y = tf.placeholder(tf.float32, [None, output_size])
+output_Y = tf.placeholder(tf.float32, [None, output_size])
 
 weight_0 = tf.Variable(tf.random_normal([input_vector_size, hidden_layer_size], stddev=1.0))
 # hidden_layer_bias = tf.Variable(tf.random_uniform([batch_size, hidden_layer_size], -1.0, 1.0))
@@ -49,7 +49,7 @@ weight_1 = tf.Variable(tf.random_normal([hidden_layer_size, output_size], stddev
 h_res_0 = tf.nn.relu(tf.matmul(input_X, weight_0))
 h_res_1 = tf.nn.relu(tf.matmul(h_res_0, weight_1))
 
-cost = tf.reduce_mean(tf.nn.sigmoid_cross_entropy_with_logits(labels=arc_Y, logits=h_res_1))
+cost = tf.reduce_mean(tf.nn.sigmoid_cross_entropy_with_logits(labels=output_Y, logits=h_res_1))
 optimizer = tf.train.GradientDescentOptimizer(learning_rate=lrate).minimize(cost)
 
 with tf.Session() as sess:
@@ -60,17 +60,20 @@ with tf.Session() as sess:
         for j in train_files:
             filename = 'd:/Program_Data/' + j
             x_data, y_data, train_data_num = k0.generate_train_data(filename)
+            for z in x_data[0]:
+                print(z)
+            print(y_data[0])
             for i in range(int(train_data_num/batch_size)+1):
                 x_list, y_list = k0.divide_train_data(x_data, y_data, i, batch_size, train_data_num)
-                _, loss_val = sess.run([optimizer, cost], feed_dict={input_X:x_list,\
-                                                                      arc_Y:y_list})
+                _, loss_val = sess.run([optimizer, cost], feed_dict={input_X:x_list,
+                                                                    output_Y:y_list})
                 total_cost += loss_val
                 para += 1
                 if i%100 == 0:
                     # lrate *= 0.999
                     print('hello, world %d' %(para*batch_size),
                           '\t', 'learning rate %f' %lrate, '\t', 'mid. Avr. loss=', loss_val)
-        print("Epoch = ", '%d' %step, 'ends. Avr. loss=', total_cost/batch_size)
+        print("Epoch = ", '%d' %(step+1), 'ends. Avr. loss=', total_cost/batch_size)
 
     # is_correct = tf.equal(tf.argmax(h_res_1, 1), tf.argmax(arc_Y, 1))
     # accuracy = tf.reduce_mean(tf.cast(is_correct, tf.float32))

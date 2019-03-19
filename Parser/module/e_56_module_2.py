@@ -2,7 +2,7 @@
 # @Date:   2019-03-05T16:48:45+09:00
 # @Project: NLP
 # @Last modified by:   J.Y.
-# @Last modified time: 2019-03-10T18:30:51+09:00
+# @Last modified time: 2019-03-19T17:03:02+09:00
 # @License: JeeY
 # @Copyright: J.Y. JeeY
 
@@ -21,8 +21,8 @@ def making_word_elements_list(sent_list):
         word_elements_list[j[2]].append(j[-1])
         word_elements_list[j[2]].append([j[0], j[1]])
     word_elements_list['ROOT'] = list()
-    word_elements_list['ROOT'].append(['ROOT'])
-    word_elements_list['ROOT'].append(['ROOT'])
+    word_elements_list['ROOT'].append(['ROOT', 'ROOT'])
+    word_elements_list['ROOT'].append(['ROOT', 'ROOT'])
     word_elements_list['ROOT'].append(0)
     word_elements_list['ROOT'].append([0, 0])
     return word_elements_list
@@ -51,15 +51,15 @@ def making_result_data(word_data, elements):
     temp2 = list()
     for s in word_data:
         if s == 'NULL':
-            temp1.append(['NULL'])
-            temp2.append(['NULL'])
+            temp1.append(['NULL', 'NULL'])
+            temp2.append(['NULL', 'NULL'])
         else:
             temp1.append(elements[s][0])
             temp2.append(elements[s][1])
     temp3 = list()
     for s in word_data[6:]:
         if s == 'NULL':
-            temp3.append(['NULL'])
+            temp3.append(['NULL', 'NULL'])
         else:
             temp3.append([elements[s][2]])
     result = list()
