@@ -2,7 +2,7 @@
 # @Date:   2019-03-19T12:33:32+09:00
 # @Project: NLP
 # @Last modified by:   J.Y.
-# @Last modified time: 2019-03-20T15:30:49+09:00
+# @Last modified time: 2019-03-20T16:10:26+09:00
 # @License: JeeY
 # @Copyright: J.Y. JeeY
 
@@ -12,8 +12,11 @@ import time
 import sys
 import os
 
+fpath1 = 'd:/Program_Data/'
+fpath2 = 'd:/Program_Data/Parsing_Data/'
+
 train_files = list()
-for (path, dir, files) in os.walk("d:/Program_Data/"):
+for (path, dir, files) in os.walk(fpath2):
     for filename in files:
         if 'result_train_dataset_' in filename:
             train_files.append(filename)
@@ -29,7 +32,7 @@ w_vec_size = 128
 p_vec_size = 73
 lrate = 0.05
 
-input_vector_size = 18*w_vec_size + 18*p_vec_size
+input_vector_size = 18*w_vec_size*2 + 18*p_vec_size*2
 hidden_layer_size = 512
 output_size = 3
 
@@ -59,7 +62,7 @@ with tf.Session() as sess:
     para = 0
     for step in range(epochs):
         for j in train_files:
-            filename = 'd:/Program_Data/' + j
+            filename = fpath1 + j
             x_data, y_data, train_data_num = k0.generate_train_data(filename)
             for i in range(int(train_data_num/batch_size)+1):
                 x_list, y_list = k0.divide_train_data(x_data, y_data, i, batch_size, train_data_num)
