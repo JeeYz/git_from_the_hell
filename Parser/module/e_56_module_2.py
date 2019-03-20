@@ -2,7 +2,7 @@
 # @Date:   2019-03-05T16:48:45+09:00
 # @Project: NLP
 # @Last modified by:   J.Y.
-# @Last modified time: 2019-03-19T17:03:02+09:00
+# @Last modified time: 2019-03-20T11:04:25+09:00
 # @License: JeeY
 # @Copyright: J.Y. JeeY
 
@@ -11,7 +11,7 @@ def making_word_elements_list(sent_list):
     for r,j in enumerate(sent_list[1:]):
         word_elements_list[j[2]] = list()
         a, b = list(), list()
-        for p,q in enumerate(j[3:-1]):
+        for p,q in enumerate(j[3:]):
             if p%2==0:
                 a.append(q)
             else:

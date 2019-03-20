@@ -2,7 +2,7 @@
 # @Date:   2019-03-13T16:34:16+09:00
 # @Project: NLP
 # @Last modified by:   J.Y.
-# @Last modified time: 2019-03-19T11:34:06+09:00
+# @Last modified time: 2019-03-20T15:09:54+09:00
 # @License: JeeY
 # @Copyright: J.Y. JeeY
 
@@ -33,8 +33,8 @@ filename1 = filepath + 'result_train_dataset_000.train'
 filename2 = filepath + 'raw_test_dataset_04.test'
 
 # train_data, train_labels = k0.generate_train_data(filename, batch_size)
-train_data, train_labels = k0.generate_train_data(filename1, batch_size)
-test_data, test_labels = k0.generate_train_data(filename2, batch_size)
+train_data, train_labels = k0.generate_train_data_2(filename1)
+test_data, test_labels = k0.generate_train_data_2(filename2)
 
 network = models.Sequential()
 network.add(layers.Dense(512, activation='relu', input_shape=(input_size, )))

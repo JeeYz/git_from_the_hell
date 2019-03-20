@@ -1,7 +1,7 @@
 # @Author: J.Y.
 # @Date:   2019-03-09T23:55:02+09:00
 # @Last modified by:   J.Y.
-# @Last modified time: 2019-03-19T19:31:38+09:00
+# @Last modified time: 2019-03-20T11:05:12+09:00
 # @License: J.Y. JeeYz
 # @Copyright: J.Y. JeeYz
 
@@ -59,20 +59,15 @@ with open(filename3, 'w', encoding='utf-8') as f:
             else:
                 while True:
                     one_data = mod1.make_one_train_data(stack_list, buffer_list, head)
-                    ##
-                    # print(len(one_data))
+
                     temp = mod2.making_result_data(one_data, word_element_list)
                     del one_data
                     one_train_input.append(temp)
 
                     transit = mod2.select_trainsition(stack_list, word_element_list,
                                                         head.childlist[0].word)
-                    ##
-                    # print('&&&& : ', transit)
-                    one_train_label.append(transit[0])
 
-                    # print('stack list : ', stack_list, transit, '\n')
-                    # print('buffer list : ', buffer_list, '\n')
+                    one_train_label.append(transit[0])
 
                     if transit[0] == 'shift':
                         stack_list.insert(0, str(buffer_list[0]))
@@ -91,11 +86,6 @@ with open(filename3, 'w', encoding='utf-8') as f:
         if len(one_train_input) != len(one_train_label):
             print('%d th sentence is not correct...' % k)
         ##########################################
-
-        # for w,z in enumerate(one_train_input):
-        #     for x,y in enumerate(z):
-        #         print(y)
-        #     print('\n\n')
 
         temp = list()
         for w,z in enumerate(one_train_input):

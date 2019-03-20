@@ -1,13 +1,13 @@
 # @Author: J.Y.
 # @Date:   2019-03-15T07:25:12+09:00
 # @Last modified by:   J.Y.
-# @Last modified time: 2019-03-19T19:44:42+09:00
+# @Last modified time: 2019-03-20T11:16:39+09:00
 # @License: J.Y. JeeYz
 # @Copyright: J.Y. JeeYz
 
 import sys
-# sys.path.append(r'C:/Users/AI_LAB/Desktop/Github/git_from_the_hell/Parser/module')
-sys.path.append(r'C:/Users/jkdsp/OneDrive/Desktop/github/git_from_the_hell/Parser/module')
+sys.path.append(r'C:/Users/AI_LAB/Desktop/Github/git_from_the_hell/Parser/module')
+# sys.path.append(r'C:/Users/jkdsp/OneDrive/Desktop/github/git_from_the_hell/Parser/module')
 import e_57_module_3 as m3
 
 words_dict, pos_dict = m3.return_data_of_words(2)

@@ -2,7 +2,7 @@
 # @Date:   2019-03-19T12:33:32+09:00
 # @Project: NLP
 # @Last modified by:   J.Y.
-# @Last modified time: 2019-03-19T20:08:18+09:00
+# @Last modified time: 2019-03-20T15:30:49+09:00
 # @License: JeeY
 # @Copyright: J.Y. JeeY
 
@@ -19,8 +19,8 @@ for (path, dir, files) in os.walk("d:/Program_Data/"):
             train_files.append(filename)
 train_files = tuple(train_files)
 
-# sys.path.append(r'c:/Users/AI_LAB/Desktop/Github/git_from_the_hell/Keras_parsing/module')
-sys.path.append(r'C:/Users/jkdsp/OneDrive/Desktop/github/git_from_the_hell/Keras_parsing/module')
+sys.path.append(r'c:/Users/AI_LAB/Desktop/Github/git_from_the_hell/Keras_parsing/module')
+# sys.path.append(r'C:/Users/jkdsp/OneDrive/Desktop/github/git_from_the_hell/Keras_parsing/module')
 import keras_module_0 as k0
 
 batch_size = 128
@@ -63,9 +63,9 @@ with tf.Session() as sess:
             x_data, y_data, train_data_num = k0.generate_train_data(filename)
             for i in range(int(train_data_num/batch_size)+1):
                 x_list, y_list = k0.divide_train_data(x_data, y_data, i, batch_size, train_data_num)
-                for z in x_list:
-                    # print(z)
-                    print(len(z))
+                # for z in x_list:
+                #     print(z)
+                #     print(len(z))
                 _, loss_val = sess.run([optimizer, cost], feed_dict={input_X:x_list,
                                                                     output_Y:y_list})
                 total_cost += loss_val
