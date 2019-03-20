@@ -2,16 +2,16 @@
 # @Date:   2019-03-14T14:36:55+09:00
 # @Project: NLP
 # @Last modified by:   J.Y.
-# @Last modified time: 2019-03-20T11:10:52+09:00
+# @Last modified time: 2019-03-20T16:35:24+09:00
 # @License: JeeY
 # @Copyright: J.Y. JeeY
 
 fpath = 'd:/Program_Data/'
-filename0 = 'raw_train_dataset_06.train'
-filename1 = 'raw_train_dataset_07.train'
+# filename0 = 'raw_train_dataset_06.train'
+# filename1 = 'raw_train_dataset_07.train'
 
-# filename0 = 'raw_test_dataset_02.test'
-# filename1 = 'raw_test_dataset_03.test'
+filename0 = 'raw_test_dataset_02.test'
+filename1 = 'raw_test_dataset_03.test'
 
 with open(fpath + filename0, 'r', encoding='utf-8') as f1,\
 open(fpath + filename1, 'a', encoding='utf-8') as f2:

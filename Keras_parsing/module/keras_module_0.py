@@ -2,7 +2,7 @@
 # @Date:   2019-03-14T09:44:24+09:00
 # @Project: NLP
 # @Last modified by:   J.Y.
-# @Last modified time: 2019-03-20T16:08:22+09:00
+# @Last modified time: 2019-03-20T16:47:49+09:00
 # @License: JeeY
 # @Copyright: J.Y. JeeY
 
@@ -110,7 +110,7 @@ def generate_train_data_2(filename):
                     train_vector.extend(words_matrix[int(j)])
                 elif num1 < 36 and 18 <= num1:
                     train_vector.extend(pos_matrix[int(j)])
-            print(len(train_vector))
+            # print(len(train_vector))
             full_train_vectors.append(train_vector)
 
             if int(line[-1]) == 0:
@@ -136,6 +136,10 @@ def divide_train_data(x_data, y_data, num, batch_size, max):
             x_list.append(x_data[i])
             y_list.append(y_data[i])
     return x_list, y_list
+
+
+
+
 
 
 

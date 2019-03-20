@@ -1,7 +1,7 @@
 # @Author: J.Y.
 # @Date:   2019-03-09T23:55:02+09:00
 # @Last modified by:   J.Y.
-# @Last modified time: 2019-03-20T11:05:12+09:00
+# @Last modified time: 2019-03-20T16:34:18+09:00
 # @License: J.Y. JeeYz
 # @Copyright: J.Y. JeeYz
 
@@ -16,11 +16,11 @@ import e_38_module_1 as mod1
 import e_56_module_2 as mod2
 import e_57_module_3 as mod3
 
-filename2 = 'd:/Program_Data/raw_train_dataset_05.train'
-filename3 = 'd:/Program_Data/raw_train_dataset_06.train'
+# filename2 = 'd:/Program_Data/raw_train_dataset_05.train'
+# filename3 = 'd:/Program_Data/raw_train_dataset_06.train'
 
-# filename2 = 'd:/Program_Data/raw_test_dataset_01.test'
-# filename3 = 'd:/Program_Data/raw_test_dataset_02.test'
+filename2 = 'd:/Program_Data/raw_test_dataset_01.test'
+filename3 = 'd:/Program_Data/raw_test_dataset_02.test'
 # filename2 = 'result_07.result'
 
 full_data = mod1.make_full_initial_raw_dataset(filename2)

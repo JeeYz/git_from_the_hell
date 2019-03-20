@@ -1,17 +1,17 @@
 # @Author: J.Y.
-# @Date:   2019-03-11T09:39:15+09:00
+# @Date:   2019-03-20T16:45:07+09:00
 # @Project: NLP
 # @Last modified by:   J.Y.
-# @Last modified time: 2019-03-20T17:03:23+09:00
+# @Last modified time: 2019-03-20T17:06:08+09:00
 # @License: JeeY
 # @Copyright: J.Y. JeeY
 
 filepath = 'd:/Program_Data/'
-filename0 = 'raw_train_dataset_08.train'
+filename0 = 'raw_test_dataset_04.test'
 
 filename = filepath + filename0
 
-line_num = 128
+line_num = 100
 
 full_data = list()
 with open(filename, 'r', encoding='utf-8') as f:
@@ -27,7 +27,7 @@ with open(filename, 'r', encoding='utf-8') as f:
             switch = 0
             sent_num += 1
             if sent_num%line_num == 0:
-                file_1 = filepath + 'Parsing_Data/' + 'result_train_dataset_%03d.train' %file_num
+                file_1 = filepath + 'Parsing_Data/' + 'result_test_dataset_%03d.test' %file_num
                 with open(file_1, 'w', encoding='utf-8') as fw:
                     for i in full_data:
                         for j in i:
@@ -46,7 +46,7 @@ with open(filename, 'r', encoding='utf-8') as f:
             continue
         one_sent.append(line)
 
-file_1 = filepath + 'Parsing_Data/' + 'result_train_dataset_%03d.train' %file_num
+file_1 = filepath + 'Parsing_Data/' + 'result_test_dataset_%03d.test' %file_num
 with open(file_1, 'w', encoding='utf-8') as fw:
     for i in full_data:
         for j in i:
@@ -59,6 +59,23 @@ with open(file_1, 'w', encoding='utf-8') as fw:
     print('generating file complete...\n')
 
 print('\n ** All files are complete... **')
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+## endl
+
+
 
 
 
