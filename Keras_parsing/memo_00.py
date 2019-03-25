@@ -2,12 +2,13 @@
 # @Date:   2019-03-14T09:56:12+09:00
 # @Project: NLP
 # @Last modified by:   J.Y.
-# @Last modified time: 2019-03-19T14:59:59+09:00
+# @Last modified time: 2019-03-25T17:34:01+09:00
 # @License: JeeY
 # @Copyright: J.Y. JeeY
 
 import numpy as np
 import time
+import datetime
 import sys
 sys.path.append(r'./module/')
 import keras_module_0 as k0
@@ -34,7 +35,9 @@ a = np.array([0, 1, 0])
 print(a)
 print(type(a))
 
+print('\n\n')
 
+print(datetime.datetime.now())
 
 
 ## endl
