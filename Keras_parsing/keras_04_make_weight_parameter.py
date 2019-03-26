@@ -2,7 +2,7 @@
 # @Date:   2019-03-21T15:47:00+09:00
 # @Project: NLP
 # @Last modified by:   J.Y.
-# @Last modified time: 2019-03-26T11:24:49+09:00
+# @Last modified time: 2019-03-26T17:08:06+09:00
 # @License: JeeY
 # @Copyright: J.Y. JeeY
 
@@ -52,22 +52,22 @@ for i in range(epochs):
         filename1 = fpath2 + j
         print('%d th epoch : ' %(i+1), filename1)
         train_data, train_labels = k0.generate_train_data_2(filename1)
-        network.fit(train_data, train_labels, epochs=10, batch_size=batch_size)
+        network.fit(train_data, train_labels, epochs=15, batch_size=batch_size)
         network.save_weights('d:/Program_Data/model_weights_k_2.h5', overwrite=True)
         # print('+++++++++++++++++++++++++++++++++')
         # print(network.get_weights())
         # print('+++++++++++++++++++++++++++++++++\n\n')
 ## test session
-    total_acc = 0
-    for j,k in enumerate(testlist):
-        # if j == test_limit:
-        #     break
-        filename2 = fpath2 + k
-        print(filename2)
-        test_data, test_labels = k0.generate_train_data_2(filename2)
-        test_loss, test_acc = network.evaluate(test_data, test_labels)
-        total_acc += test_acc
-    print('test_acc: ', total_acc/test_limit)
+    # total_acc = 0
+    # for j,k in enumerate(testlist):
+    #     # if j == test_limit:
+    #     #     break
+    #     filename2 = fpath2 + k
+    #     print(filename2)
+    #     test_data, test_labels = k0.generate_train_data_2(filename2)
+    #     test_loss, test_acc = network.evaluate(test_data, test_labels)
+    #     total_acc += test_acc
+    # print('test_acc: ', total_acc/test_limit)
 
 
 
