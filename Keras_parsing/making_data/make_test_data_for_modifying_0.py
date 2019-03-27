@@ -2,7 +2,7 @@
 # @Date:   2019-03-26T11:36:01+09:00
 # @Project: NLP
 # @Last modified by:   J.Y.
-# @Last modified time: 2019-03-27T14:13:05+09:00
+# @Last modified time: 2019-03-27T15:11:34+09:00
 # @License: JeeY
 # @Copyright: J.Y. JeeY
 
@@ -20,7 +20,6 @@ with open(filename1, 'r', encoding='utf-8') as f1, open(filename2, 'a', encoding
         if switch == 1:
             for i in range(2):
                 line = f1.readline()
-            line = f1.readline()
             if not line:break
             line = line.split()
             new = list()
