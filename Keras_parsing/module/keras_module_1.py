@@ -2,7 +2,7 @@
 # @Date:   2019-03-22T09:55:52+09:00
 # @Project: NLP
 # @Last modified by:   J.Y.
-# @Last modified time: 2019-03-22T10:30:44+09:00
+# @Last modified time: 2019-03-27T14:20:18+09:00
 # @License: JeeY
 # @Copyright: J.Y. JeeY
 
@@ -22,9 +22,10 @@ def generate_file_list(path, word_for_target):
 
 
 
+
+
+
 if __name__ == "__main__":
     print('hello, world~!!')
-
-
 
 ## endl

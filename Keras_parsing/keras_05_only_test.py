@@ -2,7 +2,7 @@
 # @Date:   2019-03-21T15:47:00+09:00
 # @Project: NLP
 # @Last modified by:   J.Y.
-# @Last modified time: 2019-03-26T11:58:47+09:00
+# @Last modified time: 2019-03-27T14:26:20+09:00
 # @License: JeeY
 # @Copyright: J.Y. JeeY
 
@@ -19,6 +19,7 @@ from keras.models import Model, Sequential
 
 import keras_module_0 as k0
 import keras_module_1 as k1
+import keras_module_2 as k2
 
 batch_size = 128
 epochs = 3
@@ -31,9 +32,6 @@ fpath2 = 'd:/Program_Data/Parsing_Data/'
 filename1 = fpath1 + 'raw_test_dataset_05.test'
 filewrite = fpath2 + '00_result_training.result'
 
-filelist = k1.generate_file_list(fpath2, '.train')
-testlist = k1.generate_file_list(fpath2, '.test')
-
 network = models.Sequential()
 network.add(layers.Dense(512, activation='relu', input_shape=(input_size, )))
 network.add(layers.Dense(3, activation='softmax'))
@@ -41,7 +39,6 @@ network.add(layers.Dense(3, activation='softmax'))
 network.compile(loss='binary_crossentropy', optimizer='adam', metrics=['accuracy'])
 
 ## 10 * 3 epoch trained weights parameter
-
 network.load_weights('d:/Program_Data/model_weights_k_1.h5', overwrite=True)
 
 ## test session

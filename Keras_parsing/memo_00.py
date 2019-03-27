@@ -2,7 +2,7 @@
 # @Date:   2019-03-14T09:56:12+09:00
 # @Project: NLP
 # @Last modified by:   J.Y.
-# @Last modified time: 2019-03-25T17:58:20+09:00
+# @Last modified time: 2019-03-27T14:36:35+09:00
 # @License: JeeY
 # @Copyright: J.Y. JeeY
 
@@ -38,6 +38,22 @@ print(type(a))
 print('\n\n')
 
 print(datetime.datetime.now())
+print('\n\n')
+
+for i,j in enumerate(range(10), 1):
+    print(i, j)
+
+print('\n\n')
+
+b = [i for i in range(1, 11)]
+print(b, '\n')
+
+c = list(b[:2])
+d = list(b[2:])
+
+print(c, '\n')
+print(d, '\n')
+
 
 
 ## endl
