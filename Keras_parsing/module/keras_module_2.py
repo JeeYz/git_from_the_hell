@@ -2,7 +2,7 @@
 # @Date:   2019-03-27T11:28:24+09:00
 # @Project: NLP
 # @Last modified by:   J.Y.
-# @Last modified time: 2019-03-27T16:47:13+09:00
+# @Last modified time: 2019-03-28T09:48:48+09:00
 # @License: JeeY
 # @Copyright: J.Y. JeeY
 
@@ -17,8 +17,9 @@ filename3 = fpath1 + 'result_raw_words_list_00.words'
 
 class tree_node():
     def __init__(self):
-        pass
-    
+        self.index = None
+        self.dependency = None
+        self.word = None
 
 def make_stack_buffer_list():
     stack, buffer = list(), list()

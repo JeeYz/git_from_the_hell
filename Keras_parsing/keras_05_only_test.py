@@ -2,7 +2,7 @@
 # @Date:   2019-03-21T15:47:00+09:00
 # @Project: NLP
 # @Last modified by:   J.Y.
-# @Last modified time: 2019-03-27T14:26:20+09:00
+# @Last modified time: 2019-03-28T09:47:52+09:00
 # @License: JeeY
 # @Copyright: J.Y. JeeY
 
@@ -42,10 +42,7 @@ network.compile(loss='binary_crossentropy', optimizer='adam', metrics=['accuracy
 network.load_weights('d:/Program_Data/model_weights_k_1.h5', overwrite=True)
 
 ## test session
-with open(filename1, 'r', encoding='utf-8') as f:
-    while True:
-        line = f.readline()
-        if not line:break
+
 
 
 
