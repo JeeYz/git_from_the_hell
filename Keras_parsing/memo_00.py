@@ -2,7 +2,7 @@
 # @Date:   2019-03-14T09:56:12+09:00
 # @Project: NLP
 # @Last modified by:   J.Y.
-# @Last modified time: 2019-03-27T14:36:35+09:00
+# @Last modified time: 2019-04-01T09:58:33+09:00
 # @License: JeeY
 # @Copyright: J.Y. JeeY
 
@@ -54,6 +54,10 @@ d = list(b[2:])
 print(c, '\n')
 print(d, '\n')
 
+print('\n\n')
+
+e = c + d
+print(e)
 
 
 ## endl
