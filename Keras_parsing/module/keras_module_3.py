@@ -2,7 +2,7 @@
 # @Date:   2019-03-28T11:14:41+09:00
 # @Project: NLP
 # @Last modified by:   J.Y.
-# @Last modified time: 2019-04-02T09:35:30+09:00
+# @Last modified time: 2019-04-02T16:20:38+09:00
 # @License: JeeY
 # @Copyright: J.Y. JeeY
 
@@ -37,10 +37,12 @@ def make_pos_list():
     pos_matrix = np.eye(len(temp)+1)
     return pos_matrix
 
-def generate_train_data3(fname):
+def generate_train_data_3(fname):
     full_word_vectors = list()
     full_pos_vectors = list()
     train_label = list()
+    words_matrix = make_word_list()
+    pos_matrix = make_pos_list()
     with open(fname, 'r', encoding='utf-8') as f:
         while True:
             word_vectors = list()
@@ -57,7 +59,7 @@ def generate_train_data3(fname):
                 if num1 < 18:
                     word_vectors.extend(words_matrix[int(j)])
                 elif num1 < 36 and 18 <= num1:
-                    pos_vector.extend(pos_matrix[int(j)])
+                    pos_vectors.extend(pos_matrix[int(j)])
             full_word_vectors.append(word_vectors)
             full_pos_vectors.append(pos_vectors)
 
@@ -68,8 +70,10 @@ def generate_train_data3(fname):
             elif int(line[-1]) == 2:
                 train_label.append([0, 0, 1])
             num1 += 1
-
-    return [full_word_vectors, full_pos_vectors], train_labels
+    full_word_vectors = np.array(full_word_vectors)
+    full_pos_vectors = np.array(full_pos_vectors)
+    train_label = np.array(train_label)
+    return full_word_vectors, full_pos_vectors, train_label
 
 
 
