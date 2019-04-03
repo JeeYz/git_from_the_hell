@@ -2,7 +2,7 @@
 # @Date:   2019-03-28T11:03:33+09:00
 # @Project: NLP
 # @Last modified by:   J.Y.
-# @Last modified time: 2019-04-02T17:22:57+09:00
+# @Last modified time: 2019-04-04T06:26:54+09:00
 # @License: JeeY
 # @Copyright: J.Y. JeeY
 
@@ -16,7 +16,7 @@ sys.path.append(r'./module')
 from keras import models
 from keras import layers
 from keras.models import load_model
-from keras.layers import Input, Dense, Embedding
+from keras.layers import Input, Dense, Embedding, Flatten
 from keras.models import Model, Sequential
 from keras import Input
 from keras.initializers import Constant
@@ -29,7 +29,7 @@ import keras_module_3 as k3
 
 BATCH_SIZE = 128
 EPOCHS = 1
-W_VEC_SIZE = 128
+W_VEC_SIZE = 64
 P_VEC_SIZE = 73
 INPUT_SIZE = (18*W_VEC_SIZE*2 + 18*P_VEC_SIZE*2)
 
@@ -40,9 +40,6 @@ filelist = k1.generate_file_list(fpath2, '.train')
 words_matrix = k3.make_word_list()
 pos_matrix = k3.make_pos_list()
 
-w = Input(shape=(36,), dtype='int32', name='words')
-p = Input(shape=(36,), dtype='int32', name='pos')
-
 embedding_layer1 = Embedding(len(words_matrix), W_VEC_SIZE,
                             embeddings_initializer=Constant(words_matrix),
                             input_length=36)
@@ -50,9 +47,13 @@ embedding_layer2 = Embedding(P_VEC_SIZE, P_VEC_SIZE,
                             embeddings_initializer=Constant(pos_matrix),
                             input_length=36)
 
-ew1 = embedding_layer1(w)
-ep1 = embedding_layer2(p)
+w = Input(batch_shape=(None, 36), dtype='int32', name='words')
+p = Input(batch_shape=(None, 36), dtype='int32', name='pos')
 
+ew1 = embedding_layer1(w)
+# Flatten()
+ep1 = embedding_layer2(p)
+# Flatten()
 embedded_sequences = layers.concatenate([ew1, ep1], axis=-1)
 x = layers.Dense(512, activation='relu')(embedded_sequences)
 output_layer = layers.Dense(3, activation='softmax')(x)

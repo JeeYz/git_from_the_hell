@@ -2,7 +2,7 @@
 # @Date:   2019-03-28T11:14:41+09:00
 # @Project: NLP
 # @Last modified by:   J.Y.
-# @Last modified time: 2019-04-02T16:20:38+09:00
+# @Last modified time: 2019-04-04T06:26:53+09:00
 # @License: JeeY
 # @Copyright: J.Y. JeeY
 
@@ -13,7 +13,7 @@ file_word = filepath + 'result_raw_words_list_00.words'
 file_pos = filepath + 'result_pos_temp_01.pos'
 
 np.random.seed(1)
-WORDVEC_SIZE = 128
+WORDVEC_SIZE = 64
 
 def make_word_list():
     temp = list()
@@ -41,8 +41,8 @@ def generate_train_data_3(fname):
     full_word_vectors = list()
     full_pos_vectors = list()
     train_label = list()
-    words_matrix = make_word_list()
-    pos_matrix = make_pos_list()
+    # words_matrix = make_word_list()
+    # pos_matrix = make_pos_list()
     with open(fname, 'r', encoding='utf-8') as f:
         while True:
             word_vectors = list()
@@ -57,9 +57,11 @@ def generate_train_data_3(fname):
                     num1 += 1
                     continue
                 if num1 < 18:
-                    word_vectors.extend(words_matrix[int(j)])
+                    # word_vectors.extend(words_matrix[int(j)])
+                    word_vectors.extend(j)
                 elif num1 < 36 and 18 <= num1:
-                    pos_vectors.extend(pos_matrix[int(j)])
+                    # pos_vectors.extend(pos_matrix[int(j)])
+                    pos_vectors.extend(j)
             full_word_vectors.append(word_vectors)
             full_pos_vectors.append(pos_vectors)
 
@@ -73,6 +75,8 @@ def generate_train_data_3(fname):
     full_word_vectors = np.array(full_word_vectors)
     full_pos_vectors = np.array(full_pos_vectors)
     train_label = np.array(train_label)
+    # print(full_pos_vectors)
+    print(len(full_word_vectors), len(full_word_vectors[0]))
     return full_word_vectors, full_pos_vectors, train_label
 
 
