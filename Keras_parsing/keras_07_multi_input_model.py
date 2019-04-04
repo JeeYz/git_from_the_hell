@@ -2,7 +2,7 @@
 # @Date:   2019-03-28T11:03:33+09:00
 # @Project: NLP
 # @Last modified by:   J.Y.
-# @Last modified time: 2019-04-04T12:05:39+09:00
+# @Last modified time: 2019-04-04T15:27:30+09:00
 # @License: JeeY
 # @Copyright: J.Y. JeeY
 
@@ -27,10 +27,9 @@ import keras_module_1 as k1
 import keras_module_2 as k2
 import keras_module_3 as k3
 
-
 BATCH_SIZE = 128
 EPOCHS = 1
-W_VEC_SIZE = 64
+W_VEC_SIZE = 128
 P_VEC_SIZE = 73
 INPUT_SIZE = (18*W_VEC_SIZE*2 + 18*P_VEC_SIZE*2)
 
@@ -50,17 +49,12 @@ embedding_layer2 = Embedding(P_VEC_SIZE, P_VEC_SIZE,
 
 w = Input(batch_shape=(None, 36), dtype='int32', name='words')
 p = Input(batch_shape=(None, 36), dtype='int32', name='pos')
-# w = Input(shape=(36,), dtype='int32', name='words')
-# p = Input(shape=(36,), dtype='int32', name='pos')
 
 ew1 = embedding_layer1(w)
 ep1 = embedding_layer2(p)
 embedded_sequences = layers.concatenate([ew1, ep1], axis=-1)
 embedded_sequences = Flatten()(embedded_sequences)
-# x = layers.Dense(512, activation='relu', input_shape=(None, INPUT_SIZE))(embedded_sequences)
 x = layers.Dense(512, activation='relu')(embedded_sequences)
-# x = layers.Reshape((None, 512))(x)
-# x = Flatten()(x)
 output_layer = layers.Dense(3, activation='softmax')(x)
 
 network = Model([w, p], output_layer)
@@ -79,7 +73,7 @@ for i in range(EPOCHS):
         filename1 = fpath2 + j
         print('%d th epoch : ' %(i+1), filename1)
         word_data, pos_data, train_labels = k3.generate_train_data_3(filename1)
-        network.fit({'words':word_data, 'pos':pos_data}, train_labels, epochs=15, batch_size=BATCH_SIZE)
+        network.fit({'words':word_data, 'pos':pos_data}, train_labels, epochs=5, batch_size=BATCH_SIZE)
         network.save_weights('d:/Program_Data/model_weights_k_3.h5', overwrite=True)
         # print('+++++++++++++++++++++++++++++++++')
         # print(network.get_weights())
