@@ -2,7 +2,7 @@
 # @Date:   2019-03-28T11:03:33+09:00
 # @Project: NLP
 # @Last modified by:   J.Y.
-# @Last modified time: 2019-04-04T06:26:54+09:00
+# @Last modified time: 2019-04-04T12:05:39+09:00
 # @License: JeeY
 # @Copyright: J.Y. JeeY
 
@@ -15,6 +15,7 @@ sys.path.append(r'./module')
 
 from keras import models
 from keras import layers
+from keras import backend
 from keras.models import load_model
 from keras.layers import Input, Dense, Embedding, Flatten
 from keras.models import Model, Sequential
@@ -49,13 +50,17 @@ embedding_layer2 = Embedding(P_VEC_SIZE, P_VEC_SIZE,
 
 w = Input(batch_shape=(None, 36), dtype='int32', name='words')
 p = Input(batch_shape=(None, 36), dtype='int32', name='pos')
+# w = Input(shape=(36,), dtype='int32', name='words')
+# p = Input(shape=(36,), dtype='int32', name='pos')
 
 ew1 = embedding_layer1(w)
-# Flatten()
 ep1 = embedding_layer2(p)
-# Flatten()
 embedded_sequences = layers.concatenate([ew1, ep1], axis=-1)
+embedded_sequences = Flatten()(embedded_sequences)
+# x = layers.Dense(512, activation='relu', input_shape=(None, INPUT_SIZE))(embedded_sequences)
 x = layers.Dense(512, activation='relu')(embedded_sequences)
+# x = layers.Reshape((None, 512))(x)
+# x = Flatten()(x)
 output_layer = layers.Dense(3, activation='softmax')(x)
 
 network = Model([w, p], output_layer)

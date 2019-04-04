@@ -2,7 +2,7 @@
 # @Date:   2019-03-28T11:14:41+09:00
 # @Project: NLP
 # @Last modified by:   J.Y.
-# @Last modified time: 2019-04-04T06:26:53+09:00
+# @Last modified time: 2019-04-04T10:03:54+09:00
 # @License: JeeY
 # @Copyright: J.Y. JeeY
 
@@ -58,10 +58,10 @@ def generate_train_data_3(fname):
                     continue
                 if num1 < 18:
                     # word_vectors.extend(words_matrix[int(j)])
-                    word_vectors.extend(j)
+                    word_vectors.append(j)
                 elif num1 < 36 and 18 <= num1:
                     # pos_vectors.extend(pos_matrix[int(j)])
-                    pos_vectors.extend(j)
+                    pos_vectors.append(j)
             full_word_vectors.append(word_vectors)
             full_pos_vectors.append(pos_vectors)
 
@@ -71,12 +71,14 @@ def generate_train_data_3(fname):
                 train_label.append([0, 1, 0])
             elif int(line[-1]) == 2:
                 train_label.append([0, 0, 1])
-            num1 += 1
+
     full_word_vectors = np.array(full_word_vectors)
     full_pos_vectors = np.array(full_pos_vectors)
     train_label = np.array(train_label)
     # print(full_pos_vectors)
-    print(len(full_word_vectors), len(full_word_vectors[0]))
+    print(len(full_word_vectors), len(full_pos_vectors), len(train_label), \
+    len(full_word_vectors[0]), len(full_pos_vectors[0]), len(train_label[0]))
+    # print(full_word_vectors[0])
     return full_word_vectors, full_pos_vectors, train_label
 
 
