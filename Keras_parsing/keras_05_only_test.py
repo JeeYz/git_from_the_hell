@@ -2,7 +2,7 @@
 # @Date:   2019-03-21T15:47:00+09:00
 # @Project: NLP
 # @Last modified by:   J.Y.
-# @Last modified time: 2019-03-28T09:47:52+09:00
+# @Last modified time: 2019-04-05T11:46:59+09:00
 # @License: JeeY
 # @Copyright: J.Y. JeeY
 
@@ -20,6 +20,9 @@ from keras.models import Model, Sequential
 import keras_module_0 as k0
 import keras_module_1 as k1
 import keras_module_2 as k2
+import keras_module_3 as k3
+
+import parsing_module_0 as p0
 
 batch_size = 128
 epochs = 3
