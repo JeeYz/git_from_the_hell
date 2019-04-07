@@ -2,7 +2,7 @@
 # @Date:   2019-03-21T15:47:00+09:00
 # @Project: NLP
 # @Last modified by:   J.Y.
-# @Last modified time: 2019-04-08T05:26:31+09:00
+# @Last modified time: 2019-04-08T06:44:06+09:00
 # @License: JeeY
 # @Copyright: J.Y. JeeY
 
@@ -10,12 +10,16 @@ import os
 import sys
 import datetime
 sys.path.append(r'./module')
+import numpy as np
 
 from keras import models
 from keras import layers
+from keras import backend
 from keras.models import load_model
-from keras.layers import Input, Dense
+from keras.layers import Input, Dense, Embedding, Flatten
 from keras.models import Model, Sequential
+from keras import Input
+from keras.initializers import Constant
 
 import keras_module_0 as k0
 import keras_module_1 as k1
@@ -37,7 +41,7 @@ filelist = k1.generate_file_list(fpath2, '.train')
 words_matrix = k3.make_word_list()
 pos_matrix = k3.make_pos_list()
 all_sents = p0.make_all_sents_to_list()
-all_init_test = p0.
+all_init_test = p0.make_all_init_test_data()
 
 embedding_layer1 = Embedding(len(words_matrix), W_VEC_SIZE,
                             embeddings_initializer=Constant(words_matrix),
@@ -61,15 +65,22 @@ network.summary()
 
 # network.compile(optimizer='rmsprop', loss='categorical_crossentropy', metrics=['accuracy'])
 network.compile(loss='binary_crossentropy', optimizer='adam', metrics=['accuracy'])
-network.load_weights('d:/Program_Data/model_weights_k_3.h5', overwrite=True)
+network.load_weights('d:/Program_Data/model_weights_k_3.h5')
 
 ## test session
 for i,j in enumerate(all_sents):
-    stack, buffer = p0.make_stack_buffer_list(i)
-    condition = 1
-    while True:
-        if condition == 0:break
-        network.predict()
+    stack, buffer = p0.make_stack_buffer_list(j)
+    # print(all_init_test[i])
+    a = np.array(all_init_test[i][0])
+    b = np.array(all_init_test[i][1])
+    print(a)
+    print(b)
+    init_result = network.predict({'words':a, 'pos':b})
+    print(init_result)
+    # condition = 1
+    # while True:
+    #     if condition == 0:break
+    #     network.predict()
 
 
 

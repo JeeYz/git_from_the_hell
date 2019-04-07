@@ -2,7 +2,7 @@
 # @Date:   2019-04-05T10:27:57+09:00
 # @Project: NLP
 # @Last modified by:   J.Y.
-# @Last modified time: 2019-04-08T05:41:57+09:00
+# @Last modified time: 2019-04-08T06:30:35+09:00
 # @License: JeeY
 # @Copyright: J.Y. JeeY
 
@@ -40,10 +40,10 @@ def make_all_init_test_data():
                     continue
                 if num < 18:
                     word.append(i)
-                else:
+                elif num >= 18:
                     pos.append(i)
-            data.append(word)
-            data.append(pos)
+            new.append(word)
+            new.append(pos)
             data.append(new)
     return data
 
