@@ -2,7 +2,7 @@
 # @Date:   2019-04-05T10:27:57+09:00
 # @Project: NLP
 # @Last modified by:   J.Y.
-# @Last modified time: 2019-04-05T11:49:54+09:00
+# @Last modified time: 2019-04-08T05:41:57+09:00
 # @License: JeeY
 # @Copyright: J.Y. JeeY
 
@@ -21,24 +21,51 @@ class tree_node():
         self.dependency = None
         self.word = None
 
-def make_stack_buffer_list():
-    stack, buffer = list(), list()
+def make_all_init_test_data():
+    data = list()
+    with open(filename2, 'r', encoding='utf-8') as f:
+        while True:
+            line = f.readline()
+            if not line:break
+            line = line.split()
+            if line == []:
+                continue
+            new = list()
+            word = list()
+            pos = list()
+            num = 0
+            for i in line:
+                if i == '##':
+                    num += 1
+                    continue
+                if num < 18:
+                    word.append(i)
+                else:
+                    pos.append(i)
+            data.append(word)
+            data.append(pos)
+            data.append(new)
+    return data
+
+def make_all_sents_to_list():
+    all_sents = list()
     with open(filename1, 'r', encoding='utf-8') as f:
         switch = 1
         while True:
             line = f.readline()
             if not line:break
             line = line.split()
-            if line == []:
-                switch = 1
-                continue
             if switch == 1:
-                a = list(line[:2])
-                b = list(line[2:])
-                stack.append(a)
-                buffer.append(b)
+                all_sents.append(line)
                 switch = 0
                 continue
+            if line == []:
+                switch = 1
+    return all_sents
+
+def make_stack_buffer_list(sent):
+    stack = list(sent[:2])
+    buffer = list(sent[2:])
     return stack, buffer
 
 def generate_data_of_test():
