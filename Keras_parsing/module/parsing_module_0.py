@@ -2,7 +2,7 @@
 # @Date:   2019-04-05T10:27:57+09:00
 # @Project: NLP
 # @Last modified by:   J.Y.
-# @Last modified time: 2019-04-08T18:03:28+09:00
+# @Last modified time: 2019-04-09T06:54:40+09:00
 # @License: JeeY
 # @Copyright: J.Y. JeeY
 
@@ -16,12 +16,7 @@ fpath1 = 'd:/Program_Data/'
 filename1 = fpath1 + 'raw_test_dataset_01.test'
 filename2 = fpath1 + 'raw_test_dataset_05.test'
 filename3 = fpath1 + 'result_raw_words_list_00.words'
-
-class tree_node():
-    def __init__(self):
-        self.index = None
-        self.dependency = None
-        self.word = None
+filename4 = fpath1 + 'result_pos_temp_01.pos'
 
 def make_all_init_test_data():
     data = list()
@@ -52,8 +47,10 @@ def make_all_init_test_data():
 
 def make_all_sents_to_list():
     all_sents = list()
+    words_data = list()
     with open(filename1, 'r', encoding='utf-8') as f:
         switch = 1
+        one_sent = list()
         while True:
             line = f.readline()
             if not line:break
@@ -63,27 +60,49 @@ def make_all_sents_to_list():
                 switch = 0
                 continue
             if line == []:
+                words_data.append(one_sent)
+                one_sent = list()
                 switch = 1
-    return all_sents
+            one_sent.append(line)
+    return all_sents, words_data
 
 def make_stack_buffer_list(sent):
     stack = list(sent[:2])
+    stack.append('ROOT')
     buffer = list(sent[2:])
     return stack, buffer
 
-def generate_data_of_test(action, stack, buffer):
-
-    with open(filename1, 'r', encoding='utf-8') as f1:
+def make_words_pos_dict():
+    words = dict()
+    pos = dict()
+    words['NULL'] = 0
+    pos['NULL'] = 0
+    num = 1
+    with open(filename3, 'r', encoding='utf-8') as f:
         while True:
-            line = f1.readline()
+            line = f.readline()
             if not line:break
             line = line.split()
+            words[line[0]] = num
+            num += 1
+    num = 1
+    with open(filename4, 'r', encoding='utf-8') as f:
+        while True:
+            line = f.readline()
+            if not line:break
+            line = line.split()
+            pos[line[0]] = num
+            num += 1
+    return words, pos
 
-    return
-
-
-
-
+def select_action(init_result):
+    if init_result[0][0] > init_result[0][1] and init_result[0][0] > init_result[0][2]:
+        act = 'shift'
+    elif init_result[0][1] > init_result[0][0] and init_result[0][1] > init_result[0][2]:
+        act = 'left'
+    else:
+        act = 'right'
+    return act
 
 
 

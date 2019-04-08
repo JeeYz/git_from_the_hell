@@ -2,7 +2,7 @@
 # @Date:   2019-03-21T15:47:00+09:00
 # @Project: NLP
 # @Last modified by:   J.Y.
-# @Last modified time: 2019-04-08T18:04:35+09:00
+# @Last modified time: 2019-04-09T06:53:36+09:00
 # @License: JeeY
 # @Copyright: J.Y. JeeY
 
@@ -27,6 +27,7 @@ import keras_module_2 as k2
 import keras_module_3 as k3
 
 import parsing_module_0 as p0
+import parsing_module_1 as p1
 
 import h5py
 filename = 'd:/Program_Data/model_weights_k_3.h5'
@@ -42,10 +43,9 @@ fpath2 = 'd:/Program_Data/Parsing_Data/'
 filewrite = '00_result_training.result'
 
 filelist = k1.generate_file_list(fpath2, '.train')
-words_matrix = k3.make_word_list()
-pos_matrix = k3.make_pos_list()
-all_sents = p0.make_all_sents_to_list()
+all_sents, sent_Words_data = p0.make_all_sents_to_list()
 all_init_test = p0.make_all_init_test_data()
+w_dict, p_dict = p0.make_words_pos_dict()
 
 embedding_layer1 = Embedding(len(words_matrix), W_VEC_SIZE)
 embedding_layer2 = Embedding(P_VEC_SIZE, P_VEC_SIZE)
@@ -74,15 +74,16 @@ for i,j in enumerate(all_sents):
     a = all_init_test[i][0]
     b = all_init_test[i][1]
     init_result = network.predict({'words':a, 'pos':b})
-    if init_result[0][0] > init_result[0][1] and init_result[0][0] > init_result[0][2]:
-        c = 'shift'
-    elif init_result[0][1] > init_result[0][0] and init_result[0][1] > init_result[0][2]:
-        c = 'left'
-    else:
-        c = 'right'
+    act = p0.select_action(init_result)
 
     while True:
-        p0.generate_data_of_test(c, stack, buffer)
+        data = p1.generate_data_of_test(act, stack, buffer, w_dict, p_dict, sent_Words_data[i])
+        a = data[0]
+        b = data[1]
+        result = network.predict({'words':a, 'pos':b})
+        act = p0.select_action(result)
+        if buffer == [] and len(stack) == 1:
+            break
 
 
 
