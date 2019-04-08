@@ -2,7 +2,7 @@
 # @Date:   2019-04-05T10:27:57+09:00
 # @Project: NLP
 # @Last modified by:   J.Y.
-# @Last modified time: 2019-04-08T17:20:08+09:00
+# @Last modified time: 2019-04-08T18:03:28+09:00
 # @License: JeeY
 # @Copyright: J.Y. JeeY
 
@@ -71,11 +71,7 @@ def make_stack_buffer_list(sent):
     buffer = list(sent[2:])
     return stack, buffer
 
-def generate_data_of_test():
-    # stack && buffer
-    # tree
-    # sentence
-    # parsing table
+def generate_data_of_test(action, stack, buffer):
 
     with open(filename1, 'r', encoding='utf-8') as f1:
         while True:
