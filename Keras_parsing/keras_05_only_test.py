@@ -2,7 +2,7 @@
 # @Date:   2019-03-21T15:47:00+09:00
 # @Project: NLP
 # @Last modified by:   J.Y.
-# @Last modified time: 2019-04-08T06:44:06+09:00
+# @Last modified time: 2019-04-08T17:34:41+09:00
 # @License: JeeY
 # @Copyright: J.Y. JeeY
 
@@ -28,6 +28,10 @@ import keras_module_3 as k3
 
 import parsing_module_0 as p0
 
+import h5py
+filename = 'd:/Program_Data/model_weights_k_3.h5'
+f = h5py.File(filename, 'r')
+
 BATCH_SIZE = 128
 EPOCHS = 1
 W_VEC_SIZE = 128
@@ -43,15 +47,15 @@ pos_matrix = k3.make_pos_list()
 all_sents = p0.make_all_sents_to_list()
 all_init_test = p0.make_all_init_test_data()
 
-embedding_layer1 = Embedding(len(words_matrix), W_VEC_SIZE,
-                            embeddings_initializer=Constant(words_matrix),
-                            input_length=36)
-embedding_layer2 = Embedding(P_VEC_SIZE, P_VEC_SIZE,
-                            embeddings_initializer=Constant(pos_matrix),
-                            input_length=36)
+embedding_layer1 = Embedding(len(words_matrix), W_VEC_SIZE)
+                            # embeddings_initializer=Constant(f['embedding_1']),
+                            # input_length=36)
+embedding_layer2 = Embedding(P_VEC_SIZE, P_VEC_SIZE)
+                            # embeddings_initializer=Constant(f['embedding_2']),
+                            # input_length=36)
 
-w = Input(batch_shape=(None, 36), dtype='int32', name='words')
-p = Input(batch_shape=(None, 36), dtype='int32', name='pos')
+w = Input(shape=(36,), dtype='int32', name='words')
+p = Input(shape=(36,), dtype='int32', name='pos')
 
 ew1 = embedding_layer1(w)
 ep1 = embedding_layer2(p)
@@ -70,17 +74,15 @@ network.load_weights('d:/Program_Data/model_weights_k_3.h5')
 ## test session
 for i,j in enumerate(all_sents):
     stack, buffer = p0.make_stack_buffer_list(j)
-    # print(all_init_test[i])
-    a = np.array(all_init_test[i][0])
-    b = np.array(all_init_test[i][1])
-    print(a)
-    print(b)
+    a = all_init_test[i][0]
+    b = all_init_test[i][1]
     init_result = network.predict({'words':a, 'pos':b})
-    print(init_result)
-    # condition = 1
-    # while True:
-    #     if condition == 0:break
-    #     network.predict()
+    if init_result[0][0] > init_result[0][1] and init_result[0][0] > init_result[0][2]:
+        pass
+    elif init_result[0][1] > init_result[0][0] and init_result[0][1] > init_result[0][2]:
+        print('left')
+    else:
+        print('right')
 
 
 

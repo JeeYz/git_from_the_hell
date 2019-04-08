@@ -2,9 +2,11 @@
 # @Date:   2019-04-05T10:27:57+09:00
 # @Project: NLP
 # @Last modified by:   J.Y.
-# @Last modified time: 2019-04-08T06:30:35+09:00
+# @Last modified time: 2019-04-08T17:20:08+09:00
 # @License: JeeY
 # @Copyright: J.Y. JeeY
+
+import numpy as np
 
 import keras_module_0 as k0
 import keras_module_1 as k1
@@ -42,9 +44,10 @@ def make_all_init_test_data():
                     word.append(i)
                 elif num >= 18:
                     pos.append(i)
-            new.append(word)
-            new.append(pos)
+            new.append([word])
+            new.append([pos])
             data.append(new)
+    data = np.array(data)
     return data
 
 def make_all_sents_to_list():

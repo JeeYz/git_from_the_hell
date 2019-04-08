@@ -2,7 +2,7 @@
 # @Date:   2019-03-28T11:03:33+09:00
 # @Project: NLP
 # @Last modified by:   J.Y.
-# @Last modified time: 2019-04-04T15:27:30+09:00
+# @Last modified time: 2019-04-08T14:36:36+09:00
 # @License: JeeY
 # @Copyright: J.Y. JeeY
 
@@ -74,6 +74,8 @@ for i in range(EPOCHS):
         print('%d th epoch : ' %(i+1), filename1)
         word_data, pos_data, train_labels = k3.generate_train_data_3(filename1)
         network.fit({'words':word_data, 'pos':pos_data}, train_labels, epochs=5, batch_size=BATCH_SIZE)
+        # result = network.predict({'words':word_data, 'pos':pos_data})
+        # print(result)
         network.save_weights('d:/Program_Data/model_weights_k_3.h5', overwrite=True)
         # print('+++++++++++++++++++++++++++++++++')
         # print(network.get_weights())
