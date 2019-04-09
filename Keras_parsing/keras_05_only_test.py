@@ -3,9 +3,9 @@
 # @Project: NLP
 # @Last modified by:   J.Y.
 <<<<<<< HEAD
-# @Last modified time: 2019-04-09T09:31:26+09:00
+# @Last modified time: 2019-04-09T10:56:47+09:00
 =======
-# @Last modified time: 2019-04-09T06:53:36+09:00
+# @Last modified time: 2019-04-09T10:56:47+09:00
 >>>>>>> f3c7853cbd3358971ab65c68bd55224ae1e1b0d8
 # @License: JeeY
 # @Copyright: J.Y. JeeY
@@ -73,20 +73,19 @@ network.load_weights('d:/Program_Data/model_weights_k_3.h5')
 
 ## test session
 for i,j in enumerate(all_sents):
-    action_stack = list()
+    action_stack = p0.make_dependency_tree(j)
     stack, buffer = p0.make_stack_buffer_list(j)
     a = all_init_test[i][0]
     b = all_init_test[i][1]
     init_result = network.predict({'words':a, 'pos':b})
     act = p0.select_action(init_result)
-
     while True:
-        data = p1.generate_data_of_test(act, stack, buffer, w_dict, p_dict, sent_Words_data[i])
+        data = p1.generate_data_of_test(act, stack, buffer, w_dict, p_dict, sent_Words_data[i], action_stack)
         a = data[0]
         b = data[1]
         result = network.predict({'words':a, 'pos':b})
         act = p0.select_action(result)
-        if buffer == [] and len(stack) == 1:
+        if buffer == [] and len(stack) == 2:
             break
 
 

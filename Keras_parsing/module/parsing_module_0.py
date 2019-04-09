@@ -2,7 +2,7 @@
 # @Date:   2019-04-05T10:27:57+09:00
 # @Project: NLP
 # @Last modified by:   J.Y.
-# @Last modified time: 2019-04-09T06:54:40+09:00
+# @Last modified time: 2019-04-09T10:44:57+09:00
 # @License: JeeY
 # @Copyright: J.Y. JeeY
 
@@ -17,6 +17,20 @@ filename1 = fpath1 + 'raw_test_dataset_01.test'
 filename2 = fpath1 + 'raw_test_dataset_05.test'
 filename3 = fpath1 + 'result_raw_words_list_00.words'
 filename4 = fpath1 + 'result_pos_temp_01.pos'
+
+class tree_node(i, w):
+    def __init__(self, i, w):
+        self.index = int(i)
+        self.word = w
+        self.children = list()
+        self.depend = None
+
+def make_dependency_tree(sent):
+    action_stack = list()
+    for i,j in enumerate(sent, 1):
+        new = tree_node(i, j)
+        action_stack.append(new)
+    return action_stack
 
 def make_all_init_test_data():
     data = list()
@@ -67,8 +81,10 @@ def make_all_sents_to_list():
     return all_sents, words_data
 
 def make_stack_buffer_list(sent):
-    stack = list(sent[:2])
-    stack.append('ROOT')
+    stack = list()
+    stack.insert(0, 'ROOT')
+    stack.insert(0, sent[0])
+    stack.insert(0, sent[1])
     buffer = list(sent[2:])
     return stack, buffer
 
