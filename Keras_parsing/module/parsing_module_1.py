@@ -1,7 +1,7 @@
 # @Author: J.Y.
 # @Date:   2019-04-09T06:19:42+09:00
 # @Last modified by:   J.Y.
-# @Last modified time: 2019-04-10T16:27:08+09:00
+# @Last modified time: 2019-04-10T16:42:14+09:00
 # @License: J.Y. JeeYz
 # @Copyright: J.Y. JeeYz
 
@@ -13,12 +13,19 @@ filename1 = fpath1 + 'raw_test_dataset_01.test'
 filename3 = fpath1 + 'result_raw_words_list_00.words'
 filename4 = fpath1 + 'result_pos_temp_01.pos'
 
-def error_pause(comment):
+def error_pause(comment, act_stack):
     print('error occured ', 'in ', comment, ' !!')
+    print('\n')
+    for i in act_stack:
+        print('index : ', i.index)
+        print('word : ', i.word)
+        print('children : ', i.children)
+        print('depend : ', i.depend)
+        print('\n')
     time.sleep(10000)
 
 def generate_temporary_data(test_words, word_data):
-    # print(test_words)
+    print(test_words)
     word = list()
     pos = list()
     for i in test_words:
@@ -27,6 +34,11 @@ def generate_temporary_data(test_words, word_data):
             pos.append('NULL')
             word.append('NULL')
             pos.append('NULL')
+        elif i == 'ROOT':
+            word.append('ROOT')
+            pos.append('ROOT')
+            word.append('ROOT')
+            pos.append('ROOT')
         else:
             for j in word_data:
                 if i == j[2]:
@@ -34,9 +46,9 @@ def generate_temporary_data(test_words, word_data):
                     pos.append(j[4])
                     word.append(j[5])
                     pos.append(j[6])
-    # print(len(word))
+    print(len(word))
     # print(word)
-    # print(len(pos))
+    print(len(pos))
     # print(pos)
     return word, pos
 
@@ -59,7 +71,7 @@ def generate_temporary_words_data(stack, buffer, act_stack):
         for i in range(3):
             temp.append(buffer[i])
     if len(temp) != 6:
-        error_pause('len(temp) != 6')
+        error_pause('len(temp) != 6', act_stack)
     print(temp, len(temp))
     for i in range(2):
         for node in act_stack:
@@ -79,7 +91,7 @@ def generate_temporary_words_data(stack, buffer, act_stack):
                         temp.append(node.children[-2])
     print(temp, len(temp))
     if len(temp) != 14:
-        error_pause('len(temp) != 14')
+        error_pause('len(temp) != 14', act_stack)
     for i in range(2):
         for node in act_stack:
             if stack[i] == node.word:
@@ -118,7 +130,7 @@ def generate_temporary_words_data(stack, buffer, act_stack):
                                         temp.append(m.children[-1])
     print(temp, len(temp))
     if len(temp) != 18:
-        error_pause('len(temp) != 18')
+        error_pause('len(temp) != 18', act_stack)
     return temp
 
 def generate_data_of_test(action, stack, buffer, w_dict, p_dict, word_data, act_stack):
@@ -204,6 +216,11 @@ def evaluate_result(table, word_data):
             c += 1
     q = len(word_data)
     return c, q
+
+
+
+
+
 
 
 

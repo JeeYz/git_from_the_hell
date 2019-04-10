@@ -2,7 +2,7 @@
 # @Date:   2019-03-21T15:47:00+09:00
 # @Project: NLP
 # @Last modified by:   J.Y.
-# @Last modified time: 2019-04-10T16:27:09+09:00
+# @Last modified time: 2019-04-10T16:42:17+09:00
 # @License: JeeY
 # @Copyright: J.Y. JeeY
 
@@ -79,12 +79,14 @@ for i,j in enumerate(all_sents):
     b = all_init_test[i][1]
     init_result = network.predict({'words':a, 'pos':b})
     act = p0.select_action(init_result)
-
+    print('\n')
+    print('ACTION : ', act)
+    print('\n')
     while True:
         data, condition, stack, buffer, action_stack = p1.generate_data_of_test(act, stack,
                                                             buffer, w_dict, p_dict,
                                                             sent_Words_data[i], action_stack)
-        print(data)
+        print(data, len(data[0][0]), len(data[1][0]))
         if condition == 0:
             break
         a = data[0]
@@ -93,6 +95,9 @@ for i,j in enumerate(all_sents):
         b = np.array(b)
         result = network.predict({'words':a, 'pos':b})
         act = p0.select_action(result)
+        print('\n')
+        print('ACTION : ', act)
+        print('\n')
         if buffer == [] and len(stack) == 2:
             break
 
