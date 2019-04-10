@@ -1,7 +1,7 @@
 # @Author: J.Y.
 # @Date:   2019-04-09T06:19:42+09:00
 # @Last modified by:   J.Y.
-# @Last modified time: 2019-04-10T16:42:14+09:00
+# @Last modified time: 2019-04-11T08:08:53+09:00
 # @License: J.Y. JeeYz
 # @Copyright: J.Y. JeeYz
 
@@ -40,6 +40,7 @@ def generate_temporary_data(test_words, word_data):
             word.append('ROOT')
             pos.append('ROOT')
         else:
+            print(word_data)
             for j in word_data:
                 if i == j[2]:
                     word.append(j[3])
@@ -74,60 +75,66 @@ def generate_temporary_words_data(stack, buffer, act_stack):
         error_pause('len(temp) != 6', act_stack)
     print(temp, len(temp))
     for i in range(2):
-        for node in act_stack:
-            if stack[i] == node.word:
-                if node.children == []:
-                    temp.extend(['NULL', 'NULL', 'NULL', 'NULL'])
-                else:
-                    if len(node.children) == 1:
-                        temp.append(node.children[0])
-                        temp.append(node.children[0])
-                        temp.append('NULL')
-                        temp.append('NULL')
+        if stack[i] == 'ROOT':
+            temp.extend(['NULL', 'NULL', 'NULL', 'NULL'])
+        else:
+            for node in act_stack:
+                if stack[i] == node.word:
+                    if node.children == []:
+                        temp.extend(['NULL', 'NULL', 'NULL', 'NULL'])
                     else:
-                        temp.append(node.children[0])
-                        temp.append(node.children[-1])
-                        temp.append(node.children[1])
-                        temp.append(node.children[-2])
+                        if len(node.children) == 1:
+                            temp.append(node.children[0])
+                            temp.append(node.children[0])
+                            temp.append('NULL')
+                            temp.append('NULL')
+                        else:
+                            temp.append(node.children[0])
+                            temp.append(node.children[-1])
+                            temp.append(node.children[1])
+                            temp.append(node.children[-2])
     print(temp, len(temp))
     if len(temp) != 14:
         error_pause('len(temp) != 14', act_stack)
     for i in range(2):
-        for node in act_stack:
-            if stack[i] == node.word:
-                if node.children == []:
-                    temp.extend(['NULL', 'NULL'])
-                else:
-                    if len(node.children) == 1:
-                        for m in act_stack:
-                            if m.word == node.children[0]:
-                                if m.children == []:
-                                    temp.extend(['NULL', 'NULL'])
-                                else:
-                                    if len(m.children) == 1:
-                                        temp.append(m.children[0])
-                                        temp.append(m.children[0])
-                                    else:
-                                        temp.append(m.children[0])
-                                        temp.append(m.children[-1])
+        if stack[i] == 'ROOT':
+            temp.extend(['NULL', 'NULL'])
+        else:
+            for node in act_stack:
+                if stack[i] == node.word:
+                    if node.children == []:
+                        temp.extend(['NULL', 'NULL'])
                     else:
-                        for m in act_stack:
-                            if m.word == node.children[0]:
-                                if m.children == []:
-                                    temp.extend(['NULL'])
-                                else:
-                                    if len(m.children) == 1:
-                                        temp.append(m.children[0])
+                        if len(node.children) == 1:
+                            for m in act_stack:
+                                if m.word == node.children[0]:
+                                    if m.children == []:
+                                        temp.extend(['NULL', 'NULL'])
                                     else:
-                                        temp.append(m.children[0])
-                            if m.word == node.children[-1]:
-                                if m.children == []:
-                                    temp.extend(['NULL'])
-                                else:
-                                    if len(m.children) == 1:
-                                        temp.append(m.children[-1])
+                                        if len(m.children) == 1:
+                                            temp.append(m.children[0])
+                                            temp.append(m.children[0])
+                                        else:
+                                            temp.append(m.children[0])
+                                            temp.append(m.children[-1])
+                        else:
+                            for m in act_stack:
+                                if m.word == node.children[0]:
+                                    if m.children == []:
+                                        temp.extend(['NULL'])
                                     else:
-                                        temp.append(m.children[-1])
+                                        if len(m.children) == 1:
+                                            temp.append(m.children[0])
+                                        else:
+                                            temp.append(m.children[0])
+                                if m.word == node.children[-1]:
+                                    if m.children == []:
+                                        temp.extend(['NULL'])
+                                    else:
+                                        if len(m.children) == 1:
+                                            temp.append(m.children[-1])
+                                        else:
+                                            temp.append(m.children[-1])
     print(temp, len(temp))
     if len(temp) != 18:
         error_pause('len(temp) != 18', act_stack)
@@ -205,8 +212,8 @@ def make_parsing_table(action_stack):
         one_word.append(i)
         one_word.append(j.depend)
         result.append(one_word)
-    if len(action_stack) == len(result):
-        error_pause('action == result')
+    if len(action_stack) != len(result):
+        error_pause('action == result', action_stack)
     return result
 
 def evaluate_result(table, word_data):
@@ -216,6 +223,8 @@ def evaluate_result(table, word_data):
             c += 1
     q = len(word_data)
     return c, q
+
+
 
 
 

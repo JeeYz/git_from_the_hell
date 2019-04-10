@@ -2,7 +2,7 @@
 # @Date:   2019-03-21T15:47:00+09:00
 # @Project: NLP
 # @Last modified by:   J.Y.
-# @Last modified time: 2019-04-10T16:42:17+09:00
+# @Last modified time: 2019-04-11T08:32:28+09:00
 # @License: JeeY
 # @Copyright: J.Y. JeeY
 
@@ -86,9 +86,10 @@ for i,j in enumerate(all_sents):
         data, condition, stack, buffer, action_stack = p1.generate_data_of_test(act, stack,
                                                             buffer, w_dict, p_dict,
                                                             sent_Words_data[i], action_stack)
-        print(data, len(data[0][0]), len(data[1][0]))
         if condition == 0:
             break
+        print(data)
+        print(len(data[0][0]), len(data[1][0]))
         a = data[0]
         b = data[1]
         a = np.array(a)

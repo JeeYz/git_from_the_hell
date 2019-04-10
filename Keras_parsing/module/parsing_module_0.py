@@ -2,7 +2,7 @@
 # @Date:   2019-04-05T10:27:57+09:00
 # @Project: NLP
 # @Last modified by:   J.Y.
-# @Last modified time: 2019-04-10T16:16:57+09:00
+# @Last modified time: 2019-04-11T08:11:04+09:00
 # @License: JeeY
 # @Copyright: J.Y. JeeY
 
@@ -77,6 +77,7 @@ def make_all_sents_to_list():
                 words_data.append(one_sent)
                 one_sent = list()
                 switch = 1
+                continue
             one_sent.append(line)
     return all_sents, words_data
 
