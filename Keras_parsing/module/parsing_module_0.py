@@ -2,7 +2,7 @@
 # @Date:   2019-04-05T10:27:57+09:00
 # @Project: NLP
 # @Last modified by:   J.Y.
-# @Last modified time: 2019-04-09T10:44:57+09:00
+# @Last modified time: 2019-04-10T16:16:57+09:00
 # @License: JeeY
 # @Copyright: J.Y. JeeY
 
@@ -18,7 +18,7 @@ filename2 = fpath1 + 'raw_test_dataset_05.test'
 filename3 = fpath1 + 'result_raw_words_list_00.words'
 filename4 = fpath1 + 'result_pos_temp_01.pos'
 
-class tree_node(i, w):
+class tree_node:
     def __init__(self, i, w):
         self.index = int(i)
         self.word = w
@@ -107,7 +107,7 @@ def make_words_pos_dict():
             line = f.readline()
             if not line:break
             line = line.split()
-            pos[line[0]] = num
+            pos[line[1]] = num
             num += 1
     return words, pos
 

@@ -2,11 +2,7 @@
 # @Date:   2019-03-21T15:47:00+09:00
 # @Project: NLP
 # @Last modified by:   J.Y.
-<<<<<<< HEAD
-# @Last modified time: 2019-04-09T16:45:30+09:00
-=======
-# @Last modified time: 2019-04-09T16:45:30+09:00
->>>>>>> f3c7853cbd3358971ab65c68bd55224ae1e1b0d8
+# @Last modified time: 2019-04-10T16:27:09+09:00
 # @License: JeeY
 # @Copyright: J.Y. JeeY
 
@@ -47,6 +43,7 @@ fpath2 = 'd:/Program_Data/Parsing_Data/'
 filewrite = '00_result_training.result'
 
 filelist = k1.generate_file_list(fpath2, '.train')
+words_matrix = k3.make_word_list()
 all_sents, sent_Words_data = p0.make_all_sents_to_list()
 all_init_test = p0.make_all_init_test_data()
 w_dict, p_dict = p0.make_words_pos_dict()
@@ -72,22 +69,38 @@ network.compile(loss='binary_crossentropy', optimizer='adam', metrics=['accuracy
 network.load_weights('d:/Program_Data/model_weights_k_3.h5')
 
 ## test session
+correct = 0
+total_q = 0
 for i,j in enumerate(all_sents):
+    condition = 1
     action_stack = p0.make_dependency_tree(j)
     stack, buffer = p0.make_stack_buffer_list(j)
     a = all_init_test[i][0]
     b = all_init_test[i][1]
     init_result = network.predict({'words':a, 'pos':b})
     act = p0.select_action(init_result)
+
     while True:
-        data = p1.generate_data_of_test(act, stack, buffer, w_dict, p_dict, sent_Words_data[i], action_stack)
+        data, condition, stack, buffer, action_stack = p1.generate_data_of_test(act, stack,
+                                                            buffer, w_dict, p_dict,
+                                                            sent_Words_data[i], action_stack)
+        print(data)
+        if condition == 0:
+            break
         a = data[0]
         b = data[1]
+        a = np.array(a)
+        b = np.array(b)
         result = network.predict({'words':a, 'pos':b})
         act = p0.select_action(result)
         if buffer == [] and len(stack) == 2:
             break
 
+    parsing_table = p1.make_parsing_table(action_stack)
+    a, b = p1.evaluate_result(parsing_table, sent_Words_data[i])
+    correct += a
+    total_q += b
+    print(correct, total_q)
 
 
 
