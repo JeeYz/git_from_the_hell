@@ -2,7 +2,7 @@
 # @Date:   2019-04-11T11:14:06+09:00
 # @Project: NLP
 # @Last modified by:   J.Y.
-# @Last modified time: 2019-04-11T17:02:01+09:00
+# @Last modified time: 2019-04-11T20:20:46+09:00
 # @License: JeeY
 # @Copyright: J.Y. JeeY
 
@@ -63,13 +63,13 @@ def find_children_1(one, action_stack):
                         temp.extend(['NULL', 'NULL', '##'])
                         temp.extend(['NULL', 'NULL', '##'])
                     else:
-                        temp.append(node.children[0])
+                        temp.extend(node.children[0])
                         temp.append('##')
-                        temp.append(node.children[-1])
+                        temp.extend(node.children[-1])
                         temp.append('##')
-                        temp.append(node.children[1])
+                        temp.extend(node.children[1])
                         temp.append('##')
-                        temp.append(node.children[-2])
+                        temp.extend(node.children[-2])
                         temp.append('##')
     return temp
 
@@ -80,7 +80,7 @@ def find_children_2(one, action_stack):
             temp.extend(['NULL', 'NULL', '##'])
     else:
         for node in action_stack:
-            if stack[i] == node.word:
+            if one == node.word:
                 if node.children == []:
                     for k in range(2):
                         temp.extend(['NULL', 'NULL', '##'])
@@ -139,17 +139,19 @@ def generate_one_train_data(line, switch, stack, buffer, action_stack):
     else:
         new_line.extend(line[:-1])
         one = list()
-        for j in range(6):
+        for j in line[:6]:
             if j == '##':
                 child = find_children_1(one, action_stack)
+                # print(child)
                 new_line.extend(child)
                 one = list()
             else:
                 one.append(j)
         one = list()
-        for j in range(6):
+        for j in line[:6]:
             if j == '##':
                 child = find_children_2(one, action_stack)
+                # print(child)
                 new_line.extend(child)
                 one = list()
             else:

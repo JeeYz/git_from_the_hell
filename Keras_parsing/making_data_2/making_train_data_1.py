@@ -2,7 +2,7 @@
 # @Date:   2019-04-11T11:06:59+09:00
 # @Project: NLP
 # @Last modified by:   J.Y.
-# @Last modified time: 2019-04-11T17:05:54+09:00
+# @Last modified time: 2019-04-11T20:20:52+09:00
 # @License: JeeY
 # @Copyright: J.Y. JeeY
 
@@ -39,9 +39,9 @@ with open(fname2, 'r', encoding='utf-8') as f:
 with open(fname0, 'r', encoding='utf-8') as fr, open(fname1, 'a', encoding='utf-8') as fw:
     switch = 1
     for i,j in enumerate(full_sent_data):
-        if i == 1:
-            print('P A U S E ! !')
-            time.sleep(10000)
+        # if i == 2:
+        #     print('P A U S E ! !')
+        #     time.sleep(10000)
         stack, buffer, action_stack = m0.return_stack_buffer_act_stack(j)
         # print(j)
         num = 0
@@ -50,11 +50,11 @@ with open(fname0, 'r', encoding='utf-8') as fr, open(fname1, 'a', encoding='utf-
             if not line: break
             line = line.split()
 
-            print(' *** %d ***' %num)
-            print('<< stack >>')
-            print(stack, '\n')
-            print('<< buffer >>')
-            print(buffer, '\n')
+            # print(' *** %d ***' %num)
+            # print('<< stack >>')
+            # print(stack, '\n')
+            # print('<< buffer >>')
+            # print(buffer, '\n')
 
             if line == []:
                 fw.write('\n')
@@ -64,15 +64,15 @@ with open(fname0, 'r', encoding='utf-8') as fr, open(fname1, 'a', encoding='utf-
             if switch == 1:
                 new_line, stack, buffer, action_stack = m0.generate_one_train_data(line, switch,
                                                                             stack, buffer, action_stack)
-                print('<< new_line >>')
-                print(new_line, '\n')
+                # print('<< new_line >>')
+                # print(new_line, new_line.count('##'), '\n')
                 fw.write('   '.join(new_line) + '\n')
                 switch = 0
             else:
                 new_line, stack, buffer, action_stack = m0.generate_one_train_data(line, switch,
                                                                             stack, buffer, action_stack)
-                print('<< new_line >>')
-                print(new_line, '\n')
+                # print('<< new_line >>')
+                # print(new_line, new_line.count('##'), '\n')
                 fw.write('   '.join(new_line) + '\n')
             num += 1
 
