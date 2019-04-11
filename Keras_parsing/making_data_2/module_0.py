@@ -2,7 +2,7 @@
 # @Date:   2019-04-11T11:14:06+09:00
 # @Project: NLP
 # @Last modified by:   J.Y.
-# @Last modified time: 2019-04-11T20:20:46+09:00
+# @Last modified time: 2019-04-12T03:30:46+09:00
 # @License: JeeY
 # @Copyright: J.Y. JeeY
 
@@ -14,23 +14,6 @@ class tree_node:
         self.word = w      ## list
         self.children = list()
         self.depend = None
-
-def make_small_dict():
-    with open(fname2, 'r', encoding='utf-8') as fr2:
-        small_dict = dict()
-        switch = 1
-        while True:
-            line = fr2.readline()
-            if not line:break
-            line = line.split()
-            if switch == 1:
-                switch = 0
-                continue
-            if line == []:
-                break
-            small_dict[line[3]] = line[4]
-            small_dict[line[5]] = line[7]
-    return small_dict
 
 def return_stack_buffer_act_stack(j):
     action_stack = list()
