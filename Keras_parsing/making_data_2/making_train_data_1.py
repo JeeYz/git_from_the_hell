@@ -2,9 +2,11 @@
 # @Date:   2019-04-11T11:06:59+09:00
 # @Project: NLP
 # @Last modified by:   J.Y.
-# @Last modified time: 2019-04-11T15:00:15+09:00
+# @Last modified time: 2019-04-11T17:05:54+09:00
 # @License: JeeY
 # @Copyright: J.Y. JeeY
+
+import time
 
 fname0 = 'd:/Program_Data/raw_train_dataset_07.train'
 fname1 = 'd:/Program_Data/raw_train_dataset_08.train'
@@ -26,33 +28,53 @@ with open(fname2, 'r', encoding='utf-8') as f:
             full_sent_data.append(one_sent)
             continue
         if switch == 1:
-            switch == 0
+            switch = 0
             one_sent = list()
             continue
         one = list()
         one.append(line[3])
         one.append(line[5])
-
-with open(fname0, 'r', encoding='utf-8') as fr, open(fname1, 'a', encoding='utf-8') as fw,\
-open(fname2, 'r', encoding='utf-8') as fr2:
+        one_sent.append(one)
+# print(full_sent_data)
+with open(fname0, 'r', encoding='utf-8') as fr, open(fname1, 'a', encoding='utf-8') as fw:
     switch = 1
     for i,j in enumerate(full_sent_data):
-        action_stack = list()
-        stack, buffer = m0.return_stack_buffer(j)
+        if i == 1:
+            print('P A U S E ! !')
+            time.sleep(10000)
+        stack, buffer, action_stack = m0.return_stack_buffer_act_stack(j)
+        # print(j)
+        num = 0
         while True:
-            line = fr1.readline()
+            line = fr.readline()
             if not line: break
             line = line.split()
+
+            print(' *** %d ***' %num)
+            print('<< stack >>')
+            print(stack, '\n')
+            print('<< buffer >>')
+            print(buffer, '\n')
+
             if line == []:
                 fw.write('\n')
                 switch = 1
+                num = 0
                 break
             if switch == 1:
-                new_line, action_stack = m0.generate_one_train_data(line, switch, action_stack)
-                switch == 0
-                continue
-            new_line, action_stack = m0.generate_one_train_data(line, switch, action_stack)
-
+                new_line, stack, buffer, action_stack = m0.generate_one_train_data(line, switch,
+                                                                            stack, buffer, action_stack)
+                print('<< new_line >>')
+                print(new_line, '\n')
+                fw.write('   '.join(new_line) + '\n')
+                switch = 0
+            else:
+                new_line, stack, buffer, action_stack = m0.generate_one_train_data(line, switch,
+                                                                            stack, buffer, action_stack)
+                print('<< new_line >>')
+                print(new_line, '\n')
+                fw.write('   '.join(new_line) + '\n')
+            num += 1
 
 
 
