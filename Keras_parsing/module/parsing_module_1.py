@@ -1,7 +1,7 @@
 # @Author: J.Y.
 # @Date:   2019-04-09T06:19:42+09:00
 # @Last modified by:   J.Y.
-# @Last modified time: 2019-04-11T08:08:53+09:00
+# @Last modified time: 2019-04-11T09:54:51+09:00
 # @License: J.Y. JeeYz
 # @Copyright: J.Y. JeeYz
 
@@ -25,7 +25,7 @@ def error_pause(comment, act_stack):
     time.sleep(10000)
 
 def generate_temporary_data(test_words, word_data):
-    print(test_words)
+    # print(test_words)
     word = list()
     pos = list()
     for i in test_words:
@@ -40,16 +40,16 @@ def generate_temporary_data(test_words, word_data):
             word.append('ROOT')
             pos.append('ROOT')
         else:
-            print(word_data)
+            # print(word_data)
             for j in word_data:
                 if i == j[2]:
                     word.append(j[3])
                     pos.append(j[4])
                     word.append(j[5])
                     pos.append(j[6])
-    print(len(word))
+    # print(len(word))
     # print(word)
-    print(len(pos))
+    # print(len(pos))
     # print(pos)
     return word, pos
 
@@ -73,7 +73,7 @@ def generate_temporary_words_data(stack, buffer, act_stack):
             temp.append(buffer[i])
     if len(temp) != 6:
         error_pause('len(temp) != 6', act_stack)
-    print(temp, len(temp))
+    # print(temp, len(temp))
     for i in range(2):
         if stack[i] == 'ROOT':
             temp.extend(['NULL', 'NULL', 'NULL', 'NULL'])
@@ -93,7 +93,7 @@ def generate_temporary_words_data(stack, buffer, act_stack):
                             temp.append(node.children[-1])
                             temp.append(node.children[1])
                             temp.append(node.children[-2])
-    print(temp, len(temp))
+    # print(temp, len(temp))
     if len(temp) != 14:
         error_pause('len(temp) != 14', act_stack)
     for i in range(2):
@@ -135,7 +135,7 @@ def generate_temporary_words_data(stack, buffer, act_stack):
                                             temp.append(m.children[-1])
                                         else:
                                             temp.append(m.children[-1])
-    print(temp, len(temp))
+    # print(temp, len(temp))
     if len(temp) != 18:
         error_pause('len(temp) != 18', act_stack)
     return temp
@@ -209,8 +209,14 @@ def make_parsing_table(action_stack):
     result = list()
     for i,j in enumerate(action_stack, 1):
         one_word = list()
-        one_word.append(i)
-        one_word.append(j.depend)
+        one_word.append(int(i))
+        if str(j.depend) == 'None':
+            one_word.append(int(0))
+        else:
+            t = str(j.depend)
+            t = t.split("__")
+            # print(t)
+            one_word.append(t[1])
         result.append(one_word)
     if len(action_stack) != len(result):
         error_pause('action == result', action_stack)
@@ -219,7 +225,7 @@ def make_parsing_table(action_stack):
 def evaluate_result(table, word_data):
     c = 0
     for i,j in enumerate(word_data):
-        if table[i][1] == j[1]:
+        if int(table[i][1]) == int(j[1]):
             c += 1
     q = len(word_data)
     return c, q
