@@ -2,7 +2,7 @@
 # @Date:   2019-03-28T11:03:33+09:00
 # @Project: NLP
 # @Last modified by:   J.Y.
-# @Last modified time: 2019-04-12T12:19:43+09:00
+# @Last modified time: 2019-04-12T16:27:48+09:00
 # @License: JeeY
 # @Copyright: J.Y. JeeY
 
@@ -28,13 +28,14 @@ import keras_module_2 as k2
 import keras_module_3 as k3
 
 BATCH_SIZE = 128
-EPOCHS = 1
-W_VEC_SIZE = 128
+EPOCHS = 2
+W_VEC_SIZE = 320
 P_VEC_SIZE = 73
 INPUT_SIZE = (18*W_VEC_SIZE*2 + 18*P_VEC_SIZE*2)
 
 fpath2 = 'd:/Program_Data/Parsing_Data/'
-filewrite = '00_result_training.result'
+# filewrite = '00_result_training.result'
+savepara_name = 'd:/Program_Data/model_weights_k_5.h5'
 
 filelist = k1.generate_file_list(fpath2, '.train')
 words_matrix = k3.make_word_list()
@@ -62,11 +63,11 @@ network.summary()
 
 # network.compile(optimizer='rmsprop', loss='categorical_crossentropy', metrics=['accuracy'])
 network.compile(loss='binary_crossentropy', optimizer='adam', metrics=['accuracy'])
-# network.save_weights('d:/Program_Data/model_weights_k_4.h5', overwrite=True)
+network.save_weights(savepara_name, overwrite=True)
 
 for i in range(EPOCHS):
     for k,j in enumerate(filelist):
-        network.load_weights('d:/Program_Data/model_weights_k_4.h5')
+        network.load_weights(savepara_name)
         # print('*****************************')
         # print(network.get_weights())
         # print('*****************************\n\n')
@@ -76,7 +77,7 @@ for i in range(EPOCHS):
         network.fit({'words':word_data, 'pos':pos_data}, train_labels, epochs=5, batch_size=BATCH_SIZE)
         # result = network.predict({'words':word_data, 'pos':pos_data})
         # print(result)
-        network.save_weights('d:/Program_Data/model_weights_k_4.h5', overwrite=True)
+        network.save_weights(savepara_name, overwrite=True)
         # print('+++++++++++++++++++++++++++++++++')
         # print(network.get_weights())
         # print('+++++++++++++++++++++++++++++++++\n\n')
