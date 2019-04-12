@@ -2,7 +2,7 @@
 # @Date:   2019-03-21T15:47:00+09:00
 # @Project: NLP
 # @Last modified by:   J.Y.
-# @Last modified time: 2019-04-11T09:54:57+09:00
+# @Last modified time: 2019-04-12T12:15:57+09:00
 # @License: JeeY
 # @Copyright: J.Y. JeeY
 
@@ -30,7 +30,7 @@ import parsing_module_0 as p0
 import parsing_module_1 as p1
 
 import h5py
-filename = 'd:/Program_Data/model_weights_k_3.h5'
+filename = 'd:/Program_Data/model_weights_k_4.h5'
 f = h5py.File(filename, 'r')
 
 BATCH_SIZE = 128
@@ -66,7 +66,7 @@ network.summary()
 
 # network.compile(optimizer='rmsprop', loss='categorical_crossentropy', metrics=['accuracy'])
 network.compile(loss='binary_crossentropy', optimizer='adam', metrics=['accuracy'])
-network.load_weights('d:/Program_Data/model_weights_k_3.h5')
+network.load_weights('d:/Program_Data/model_weights_k_4.h5')
 
 ## test session
 correct = 0
@@ -107,7 +107,7 @@ for i,j in enumerate(all_sents):
     a, b = p1.evaluate_result(parsing_table, sent_Words_data[i])
     correct += a
     total_q += b
-    print(correct, total_q)
+    print(correct, total_q, '\taccuracy : %.3f %%' % (correct/total_q*100))
 
 
 

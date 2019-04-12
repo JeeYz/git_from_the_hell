@@ -2,7 +2,7 @@
 # @Date:   2019-03-28T11:03:33+09:00
 # @Project: NLP
 # @Last modified by:   J.Y.
-# @Last modified time: 2019-04-08T14:36:36+09:00
+# @Last modified time: 2019-04-12T12:19:43+09:00
 # @License: JeeY
 # @Copyright: J.Y. JeeY
 
@@ -62,11 +62,11 @@ network.summary()
 
 # network.compile(optimizer='rmsprop', loss='categorical_crossentropy', metrics=['accuracy'])
 network.compile(loss='binary_crossentropy', optimizer='adam', metrics=['accuracy'])
-network.save_weights('d:/Program_Data/model_weights_k_3.h5', overwrite=True)
+# network.save_weights('d:/Program_Data/model_weights_k_4.h5', overwrite=True)
 
 for i in range(EPOCHS):
     for k,j in enumerate(filelist):
-        network.load_weights('d:/Program_Data/model_weights_k_3.h5')
+        network.load_weights('d:/Program_Data/model_weights_k_4.h5')
         # print('*****************************')
         # print(network.get_weights())
         # print('*****************************\n\n')
@@ -76,7 +76,7 @@ for i in range(EPOCHS):
         network.fit({'words':word_data, 'pos':pos_data}, train_labels, epochs=5, batch_size=BATCH_SIZE)
         # result = network.predict({'words':word_data, 'pos':pos_data})
         # print(result)
-        network.save_weights('d:/Program_Data/model_weights_k_3.h5', overwrite=True)
+        network.save_weights('d:/Program_Data/model_weights_k_4.h5', overwrite=True)
         # print('+++++++++++++++++++++++++++++++++')
         # print(network.get_weights())
         # print('+++++++++++++++++++++++++++++++++\n\n')

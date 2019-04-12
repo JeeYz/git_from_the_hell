@@ -2,7 +2,7 @@
 # @Date:   2019-03-28T11:14:41+09:00
 # @Project: NLP
 # @Last modified by:   J.Y.
-# @Last modified time: 2019-04-05T10:26:59+09:00
+# @Last modified time: 2019-04-12T11:22:39+09:00
 # @License: JeeY
 # @Copyright: J.Y. JeeY
 
@@ -65,11 +65,18 @@ def generate_train_data_3(fname):
             full_word_vectors.append(word_vectors)
             full_pos_vectors.append(pos_vectors)
 
-            if int(line[-1]) == 0:
+            # if int(line[-1]) == 0:
+            #     train_label.append([1, 0, 0])
+            # elif int(line[-1]) == 1:
+            #     train_label.append([0, 1, 0])
+            # elif int(line[-1]) == 2:
+            #     train_label.append([0, 0, 1])
+
+            if line[-1] == 'shift':
                 train_label.append([1, 0, 0])
-            elif int(line[-1]) == 1:
+            elif line[-1] == 'left':
                 train_label.append([0, 1, 0])
-            elif int(line[-1]) == 2:
+            elif line[-1] == 'right':
                 train_label.append([0, 0, 1])
 
     full_word_vectors = np.array(full_word_vectors)

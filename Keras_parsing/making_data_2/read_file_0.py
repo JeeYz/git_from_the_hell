@@ -1,7 +1,7 @@
 # @Author: J.Y.
 # @Date:   2019-04-12T06:03:02+09:00
 # @Last modified by:   J.Y.
-# @Last modified time: 2019-04-12T10:41:48+09:00
+# @Last modified time: 2019-04-12T10:43:30+09:00
 # @License: J.Y. JeeYz
 # @Copyright: J.Y. JeeYz
 
@@ -20,18 +20,19 @@ with open(filename6, 'r', encoding='utf-8') as f:
         if not line:break
         line = line.split()
         if line == []:
+            num += 1
             continue
         # if line.count('##') != 6:
         #     print(line)
         # if len(line) != 109:
         #     print(line)
-        num += 1
-        print(line)
-        print(len(line))
-        if num == 5:
-            time.sleep(10000)
+        # num += 1
+        # print(line)
+        # print(len(line))
+        # if num == 5:
+        #     time.sleep(10000)
 
-
+print(num)
 
 
 
