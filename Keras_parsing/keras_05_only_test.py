@@ -2,7 +2,7 @@
 # @Date:   2019-03-21T15:47:00+09:00
 # @Project: NLP
 # @Last modified by:   J.Y.
-# @Last modified time: 2019-04-12T14:27:36+09:00
+# @Last modified time: 2019-04-12T16:11:56+09:00
 # @License: JeeY
 # @Copyright: J.Y. JeeY
 
@@ -30,8 +30,8 @@ import parsing_module_0 as p0
 import parsing_module_1 as p1
 
 import h5py
-filename = 'd:/Program_Data/model_weights_k_4.h5'
-f = h5py.File(filename, 'r')
+# filename = 'd:/Program_Data/model_weights_k_4.h5'
+# f = h5py.File(filename, 'r')
 
 BATCH_SIZE = 128
 EPOCHS = 1
