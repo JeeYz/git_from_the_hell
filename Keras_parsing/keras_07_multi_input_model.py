@@ -2,7 +2,7 @@
 # @Date:   2019-03-28T11:03:33+09:00
 # @Project: NLP
 # @Last modified by:   J.Y.
-# @Last modified time: 2019-04-12T16:27:48+09:00
+# @Last modified time: 2019-04-12T16:29:08+09:00
 # @License: JeeY
 # @Copyright: J.Y. JeeY
 
@@ -28,7 +28,7 @@ import keras_module_2 as k2
 import keras_module_3 as k3
 
 BATCH_SIZE = 128
-EPOCHS = 2
+EPOCHS = 3
 W_VEC_SIZE = 320
 P_VEC_SIZE = 73
 INPUT_SIZE = (18*W_VEC_SIZE*2 + 18*P_VEC_SIZE*2)
