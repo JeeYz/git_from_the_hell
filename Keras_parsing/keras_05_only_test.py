@@ -2,7 +2,7 @@
 # @Date:   2019-03-21T15:47:00+09:00
 # @Project: NLP
 # @Last modified by:   J.Y.
-# @Last modified time: 2019-04-12T12:15:57+09:00
+# @Last modified time: 2019-04-12T14:27:36+09:00
 # @License: JeeY
 # @Copyright: J.Y. JeeY
 
@@ -71,6 +71,7 @@ network.load_weights('d:/Program_Data/model_weights_k_4.h5')
 ## test session
 correct = 0
 total_q = 0
+num = 0
 for i,j in enumerate(all_sents):
     condition = 1
     action_stack = p0.make_dependency_tree(j)
@@ -92,6 +93,10 @@ for i,j in enumerate(all_sents):
         # print(len(data[0][0]), len(data[1][0]))
         a = data[0]
         b = data[1]
+        if len(a[0]) != 36:
+            print(a, len(a[0]))
+        if len(b[0]) != 36:
+            print(b, len(b[0]))
         a = np.array(a)
         b = np.array(b)
         result = network.predict({'words':a, 'pos':b})
@@ -107,7 +112,9 @@ for i,j in enumerate(all_sents):
     a, b = p1.evaluate_result(parsing_table, sent_Words_data[i])
     correct += a
     total_q += b
-    print(correct, total_q, '\taccuracy : %.3f %%' % (correct/total_q*100))
+    num += 1
+    if num%100 == 0:
+        print(correct, total_q, '\taccuracy : %.3f %%' % (correct/total_q*100))
 
 
 

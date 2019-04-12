@@ -1,7 +1,7 @@
 # @Author: J.Y.
 # @Date:   2019-04-09T06:19:42+09:00
 # @Last modified by:   J.Y.
-# @Last modified time: 2019-04-11T09:54:51+09:00
+# @Last modified time: 2019-04-12T14:27:32+09:00
 # @License: J.Y. JeeYz
 # @Copyright: J.Y. JeeYz
 
@@ -75,7 +75,10 @@ def generate_temporary_words_data(stack, buffer, act_stack):
         error_pause('len(temp) != 6', act_stack)
     # print(temp, len(temp))
     for i in range(2):
-        if stack[i] == 'ROOT':
+        if stack[0] == 'ROOT':
+            temp.extend(['NULL', 'NULL', 'NULL', 'NULL', 'NULL', 'NULL', 'NULL', 'NULL'])
+            break
+        if stack[1] == 'ROOT':
             temp.extend(['NULL', 'NULL', 'NULL', 'NULL'])
         else:
             for node in act_stack:
@@ -97,7 +100,10 @@ def generate_temporary_words_data(stack, buffer, act_stack):
     if len(temp) != 14:
         error_pause('len(temp) != 14', act_stack)
     for i in range(2):
-        if stack[i] == 'ROOT':
+        if stack[0] == 'ROOT':
+            temp.extend(['NULL', 'NULL', 'NULL', 'NULL'])
+            break
+        elif stack[1] == 'ROOT':
             temp.extend(['NULL', 'NULL'])
         else:
             for node in act_stack:
@@ -216,7 +222,10 @@ def make_parsing_table(action_stack):
             t = str(j.depend)
             t = t.split("__")
             # print(t)
-            one_word.append(t[1])
+            if t[0] == 'ROOT':
+                one_word.append(0)
+            else:
+                one_word.append(t[1])
         result.append(one_word)
     if len(action_stack) != len(result):
         error_pause('action == result', action_stack)
