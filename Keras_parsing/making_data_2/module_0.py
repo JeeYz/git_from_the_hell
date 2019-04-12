@@ -2,7 +2,7 @@
 # @Date:   2019-04-11T11:14:06+09:00
 # @Project: NLP
 # @Last modified by:   J.Y.
-# @Last modified time: 2019-04-12T03:30:46+09:00
+# @Last modified time: 2019-04-12T10:02:06+09:00
 # @License: JeeY
 # @Copyright: J.Y. JeeY
 
@@ -19,32 +19,32 @@ def return_stack_buffer_act_stack(j):
     action_stack = list()
     stack = list()
     buffer = copy.deepcopy(j)
-    stack.append(['ROOT', 'ROOT'])
-    new = tree_node(int(0), ['ROOT', 'ROOT'])
-    for m,n in enumerate(j):
-        new = tree_node(int(m), n)
+    stack.append('ROOT')
+    new = tree_node(0, 'ROOT')
+    for m,n in enumerate(j, 1):
+        new = tree_node(m, n)
         action_stack.append(new)
     return stack, buffer, action_stack
 
 def find_children_1(one, action_stack):
     temp = list()
-    if one == ['ROOT', 'ROOT'] or one == ['NULL', 'NULL']:
+    if one == ['ROOT'] or one == ['NULL']:
         for k in range(4):
-            temp.extend(['NULL', 'NULL', '##'])
+            temp.extend(['NULL', '##'])
     else:
         for node in action_stack:
             if node.word == one:
                 if node.children == []:
                     for k in range(4):
-                        temp.extend(['NULL', 'NULL', '##'])
+                        temp.extend(['NULL', '##'])
                 else:
                     if len(node.children) == 1:
                         temp.extend(node.children[0])
                         temp.append('##')
                         temp.extend(node.children[0])
                         temp.append('##')
-                        temp.extend(['NULL', 'NULL', '##'])
-                        temp.extend(['NULL', 'NULL', '##'])
+                        temp.extend(['NULL', '##'])
+                        temp.extend(['NULL', '##'])
                     else:
                         temp.extend(node.children[0])
                         temp.append('##')
@@ -58,22 +58,22 @@ def find_children_1(one, action_stack):
 
 def find_children_2(one, action_stack):
     temp = list()
-    if one == ['ROOT', 'ROOT'] or one == ['NULL', 'NULL']:
+    if one == ['ROOT'] or one == ['NULL']:
         for k in range(2):
-            temp.extend(['NULL', 'NULL', '##'])
+            temp.extend(['NULL', '##'])
     else:
         for node in action_stack:
             if one == node.word:
                 if node.children == []:
                     for k in range(2):
-                        temp.extend(['NULL', 'NULL', '##'])
+                        temp.extend(['NULL', '##'])
                 else:
                     if len(node.children) == 1:
                         for m in action_stack:
                             if m.word == node.children[0]:
                                 if m.children == []:
                                     for k in range(2):
-                                        temp.extend(['NULL', 'NULL', '##'])
+                                        temp.extend(['NULL', '##'])
                                 else:
                                     if len(m.children) == 1:
                                         temp.extend(m.children[0])
@@ -90,7 +90,7 @@ def find_children_2(one, action_stack):
                             if m.word == node.children[0]:
                                 if m.children == []:
                                     for k in range(2):
-                                        temp.extend(['NULL', 'NULL', '##'])
+                                        temp.extend(['NULL', '##'])
                                 else:
                                     if len(m.children) == 1:
                                         temp.extend(m.children[0])
@@ -101,7 +101,7 @@ def find_children_2(one, action_stack):
                             if m.word == node.children[-1]:
                                 if m.children == []:
                                     for k in range(2):
-                                        temp.extend(['NULL', 'NULL', '##'])
+                                        temp.extend(['NULL', '##'])
                                 else:
                                     if len(m.children) == 1:
                                         temp.extend(m.children[-1])
@@ -117,12 +117,12 @@ def generate_one_train_data(line, switch, stack, buffer, action_stack):
     if switch == 1:
         new_line.extend(line[:-1])
         for i in range(12):
-            new_line.extend(['NULL', 'NULL', '##'])
+            new_line.extend(['NULL', '##'])
         new_line.append(line[-1])
     else:
         new_line.extend(line[:-1])
         one = list()
-        for j in line[:6]:
+        for j in line[:4]:
             if j == '##':
                 child = find_children_1(one, action_stack)
                 # print(child)
@@ -131,7 +131,7 @@ def generate_one_train_data(line, switch, stack, buffer, action_stack):
             else:
                 one.append(j)
         one = list()
-        for j in line[:6]:
+        for j in line[:4]:
             if j == '##':
                 child = find_children_2(one, action_stack)
                 # print(child)

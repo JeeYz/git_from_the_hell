@@ -1,22 +1,22 @@
 # @Author: J.Y.
 # @Date:   2019-04-12T02:59:49+09:00
 # @Last modified by:   J.Y.
-# @Last modified time: 2019-04-12T06:01:26+09:00
+# @Last modified time: 2019-04-12T10:14:56+09:00
 # @License: J.Y. JeeYz
 # @Copyright: J.Y. JeeYz
 
 import time
 import module_1 as m1
 
-fname0 = 'd:/Program_Data/raw_train_dataset_08.train'
-fname1 = 'd:/Program_Data/raw_train_dataset_09.train'
+fname0 = 'd:/Program_Data/raw_train_dataset_12.train'
+fname1 = 'd:/Program_Data/raw_train_dataset_13.train'
 
 fname2 = 'd:/Program_Data/raw_train_dataset_05.train'
 
 fr2 = open(fname2, 'r', encoding='utf-8')
 
 def make_one_sent_data():
-    sent_data = list()
+    sent_data = dict()
     switch = 1
     while True:
         line = fr2.readline()
@@ -27,13 +27,16 @@ def make_one_sent_data():
         if switch == 1:
             switch = 0
         else:
-            ele = list()
-            a_word = list()
-            ele.append(line[3])
-            ele.append(line[5])
-            a_word.append(ele)
-            a_word.append(line[2])
-            sent_data.append(a_word)
+            word = list()
+            pos = list()
+            one_ele = list()
+            word.append(line[3])
+            word.append(line[5])
+            pos.append(line[4])
+            pos.append(line[6])
+            one_ele.append(word)
+            one_ele.append(pos)
+            sent_data[line[2]] = one_ele
     return sent_data
 
 with open(fname0, 'r', encoding='utf-8') as fr, open(fname1, 'a', encoding='utf-8') as fw:
@@ -46,21 +49,34 @@ with open(fname0, 'r', encoding='utf-8') as fr, open(fname1, 'a', encoding='utf-
             sent_data = make_one_sent_data()
             fw.write('\n')
         else:
-            new = list()
+            words = list()
+            poses = list()
             for i in range(18):
-                if line[3*i] == 'ROOT':
-                    new.append('ROOT')
-                    new.append('##')
-                elif line[3*i] == 'NULL':
-                    new.append('NULL')
-                    new.append('##')
+                if line[2*i] == 'ROOT':
+                    words.append('ROOT')
+                    words.append('ROOT')
+                    words.append('##')
+                    poses.append('ROOT')
+                    poses.append('ROOT')
+                    poses.append('##')
+                elif line[2*i] == 'NULL':
+                    words.append('NULL')
+                    words.append('NULL')
+                    words.append('##')
+                    poses.append('NULL')
+                    poses.append('NULL')
+                    poses.append('##')
                 else:
-                    for j in sent_data:
-                        if line[3*i] == j[0][0] and line[3*i+1] == j[0][1]:
-                            new.append(j[1])
-                    new.append('##')
+                    words.extend(sent_data[line[2*i]][0])
+                    words.append('##')
+                    poses.extend(sent_data[line[2*i]][1])
+                    poses.append('##')
+
+            new = list()
+            new.extend(words)
+            new.extend(poses)
             new.append(line[-1])
-            if len(new) != 37:
+            if len(new) != 109:
                 print(new)
                 print(len(new))
                 time.sleep(100000)
