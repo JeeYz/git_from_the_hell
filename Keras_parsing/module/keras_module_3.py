@@ -2,7 +2,7 @@
 # @Date:   2019-03-28T11:14:41+09:00
 # @Project: NLP
 # @Last modified by:   J.Y.
-# @Last modified time: 2019-04-15T11:04:55+09:00
+# @Last modified time: 2019-04-15T14:19:38+09:00
 # @License: JeeY
 # @Copyright: J.Y. JeeY
 
@@ -13,9 +13,8 @@ file_word = filepath + 'result_raw_words_list_00.words'
 file_pos = filepath + 'result_pos_temp_01.pos'
 
 np.random.seed(1)
-WORDVEC_SIZE = 128
 
-def make_word_list():
+def make_word_list(w_size):
     temp = list()
     with open(file_word, 'r', encoding='utf-8') as f:
         while True:
@@ -23,7 +22,7 @@ def make_word_list():
             if not line:break
             line = line.split()
             temp.append(line)
-    words_matrix = np.random.uniform(-1.0, 1.0, (len(temp)+1, WORDVEC_SIZE))
+    words_matrix = np.random.uniform(-1.0, 1.0, (len(temp)+1, w_size))
     return words_matrix
 
 def make_pos_list():
