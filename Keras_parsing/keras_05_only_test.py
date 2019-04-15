@@ -2,7 +2,7 @@
 # @Date:   2019-03-21T15:47:00+09:00
 # @Project: NLP
 # @Last modified by:   J.Y.
-# @Last modified time: 2019-04-15T09:37:44+09:00
+# @Last modified time: 2019-04-15T11:05:00+09:00
 # @License: JeeY
 # @Copyright: J.Y. JeeY
 
@@ -42,7 +42,7 @@ INPUT_SIZE = (18*W_VEC_SIZE*2 + 18*P_VEC_SIZE*2)
 fpath2 = 'd:/Program_Data/Parsing_Data/'
 filewrite = '00_result_training.result'
 
-savepara_name = 'd:/Program_Data/model_weights_k_4.h5'
+savepara_name = 'd:/Program_Data/model_weights_k_6_vec_dim_300.h5'
 
 filelist = k1.generate_file_list(fpath2, '.train')
 words_matrix = k3.make_word_list()

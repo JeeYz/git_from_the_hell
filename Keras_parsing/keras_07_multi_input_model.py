@@ -2,7 +2,7 @@
 # @Date:   2019-03-28T11:03:33+09:00
 # @Project: NLP
 # @Last modified by:   J.Y.
-# @Last modified time: 2019-04-12T16:29:08+09:00
+# @Last modified time: 2019-04-15T11:05:06+09:00
 # @License: JeeY
 # @Copyright: J.Y. JeeY
 
@@ -28,14 +28,14 @@ import keras_module_2 as k2
 import keras_module_3 as k3
 
 BATCH_SIZE = 128
-EPOCHS = 3
-W_VEC_SIZE = 320
+EPOCHS = 1
+W_VEC_SIZE = 128
 P_VEC_SIZE = 73
 INPUT_SIZE = (18*W_VEC_SIZE*2 + 18*P_VEC_SIZE*2)
 
 fpath2 = 'd:/Program_Data/Parsing_Data/'
 # filewrite = '00_result_training.result'
-savepara_name = 'd:/Program_Data/model_weights_k_5.h5'
+savepara_name = 'd:/Program_Data/model_weights_k_6_vec_dim_300.h5'
 
 filelist = k1.generate_file_list(fpath2, '.train')
 words_matrix = k3.make_word_list()

@@ -2,7 +2,7 @@
 # @Date:   2019-03-28T11:14:41+09:00
 # @Project: NLP
 # @Last modified by:   J.Y.
-# @Last modified time: 2019-04-12T16:26:49+09:00
+# @Last modified time: 2019-04-15T11:04:55+09:00
 # @License: JeeY
 # @Copyright: J.Y. JeeY
 
@@ -13,7 +13,7 @@ file_word = filepath + 'result_raw_words_list_00.words'
 file_pos = filepath + 'result_pos_temp_01.pos'
 
 np.random.seed(1)
-WORDVEC_SIZE = 320
+WORDVEC_SIZE = 128
 
 def make_word_list():
     temp = list()
