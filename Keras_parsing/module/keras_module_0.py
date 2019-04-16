@@ -2,7 +2,7 @@
 # @Date:   2019-03-14T09:44:24+09:00
 # @Project: NLP
 # @Last modified by:   J.Y.
-# @Last modified time: 2019-03-20T16:47:49+09:00
+# @Last modified time: 2019-04-15T15:32:53+09:00
 # @License: JeeY
 # @Copyright: J.Y. JeeY
 
@@ -14,9 +14,9 @@ file_pos = 'result_pos_temp_01.pos'
 file_arc = 'temp_result_09.temp'
 
 np.random.seed(1)
-wordvec_size = 128
 
-def make_word_list(fname):
+def make_word_list(w_size):
+    fname = filepath + file_word
     temp = list()
     with open(fname, 'r', encoding='utf-8') as f:
         while True:
@@ -24,10 +24,11 @@ def make_word_list(fname):
             if not line:break
             line = line.split()
             temp.append(line)
-    words_matrix = np.random.uniform(-1.0, 1.0, (len(temp)+1, wordvec_size))
+    words_matrix = np.random.uniform(-1.0, 1.0, (len(temp)+1, w_size))
     return words_matrix
 
-def make_pos_list(fname):
+def make_pos_list():
+    fname = filepath + file_pos
     temp = list()
     with open(fname, 'r', encoding='utf-8') as f:
         while True:
@@ -87,10 +88,8 @@ def generate_train_data(filename):
     # train_label = np.array(train_label)
     return full_train_vectors, train_label, num1
 
-def generate_train_data_2(filename):
-    words_matrix = make_word_list(filepath + file_word)
-    pos_matrix = make_pos_list(filepath + file_pos)
-
+def generate_train_data_2(filename, words_matrix, pos_matrix):
+    
     full_train_vectors = list()
     train_label = list()
     with open(filename, 'r', encoding='utf-8') as f:
@@ -113,12 +112,20 @@ def generate_train_data_2(filename):
             # print(len(train_vector))
             full_train_vectors.append(train_vector)
 
-            if int(line[-1]) == 0:
+            # if int(line[-1]) == 0:
+            #     train_label.append([1, 0, 0])
+            # elif int(line[-1]) == 1:
+            #     train_label.append([0, 1, 0])
+            # elif int(line[-1]) == 2:
+            #     train_label.append([0, 0, 1])
+
+            if line[-1] == 'shift':
                 train_label.append([1, 0, 0])
-            elif int(line[-1]) == 1:
+            elif line[-1] == 'left':
                 train_label.append([0, 1, 0])
-            elif int(line[-1]) == 2:
+            elif line[-1] == 'right':
                 train_label.append([0, 0, 1])
+
             num1 += 1
     print('data load complete!!')
     full_train_vectors = np.array(full_train_vectors)
