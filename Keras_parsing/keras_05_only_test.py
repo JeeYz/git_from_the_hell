@@ -2,7 +2,7 @@
 # @Date:   2019-03-21T15:47:00+09:00
 # @Project: NLP
 # @Last modified by:   J.Y.
-# @Last modified time: 2019-04-16T16:27:30+09:00
+# @Last modified time: 2019-04-17T10:55:12+09:00
 # @License: JeeY
 # @Copyright: J.Y. JeeY
 
@@ -43,11 +43,11 @@ INPUT_SIZE = (18*W_VEC_SIZE*2 + 18*P_VEC_SIZE*2)
 fpath2 = 'd:/Program_Data/Parsing_Data/'
 filewrite = '00_result_training.result'
 
-savepara_name = 'd:/Program_Data/model_weights_k_12_dim_128_rand_pos_128dim.h5'
+savepara_name = 'd:/Program_Data/model_weights_k_13_dim_128_fT_pos_128dim.h5'
 
 filelist = k1.generate_file_list(fpath2, '.train')
-# words_matrix = kfT.words_matrix_fastText(W_VEC_SIZE)
-words_matrix = k3.make_word_list(W_VEC_SIZE)
+words_matrix = kfT.words_matrix_fastText(W_VEC_SIZE)
+# words_matrix = k3.make_word_list(W_VEC_SIZE)
 pos_matrix = k3.make_pos_list(P_VEC_SIZE)
 all_sents, sent_Words_data = p0.make_all_sents_to_list()
 all_init_test = p0.make_all_init_test_data()
