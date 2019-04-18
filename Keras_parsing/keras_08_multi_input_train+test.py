@@ -1,8 +1,8 @@
 # @Author: J.Y.
-# @Date:   2019-03-28T11:03:33+09:00
+# @Date:   2019-04-18T15:19:10+09:00
 # @Project: NLP
 # @Last modified by:   J.Y.
-# @Last modified time: 2019-04-18T15:21:06+09:00
+# @Last modified time: 2019-04-18T16:27:18+09:00
 # @License: JeeY
 # @Copyright: J.Y. JeeY
 
@@ -28,21 +28,30 @@ import keras_module_2 as k2
 import keras_module_3 as k3
 import keras_module_for_fastText as kfT
 
+import parsing_module_0 as p0
+import parsing_module_1 as p1
+
 BATCH_SIZE = 128
-EPOCHS = 1
+EPOCHS = 10
 W_VEC_SIZE = 128
 P_VEC_SIZE = 128
 INPUT_SIZE = (18*W_VEC_SIZE*2 + 18*P_VEC_SIZE*2)
 
 fpath2 = 'd:/Program_Data/Parsing_Data/'
-# filewrite = '00_result_training.result'
+filewrite = '00_result_training.result'
 savepara_name = 'd:/Program_Data/model_weights_k_16_dim_128_fT_pos_128dim_Dropout.h5'
+
+fw1 = open(fpath2 + filewrite, 'a', encoding='utf-8')
 
 filelist = k1.generate_file_list(fpath2, '.train')
 # words_matrix = k3.make_word_list(W_VEC_SIZE)
 # pos_matrix = k3.make_pos_list(P_VEC_SIZE)
 words_matrix = kfT.words_matrix_fastText(W_VEC_SIZE)
 pos_matrix = kfT.make_pos_fastText(P_VEC_SIZE)
+
+all_sents, sent_Words_data = p0.make_all_sents_to_list()
+all_init_test = p0.make_all_init_test_data()
+w_dict, p_dict = p0.make_words_pos_dict()
 
 embedding_layer1 = Embedding(len(words_matrix), W_VEC_SIZE,
                             embeddings_initializer=Constant(words_matrix),
@@ -58,9 +67,9 @@ ew1 = embedding_layer1(w)
 ep1 = embedding_layer2(p)
 embedded_sequences = layers.concatenate([ew1, ep1], axis=-1)
 embedded_sequences = Flatten()(embedded_sequences)
-embedded_sequences = Dropout(0.2)(embedded_sequences)
+embedded_sequences = Dropout(0.5)(embedded_sequences)
 x = layers.Dense(512, activation='relu')(embedded_sequences)
-x = Dropout(0.2)(x)
+x = Dropout(0.5)(x)
 output_layer = layers.Dense(3, activation='softmax')(x)
 
 network = Model([w, p], output_layer)
@@ -70,24 +79,58 @@ network.summary()
 network.compile(loss='binary_crossentropy', optimizer='adam', metrics=['accuracy'])
 network.save_weights(savepara_name, overwrite=True)
 
+correct = 0
+total_q = 0
+num = 0
 for i in range(EPOCHS):
     for k,j in enumerate(filelist):
         network.load_weights(savepara_name)
-        # print('*****************************')
-        # print(network.get_weights())
-        # print('*****************************\n\n')
+
         filename1 = fpath2 + j
         print('%d th epoch : ' %(i+1), filename1)
         word_data, pos_data, train_labels = k3.generate_train_data_3(filename1)
         network.fit({'words':word_data, 'pos':pos_data}, train_labels, epochs=5, batch_size=BATCH_SIZE)
-        # result = network.predict({'words':word_data, 'pos':pos_data})
-        # print(result)
+
         network.save_weights(savepara_name, overwrite=True)
-        # print('+++++++++++++++++++++++++++++++++')
-        # print(network.get_weights())
-        # print('+++++++++++++++++++++++++++++++++\n\n')
 
+    for m,n in enumerate(all_sents):
+        condition = 1
+        action_stack = p0.make_dependency_tree(n)
+        stack, buffer = p0.make_stack_buffer_list(n)
+        a = all_init_test[m][0]
+        b = all_init_test[m][1]
+        init_result = network.predict({'words':a, 'pos':b})
+        act = p0.select_action(init_result)
+        while True:
+            data, condition, stack, buffer, action_stack = p1.generate_data_of_test(act, stack,
+                                                                buffer, w_dict, p_dict,
+                                                                sent_Words_data[m], action_stack)
+            if condition == 0:
+                break
 
+            a = data[0]
+            b = data[1]
+            if len(a[0]) != 36:
+                print(a, len(a[0]))
+            if len(b[0]) != 36:
+                print(b, len(b[0]))
+            a = np.array(a)
+            b = np.array(b)
+            result = network.predict({'words':a, 'pos':b})
+            act = p0.select_action(result)
+            if buffer == [] and len(stack) == 2:
+                break
+
+        parsing_table = p1.make_parsing_table(action_stack)
+        a, b = p1.evaluate_result(parsing_table, sent_Words_data[m])
+        correct += a
+        total_q += b
+        num += 1
+
+    print(correct, total_q, '\t%d th accuracy : %.3f %%' %(i, correct/total_q*100))
+    fw1.write(str(correct) + str(total_q) + '\t%d th accuracy : %.3f %%' %(i, correct/total_q*100) + '\n')
+
+fw1.close()
 
 
 

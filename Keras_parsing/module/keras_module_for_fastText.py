@@ -2,7 +2,7 @@
 # @Date:   2019-04-15T11:41:04+09:00
 # @Project: NLP
 # @Last modified by:   J.Y.
-# @Last modified time: 2019-04-18T11:13:12+09:00
+# @Last modified time: 2019-04-18T13:30:54+09:00
 # @License: JeeY
 # @Copyright: J.Y. JeeY
 
@@ -69,10 +69,11 @@ def make_pos_fastText(pvec_size):
         # w_matrix.append(a)
         p_matrix.append(i[1:])
     # w_matrix.append(np.random.uniform(-1.0, 1.0, (wvec_size)))
+    p_matrix.insert(0, np.random.uniform(-1.0, 1.0, (pvec_size)))
     p_matrix.append(c) ## for fT No.3
     b = np.array(p_matrix)
     # w_matrix = b.astype('float32')
-    return p_matrix
+    return b
 
 
 
