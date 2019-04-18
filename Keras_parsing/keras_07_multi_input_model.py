@@ -2,7 +2,7 @@
 # @Date:   2019-03-28T11:03:33+09:00
 # @Project: NLP
 # @Last modified by:   J.Y.
-# @Last modified time: 2019-04-17T15:29:38+09:00
+# @Last modified time: 2019-04-18T11:07:26+09:00
 # @License: JeeY
 # @Copyright: J.Y. JeeY
 
@@ -29,7 +29,7 @@ import keras_module_3 as k3
 import keras_module_for_fastText as kfT
 
 BATCH_SIZE = 128
-EPOCHS = 1
+EPOCHS = 2
 W_VEC_SIZE = 128
 P_VEC_SIZE = 128
 INPUT_SIZE = (18*W_VEC_SIZE*2 + 18*P_VEC_SIZE*2)
@@ -42,7 +42,7 @@ filelist = k1.generate_file_list(fpath2, '.train')
 # words_matrix = k3.make_word_list(W_VEC_SIZE)
 pos_matrix = k3.make_pos_list(P_VEC_SIZE)
 words_matrix = kfT.words_matrix_fastText(W_VEC_SIZE)
-# pos_matrix = kfT.pos_matrix_random(P_VEC_SIZE)
+# pos_matrix = kfT.pos_matrix_fastText(P_VEC_SIZE)
 
 embedding_layer1 = Embedding(len(words_matrix), W_VEC_SIZE,
                             embeddings_initializer=Constant(words_matrix),
