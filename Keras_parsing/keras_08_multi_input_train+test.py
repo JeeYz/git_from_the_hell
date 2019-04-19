@@ -2,7 +2,7 @@
 # @Date:   2019-04-18T15:19:10+09:00
 # @Project: NLP
 # @Last modified by:   J.Y.
-# @Last modified time: 2019-04-18T16:27:18+09:00
+# @Last modified time: 2019-04-19T16:05:51+09:00
 # @License: JeeY
 # @Copyright: J.Y. JeeY
 
@@ -32,7 +32,7 @@ import parsing_module_0 as p0
 import parsing_module_1 as p1
 
 BATCH_SIZE = 128
-EPOCHS = 10
+EPOCHS = 30
 W_VEC_SIZE = 128
 P_VEC_SIZE = 128
 INPUT_SIZE = (18*W_VEC_SIZE*2 + 18*P_VEC_SIZE*2)
@@ -67,9 +67,9 @@ ew1 = embedding_layer1(w)
 ep1 = embedding_layer2(p)
 embedded_sequences = layers.concatenate([ew1, ep1], axis=-1)
 embedded_sequences = Flatten()(embedded_sequences)
-embedded_sequences = Dropout(0.5)(embedded_sequences)
+embedded_sequences = Dropout(0.4)(embedded_sequences)
 x = layers.Dense(512, activation='relu')(embedded_sequences)
-x = Dropout(0.5)(x)
+x = Dropout(0.4)(x)
 output_layer = layers.Dense(3, activation='softmax')(x)
 
 network = Model([w, p], output_layer)
@@ -89,7 +89,7 @@ for i in range(EPOCHS):
         filename1 = fpath2 + j
         print('%d th epoch : ' %(i+1), filename1)
         word_data, pos_data, train_labels = k3.generate_train_data_3(filename1)
-        network.fit({'words':word_data, 'pos':pos_data}, train_labels, epochs=5, batch_size=BATCH_SIZE)
+        network.fit({'words':word_data, 'pos':pos_data}, train_labels, epochs=1, batch_size=BATCH_SIZE)
 
         network.save_weights(savepara_name, overwrite=True)
 
