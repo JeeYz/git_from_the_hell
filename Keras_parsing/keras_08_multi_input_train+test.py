@@ -2,7 +2,7 @@
 # @Date:   2019-04-18T15:19:10+09:00
 # @Project: NLP
 # @Last modified by:   J.Y.
-# @Last modified time: 2019-04-19T16:05:51+09:00
+# @Last modified time: 2019-04-22T15:10:25+09:00
 # @License: JeeY
 # @Copyright: J.Y. JeeY
 
@@ -32,7 +32,7 @@ import parsing_module_0 as p0
 import parsing_module_1 as p1
 
 BATCH_SIZE = 128
-EPOCHS = 30
+EPOCHS = 10
 W_VEC_SIZE = 128
 P_VEC_SIZE = 128
 INPUT_SIZE = (18*W_VEC_SIZE*2 + 18*P_VEC_SIZE*2)
@@ -41,8 +41,7 @@ fpath2 = 'd:/Program_Data/Parsing_Data/'
 filewrite = '00_result_training.result'
 savepara_name = 'd:/Program_Data/model_weights_k_16_dim_128_fT_pos_128dim_Dropout.h5'
 
-fw1 = open(fpath2 + filewrite, 'a', encoding='utf-8')
-
+# fw1 = open(fpath2 + filewrite, 'a', encoding='utf-8')
 filelist = k1.generate_file_list(fpath2, '.train')
 # words_matrix = k3.make_word_list(W_VEC_SIZE)
 # pos_matrix = k3.make_pos_list(P_VEC_SIZE)
@@ -126,11 +125,10 @@ for i in range(EPOCHS):
         correct += a
         total_q += b
         num += 1
-
+    fw1 = open(fpath2 + filewrite, 'a', encoding='utf-8')
     print(correct, total_q, '\t%d th accuracy : %.3f %%' %(i, correct/total_q*100))
     fw1.write(str(correct) + str(total_q) + '\t%d th accuracy : %.3f %%' %(i, correct/total_q*100) + '\n')
-
-fw1.close()
+    fw1.close()
 
 
 
