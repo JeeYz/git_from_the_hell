@@ -2,7 +2,7 @@
 # @Date:   2019-04-25T10:56:41+09:00
 # @Project: NLP
 # @Last modified by:   J.Y.
-# @Last modified time: 2019-04-26T13:33:23+09:00
+# @Last modified time: 2019-04-26T15:35:38+09:00
 # @License: JeeY
 # @Copyright: J.Y. JeeY
 
@@ -18,7 +18,7 @@ from keras import layers
 from keras import backend
 from keras.models import load_model
 from keras.layers import Input, Dense, Embedding, Flatten, Dropout
-from keras.layers import LSTM, Bidirectional
+from keras.layers import LSTM, Bidirectional, Multiply
 from keras.models import Model, Sequential
 from keras import Input
 from keras.initializers import Constant
@@ -79,8 +79,8 @@ a = p2.make_matrix_A(a)
 b = p2.make_matrix_A(b)
 b = backend.permute_dimensions(b, (0, 2, 1))
 
-x = layers.Dense((W_VEC_SIZE+1, W_VEC_SIZE))(a)
-
+x = layers.Dense((W_VEC_SIZE+1)*W_VEC_SIZE)(a)
+x = Multiply([x, b])
 
 
 
