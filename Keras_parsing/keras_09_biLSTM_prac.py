@@ -2,7 +2,11 @@
 # @Date:   2019-04-25T10:56:41+09:00
 # @Project: NLP
 # @Last modified by:   J.Y.
+<<<<<<< HEAD
 # @Last modified time: 2019-04-29T09:43:33+09:00
+=======
+# @Last modified time: 2019-04-29T04:10:40+09:00
+>>>>>>> 30b1d1b8ebe8b94538fab7853500cc1cafe97cfa
 # @License: JeeY
 # @Copyright: J.Y. JeeY
 
@@ -81,6 +85,7 @@ b = backend.permute_dimensions(b, (0, 2, 1))
 
 x = layers.Dense((W_VEC_SIZE+1)*W_VEC_SIZE)(a)
 x = Multiply([x, b])
+
 
 
 
