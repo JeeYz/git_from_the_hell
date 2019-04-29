@@ -3,9 +3,9 @@
 # @Project: NLP
 # @Last modified by:   J.Y.
 <<<<<<< HEAD
-# @Last modified time: 2019-04-29T17:32:09+09:00
+# @Last modified time: 2019-04-29T17:35:36+09:00
 =======
-# @Last modified time: 2019-04-29T17:32:09+09:00
+# @Last modified time: 2019-04-29T17:35:36+09:00
 >>>>>>> 30b1d1b8ebe8b94538fab7853500cc1cafe97cfa
 # @License: JeeY
 # @Copyright: J.Y. JeeY
@@ -69,6 +69,7 @@ embedding_layer2 = Embedding(len(pos_matrix), P_VEC_SIZE,
 
 w = Input(batch_shape=(None, 2), dtype='int32', name='words')
 p = Input(batch_shape=(None, 2), dtype='int32', name='pos')
+length = Input(batch_shape=(None, 1), dtype='int32', name='length')
 
 ew1 = embedding_layer1(w)
 ep1 = embedding_layer2(p)
@@ -76,7 +77,7 @@ ep1 = embedding_layer2(p)
 embedded_sequences = layers.concatenate([ew1, ep1], axis=-1)
 embedded_sequences = Flatten()(embedded_sequences)
 
-x = Bidirectional(LSTM(128, return_sequences=True, dropout=0.15, recurrent_dropout=0.15))(x)
+x = Bidirectional(LSTM(length, return_sequences=True, dropout=0.15, recurrent_dropout=0.15))(x)
 x = Dropout(0.4)(x)
 a = layers.Dense(512, activation='relu')(x)
 b = layers.Dense(512, activation='relu')(x)
