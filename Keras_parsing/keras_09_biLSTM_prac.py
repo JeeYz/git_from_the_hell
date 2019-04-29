@@ -3,9 +3,9 @@
 # @Project: NLP
 # @Last modified by:   J.Y.
 <<<<<<< HEAD
-# @Last modified time: 2019-04-29T09:43:33+09:00
+# @Last modified time: 2019-04-29T17:32:09+09:00
 =======
-# @Last modified time: 2019-04-29T04:10:40+09:00
+# @Last modified time: 2019-04-29T17:32:09+09:00
 >>>>>>> 30b1d1b8ebe8b94538fab7853500cc1cafe97cfa
 # @License: JeeY
 # @Copyright: J.Y. JeeY
@@ -45,18 +45,20 @@ INPUT_SIZE = (18*W_VEC_SIZE*2 + 18*P_VEC_SIZE*2)
 
 fpath2 = 'd:/Program_Data/Parsing_Data/'
 filewrite = '00_result_training.result'
-savepara_name = 'd:/Program_Data/model_weights_k_16_dim_128_fT_pos_128dim_Dropout.h5'
+trainfile = 'd:/Program_Data/raw_train_dataset_21.train'
+savepara_name = 'd:/Program_Data/model_weights_k_17_bi_LSTM_proto.h5'
 
 # fw1 = open(fpath2 + filewrite, 'a', encoding='utf-8')
-filelist = k1.generate_file_list(fpath2, '.train')
+# filelist = k1.generate_file_list(fpath2, '.train')
 # words_matrix = k3.make_word_list(W_VEC_SIZE)
 # pos_matrix = k3.make_pos_list(P_VEC_SIZE)
 words_matrix = kfT.words_matrix_fastText(W_VEC_SIZE)
 pos_matrix = kfT.make_pos_fastText(P_VEC_SIZE)
-
-all_sents, sent_Words_data = p0.make_all_sents_to_list()
-all_init_test = p0.make_all_init_test_data()
-w_dict, p_dict = p0.make_words_pos_dict()
+# all_sents, sent_Words_data = p0.make_all_sents_to_list()
+all_word, all_pos = p2.make_all_data()
+all_label = p2.make_label_matrix()
+# all_init_test = p0.make_all_init_test_data()
+# w_dict, p_dict = p0.make_words_pos_dict()
 
 embedding_layer1 = Embedding(len(words_matrix), W_VEC_SIZE,
                             embeddings_initializer=Constant(words_matrix),
@@ -65,8 +67,8 @@ embedding_layer2 = Embedding(len(pos_matrix), P_VEC_SIZE,
                             embeddings_initializer=Constant(pos_matrix),
                             input_length=36)
 
-w = Input(batch_shape=(None, 36), dtype='int32', name='words')
-p = Input(batch_shape=(None, 36), dtype='int32', name='pos')
+w = Input(batch_shape=(None, 2), dtype='int32', name='words')
+p = Input(batch_shape=(None, 2), dtype='int32', name='pos')
 
 ew1 = embedding_layer1(w)
 ep1 = embedding_layer2(p)
@@ -84,17 +86,8 @@ b = p2.make_matrix_A(b)
 b = backend.permute_dimensions(b, (0, 2, 1))
 
 x = layers.Dense((W_VEC_SIZE+1)*W_VEC_SIZE)(a)
-x = Multiply([x, b])
-
-
-
-
-
-
-embedded_sequences = Dropout(0.4)(embedded_sequences)
-x = layers.Dense(512, activation='relu')(embedded_sequences)
-x = Dropout(0.4)(x)
-output_layer = layers.Dense(3, activation='softmax')(x)
+output_matrix = Multiply([x, b])
+result_matrix = p2.make_softmax(output_matrix)
 
 network = Model([w, p], output_layer)
 network.summary()
@@ -106,6 +99,13 @@ network.save_weights(savepara_name, overwrite=True)
 correct = 0
 total_q = 0
 num = 0
+for i in range(EPOCHS):
+    for k,sent_words in enumerate(all_word):
+        network.load_weights(savepara_name)
+        filename1 = fpath2 + j
+        print('%d th epoch : ' %(i+1), filename1)
+        network.fit({'words':sent_words, 'pos':all_pos[k]}, all_label[k], epochs=5)
+        network.save_weights(savepara_name, overwrite=True)
 
 
 
