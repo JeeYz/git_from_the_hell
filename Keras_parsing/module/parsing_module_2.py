@@ -2,7 +2,7 @@
 # @Date:   2019-04-25T11:43:51+09:00
 # @Project: NLP
 # @Last modified by:   J.Y.
-# @Last modified time: 2019-04-29T15:12:20+09:00
+# @Last modified time: 2019-04-30T16:33:04+09:00
 # @License: JeeY
 # @Copyright: J.Y. JeeY
 
@@ -14,10 +14,14 @@ trainfile = 'd:/Program_Data/raw_train_dataset_21.train'
 trainfile1 = 'd:/Program_Data/raw_train_dataset_05.train'
 
 def make_matrix_A(a):
-    return
+    result = list()
+    
+    return result
 
 def make_matrix_B(b):
-    return
+    result = list()
+
+    return result
 
 def making_dictionary_of_words():
     words_dict = dict()
@@ -71,8 +75,9 @@ def make_all_data():
 
     return all_word, all_pos
 
-def make_label_matrix()
+def make_label_matrix():
     all_label = list()
+    all_sent = list()
     with open(trainfile1, 'r', encoding='utf-8') as f:
         switch = 1
         sent = list()
@@ -87,11 +92,12 @@ def make_label_matrix()
                 continue
             if switch == 1:
                 len = len(line)
+                all_sent.append(line)
                 switch = 0
                 continue
             word_list = make_one_word_list(int(line[1]), len)
             sent.append(word_list)
-    return all_label
+    return all_label, all_sent
 
 def make_one_word_list(num, len):
     new = list()
