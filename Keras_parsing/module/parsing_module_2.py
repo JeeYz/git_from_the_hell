@@ -2,7 +2,7 @@
 # @Date:   2019-04-25T11:43:51+09:00
 # @Project: NLP
 # @Last modified by:   J.Y.
-# @Last modified time: 2019-04-30T16:33:04+09:00
+# @Last modified time: 2019-05-01T14:46:17+09:00
 # @License: JeeY
 # @Copyright: J.Y. JeeY
 
@@ -15,7 +15,7 @@ trainfile1 = 'd:/Program_Data/raw_train_dataset_05.train'
 
 def make_matrix_A(a):
     result = list()
-    
+
     return result
 
 def make_matrix_B(b):
@@ -91,17 +91,18 @@ def make_label_matrix():
                 switch = 1
                 continue
             if switch == 1:
-                len = len(line)
+                leng = len(line)
+                line.insert(0, 'ROOT')
                 all_sent.append(line)
                 switch = 0
                 continue
-            word_list = make_one_word_list(int(line[1]), len)
+            word_list = make_one_word_list(int(line[1]), leng)
             sent.append(word_list)
     return all_label, all_sent
 
-def make_one_word_list(num, len):
+def make_one_word_list(num, leng):
     new = list()
-    if i in range(len):
+    for i in range(leng):
         if i == num:
             new.append(1)
         else:
