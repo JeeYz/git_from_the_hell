@@ -2,11 +2,8 @@
 # @Date:   2019-04-25T10:56:41+09:00
 # @Project: NLP
 # @Last modified by:   J.Y.
-<<<<<<< HEAD
-# @Last modified time: 2019-04-30T16:38:30+09:00
-=======
-# @Last modified time: 2019-04-30T16:38:30+09:00
->>>>>>> 30b1d1b8ebe8b94538fab7853500cc1cafe97cfa
+# @Last modified time: 2019-05-01T11:32:08+09:00
+# @Last modified time: 2019-05-01T11:32:08+09:00
 # @License: JeeY
 # @Copyright: J.Y. JeeY
 
@@ -60,14 +57,14 @@ all_label, all_sent = p2.make_label_matrix()
 
 embedding_layer1 = Embedding(len(words_matrix), W_VEC_SIZE,
                             embeddings_initializer=Constant(words_matrix),
-                            input_length=36)
+                            input_length=2)
 embedding_layer2 = Embedding(len(pos_matrix), P_VEC_SIZE,
                             embeddings_initializer=Constant(pos_matrix),
-                            input_length=36)
+                            input_length=2)
 
-w = Input(batch_shape=(None, 2), dtype='int32', name='words')
-p = Input(batch_shape=(None, 2), dtype='int32', name='pos')
-length = Input(batch_shape=(None, 1), dtype='int32', name='length')
+w = Input(e=(2, 1), dtype='int32', name='words')
+p = Input(shape=(2, 1), dtype='int32', name='pos')
+length = Input(shape=(1, 1), dtype='int32', name='length')
 
 ew1 = embedding_layer1(w)
 ep1 = embedding_layer2(p)
@@ -105,8 +102,9 @@ for i in range(EPOCHS):
         network.load_weights(savepara_name)
         filename1 = fpath2 + j
         print('%d th epoch : ' %(i+1), filename1)
-        network.fit({'words':sent_words, 'pos':all_pos[k], 'length':len(all_sent[k])},
-                        all_label[k], epochs=5)
+        network.fit({'words':sent_words, 'pos':all_pos[k],
+                        'length':(len(all_sent[k])+1)}, all_label[k],
+                        epochs=5, batch_size=1)
         network.save_weights(savepara_name, overwrite=True)
 
 
