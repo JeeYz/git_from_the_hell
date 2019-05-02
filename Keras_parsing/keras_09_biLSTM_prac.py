@@ -2,8 +2,8 @@
 # @Date:   2019-04-25T10:56:41+09:00
 # @Project: NLP
 # @Last modified by:   J.Y.
-# @Last modified time: 2019-05-01T16:59:23+09:00
-# @Last modified time: 2019-05-01T16:59:23+09:00
+# @Last modified time: 2019-05-02T13:37:23+09:00
+# @Last modified time: 2019-05-02T13:37:23+09:00
 # @License: JeeY
 # @Copyright: J.Y. JeeY
 
@@ -67,23 +67,28 @@ embedding_layer2 = Embedding(len(pos_matrix), P_VEC_SIZE,
 #                             embeddings_initializer=Constant(pos_matrix),
 #                             input_length=2)
 
-w = Input(batch_shape=(None, 2), dtype='int32', name='words')
-p = Input(batch_shape=(None, 2), dtype='int32', name='pos')
-length = Input(batch_shape=(None, 1), dtype='int32', name='length')
+w = Input(shape=(1, 2), dtype='int32', name='words')
+p = Input(shape=(1, 2), dtype='int32', name='pos')
+length = Input(shape=(1, 2), dtype='int32', name='length')
+
+# w = Input(batch_shape=(None, 2), dtype='int32', name='words')
+# p = Input(batch_shape=(None, 2), dtype='int32', name='pos')
+# length = Input(batch_shape=(None, 1), dtype='int32', name='length')
 
 print(w, p, length)
 ew1 = embedding_layer1(w)
 ep1 = embedding_layer2(p)
-# print(ew1, ep1)
-# ew1 = Flatten()(ew1)
-# ep1 = Flatten()(ep1)
+print(ew1, ep1)
+ew1 = Flatten()(ew1)
+ep1 = Flatten()(ep1)
 print(ew1, ep1)
 es = layers.concatenate([ew1, ep1], axis=-1) ## es = embedded_sequences
 print(es)
 # es = Flatten()(es) ## es = embedded_sequences
+# es = [es, es]
 # print(es)
 
-x = Bidirectional(LSTM(length, return_sequences=True))(es)
+x = Bidirectional(LSTM(length, return_sequences=True), merge_mode='concat')(es)
 
 # x = Bidirectional(LSTM(length, return_sequences=True,
 #                     dropout=0.15, recurrent_dropout=0.15,
@@ -114,8 +119,6 @@ num = 0
 for i in range(EPOCHS):
     for k,sent_words in enumerate(all_word):
         network.load_weights(savepara_name)
-        filename1 = fpath2 + j
-        print('%d th epoch : ' %(i+1), filename1)
         network.fit({'words':sent_words, 'pos':all_pos[k],
                         'length':len(all_sent[k])}, all_label[k],
                         epochs=5, batch_size=1)
