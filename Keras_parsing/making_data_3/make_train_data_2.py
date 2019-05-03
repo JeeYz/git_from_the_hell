@@ -2,7 +2,7 @@
 # @Date:   2019-05-03T11:51:59+09:00
 # @Project: NLP
 # @Last modified by:   J.Y.
-# @Last modified time: 2019-05-03T14:29:18+09:00
+# @Last modified time: 2019-05-03T14:33:26+09:00
 # @License: JeeY
 # @Copyright: J.Y. JeeY
 
@@ -31,8 +31,8 @@ with open(fname1, 'r', encoding='utf-8') as f, open(fname2, 'a', encoding='utf-8
             new.append('ROOT')
             new.append(str(word_dict['ROOT']))
             new.append(str(word_dict['ROOT']))
-            new.append(str(word_dict['ROOT']))
-            new.append(str(word_dict['ROOT']))
+            new.append(str(pos_dict['ROOT']))
+            new.append(str(pos_dict['ROOT']))
             fw.write('    '.join(new) + '\n')
             switch = 0
             continue
@@ -44,11 +44,12 @@ with open(fname1, 'r', encoding='utf-8') as f, open(fname2, 'a', encoding='utf-8
             switch = 1
             fw.write('\n')
             continue
+        # print(line)
         new.append(line[0])
-        new.append(str(word_dict[line[1]]))
-        new.append(str(word_dict[line[3]]))
-        new.append(str(pos_dict[line[2]]))
-        new.append(str(pos_dict[line[4]]))
+        new.append(str(line[1]))
+        new.append(str(line[3]))
+        new.append(str(line[2]))
+        new.append(str(line[4]))
         fw.write('    '.join(new) + '\n')
 
 
