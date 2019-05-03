@@ -2,8 +2,8 @@
 # @Date:   2019-04-25T10:56:41+09:00
 # @Project: NLP
 # @Last modified by:   J.Y.
-# @Last modified time: 2019-05-02T13:37:23+09:00
-# @Last modified time: 2019-05-02T13:37:23+09:00
+# @Last modified time: 2019-05-03T11:38:00+09:00
+# @Last modified time: 2019-05-03T11:38:00+09:00
 # @License: JeeY
 # @Copyright: J.Y. JeeY
 
@@ -88,7 +88,7 @@ print(es)
 # es = [es, es]
 # print(es)
 
-x = Bidirectional(LSTM(length, return_sequences=True), merge_mode='concat')(es)
+x = Bidirectional(LSTM(128, return_sequences=True), merge_mode='concat')(es)
 
 # x = Bidirectional(LSTM(length, return_sequences=True,
 #                     dropout=0.15, recurrent_dropout=0.15,
