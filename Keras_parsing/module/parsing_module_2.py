@@ -2,7 +2,7 @@
 # @Date:   2019-04-25T11:43:51+09:00
 # @Project: NLP
 # @Last modified by:   J.Y.
-# @Last modified time: 2019-05-03T11:38:13+09:00
+# @Last modified time: 2019-05-07T01:10:53+09:00
 # @License: JeeY
 # @Copyright: J.Y. JeeY
 
@@ -10,7 +10,7 @@ import numpy as np
 
 file1 = 'd:/Program_Data/result_raw_words_list_00.words'
 file2 = 'd:/Program_Data/result_pos_temp_01.pos'
-trainfile = 'd:/Program_Data/raw_train_dataset_21.train'
+trainfile = 'd:/Program_Data/raw_train_dataset_22.train'
 trainfile1 = 'd:/Program_Data/raw_train_dataset_05.train'
 
 def make_matrix_A(a):

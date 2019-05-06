@@ -2,8 +2,8 @@
 # @Date:   2019-04-25T10:56:41+09:00
 # @Project: NLP
 # @Last modified by:   J.Y.
-# @Last modified time: 2019-05-03T16:53:18+09:00
-# @Last modified time: 2019-05-03T16:53:18+09:00
+# @Last modified time: 2019-05-07T03:16:41+09:00
+# @Last modified time: 2019-05-07T03:16:41+09:00
 # @License: JeeY
 # @Copyright: J.Y. JeeY
 
@@ -55,6 +55,14 @@ all_label, all_sent = p2.make_label_matrix()
 # all_init_test = p0.make_all_init_test_data()
 # w_dict, p_dict = p0.make_words_pos_dict()
 
+w = Input(shape=(1, 2), dtype='int32', name='words')
+p = Input(shape=(1, 2), dtype='int32', name='pos')
+length = Input(shape=(1, 2), dtype='int32', name='length')
+
+# w = Input(batch_shape=(None, 2), dtype='int32', name='words')
+# p = Input(batch_shape=(None, 2), dtype='int32', name='pos')
+# length = Input(batch_shape=(None, 1), dtype='int32', name='length')
+
 embedding_layer1 = Embedding(len(words_matrix), W_VEC_SIZE,
                             embeddings_initializer=Constant(words_matrix))
 embedding_layer2 = Embedding(len(pos_matrix), P_VEC_SIZE,
@@ -66,14 +74,6 @@ embedding_layer2 = Embedding(len(pos_matrix), P_VEC_SIZE,
 # embedding_layer2 = Embedding(len(pos_matrix), P_VEC_SIZE,
 #                             embeddings_initializer=Constant(pos_matrix),
 #                             input_length=2)
-
-w = Input(shape=(1, 2), dtype='int32', name='words')
-p = Input(shape=(1, 2), dtype='int32', name='pos')
-length = Input(shape=(1, 2), dtype='int32', name='length')
-
-# w = Input(batch_shape=(None, 2), dtype='int32', name='words')
-# p = Input(batch_shape=(None, 2), dtype='int32', name='pos')
-# length = Input(batch_shape=(None, 1), dtype='int32', name='length')
 
 print(w, p, length)
 ew1 = embedding_layer1(w)
@@ -88,7 +88,8 @@ print(es)
 # es = [es, es]
 # print(es)
 
-x = Bidirectional(LSTM(128, return_sequences=True), merge_mode='concat')(es)
+x = Bidirectional(LSTM(128, return_sequences=True,
+                    batch_input_shape=(1, length, 512)), merge_mode='concat')(es)
 
 # x = Bidirectional(LSTM(length, return_sequences=True,
 #                     dropout=0.15, recurrent_dropout=0.15,
