@@ -2,13 +2,6 @@
 # @Date:   2019-04-25T10:56:41+09:00
 # @Project: NLP
 # @Last modified by:   J.Y.
-<<<<<<< HEAD
-# @Last modified time: 2019-05-07T11:14:11+09:00
-# @Last modified time: 2019-05-07T11:14:11+09:00
-=======
-# @Last modified time: 2019-05-07T03:37:31+09:00
-# @Last modified time: 2019-05-07T03:37:31+09:00
->>>>>>> f1ed979e0bc9401e3033af4b07b35e59b84e332b
 # @License: JeeY
 # @Copyright: J.Y. JeeY
 
@@ -60,37 +53,15 @@ all_label, all_sent = p2.make_label_matrix()
 # all_init_test = p0.make_all_init_test_data()
 # w_dict, p_dict = p0.make_words_pos_dict()
 
-w = Input(shape=(1, 2), dtype='int32', name='words')
-p = Input(shape=(1, 2), dtype='int32', name='pos')
-length = Input(shape=(1, 2), dtype='int32', name='length')
-
-# w = Input(batch_shape=(None, 2), dtype='int32', name='words')
-# p = Input(batch_shape=(None, 2), dtype='int32', name='pos')
-# length = Input(batch_shape=(None, 1), dtype='int32', name='length')
+w = Input(shape=(None, 2), dtype='int32', name='words')
+p = Input(shape=(None, 2), dtype='int32', name='pos')
+length = Input(shape=(None, 1),dtype='int32', name='length')
 
 embedding_layer1 = Embedding(len(words_matrix), W_VEC_SIZE,
                             embeddings_initializer=Constant(words_matrix))
 embedding_layer2 = Embedding(len(pos_matrix), P_VEC_SIZE,
                             embeddings_initializer=Constant(pos_matrix))
 
-# embedding_layer1 = Embedding(len(words_matrix), W_VEC_SIZE,
-#                             embeddings_initializer=Constant(words_matrix),
-#                             input_length=2)
-# embedding_layer2 = Embedding(len(pos_matrix), P_VEC_SIZE,
-#                             embeddings_initializer=Constant(pos_matrix),
-#                             input_length=2)
-
-<<<<<<< HEAD
-w = Input(shape=(None, 2), dtype='int32', name='words')
-p = Input(shape=(None, 2), dtype='int32', name='pos')
-length = Input(shape=(None, 1), dtype='int32', name='length')
-
-# w = Input(batch_shape=(None, 2), dtype='int32', name='words')
-# p = Input(batch_shape=(None, 2), dtype='int32', name='pos')
-# length = Input(batch_shape=(None, 1), dtype='int32', name='length')
-
-=======
->>>>>>> f1ed979e0bc9401e3033af4b07b35e59b84e332b
 print(w, p, length)
 ew1 = embedding_layer1(w)
 ep1 = embedding_layer2(p)
@@ -105,7 +76,7 @@ print(es)
 # print(es)
 
 x = Bidirectional(LSTM(128, return_sequences=True,
-                    batch_input_shape=(1, length, 512)), merge_mode='concat')(es)
+                    input_shape=(1, length[2], 512)), merge_mode='concat')(es)
 
 # x = Bidirectional(LSTM(length, return_sequences=True,
 #                     dropout=0.15, recurrent_dropout=0.15,
