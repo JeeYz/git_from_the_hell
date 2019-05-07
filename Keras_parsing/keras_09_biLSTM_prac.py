@@ -2,8 +2,8 @@
 # @Date:   2019-04-25T10:56:41+09:00
 # @Project: NLP
 # @Last modified by:   J.Y.
-# @Last modified time: 2019-05-03T16:53:18+09:00
-# @Last modified time: 2019-05-03T16:53:18+09:00
+# @Last modified time: 2019-05-07T11:14:11+09:00
+# @Last modified time: 2019-05-07T11:14:11+09:00
 # @License: JeeY
 # @Copyright: J.Y. JeeY
 
@@ -67,9 +67,9 @@ embedding_layer2 = Embedding(len(pos_matrix), P_VEC_SIZE,
 #                             embeddings_initializer=Constant(pos_matrix),
 #                             input_length=2)
 
-w = Input(shape=(1, 2), dtype='int32', name='words')
-p = Input(shape=(1, 2), dtype='int32', name='pos')
-length = Input(shape=(1, 2), dtype='int32', name='length')
+w = Input(shape=(None, 2), dtype='int32', name='words')
+p = Input(shape=(None, 2), dtype='int32', name='pos')
+length = Input(shape=(None, 1), dtype='int32', name='length')
 
 # w = Input(batch_shape=(None, 2), dtype='int32', name='words')
 # p = Input(batch_shape=(None, 2), dtype='int32', name='pos')
