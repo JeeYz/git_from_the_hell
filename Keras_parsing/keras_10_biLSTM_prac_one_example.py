@@ -2,7 +2,7 @@
 # @Date:   2019-05-09T11:28:21+09:00
 # @Project: NLP
 # @Last modified by:   J.Y.
-# @Last modified time: 2019-05-09T14:07:19+09:00
+# @Last modified time: 2019-05-10T13:04:24+09:00
 # @License: JeeY
 # @Copyright: J.Y. JeeY
 
@@ -45,7 +45,12 @@ word, pos, label = p3.make_small_train_data()
 
 w = Input(shape=(None, 2), dtype='int32', name='words')
 p = Input(shape=(None, 2), dtype='int32', name='pos')
-print(w, p)
+l = Input(shape=(None, 1), dtype='int32', name='length')
+
+print(w, p, l)
+print(backend.int_shape(w))
+print(backend.int_shape(l))
+print(backend.eval(l))
 
 embedding_layer1 = Embedding(len(words_matrix), W_VEC_SIZE,
                             embeddings_initializer=Constant(words_matrix))
@@ -54,8 +59,9 @@ embedding_layer2 = Embedding(len(pos_matrix), P_VEC_SIZE,
 
 ew1 = embedding_layer1(w)
 ep1 = embedding_layer2(p)
-length = len(w[0][1])
-print(length)
+# print(backend.shape(w))
+# length = len(w)
+# print(length)
 print(ew1, ep1)
 ew1 = Flatten()(ew1)
 ep1 = Flatten()(ep1)
@@ -89,7 +95,7 @@ total_q = 0
 num = 0
 for i in range(EPOCHS):
     network.load_weights(savepara_name)
-    network.fit({'words':word, 'pos':pos}, label,
+    network.fit({'words':word, 'pos':pos, 'length':len(word)}, label,
                     epochs=5, batch_size=1)
     network.save_weights(savepara_name, overwrite=True)
 
