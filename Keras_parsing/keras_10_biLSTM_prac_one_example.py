@@ -2,7 +2,7 @@
 # @Date:   2019-05-09T11:28:21+09:00
 # @Project: NLP
 # @Last modified by:   J.Y.
-# @Last modified time: 2019-05-10T13:04:24+09:00
+# @Last modified time: 2019-05-13T05:33:31+09:00
 # @License: JeeY
 # @Copyright: J.Y. JeeY
 
@@ -11,20 +11,24 @@ from __future__ import print_function
 import os
 import sys
 import numpy as np
+import tensorflow as tf
 sys.path.append(r'./module')
 
 from keras import models
 from keras import layers
 from keras import backend
+from keras import activations
+from keras.activations import softmax
 from keras.models import load_model
 from keras.layers import Input, Dense, Embedding, Flatten, Dropout
-from keras.layers import LSTM, Bidirectional, Multiply
+from keras.layers import LSTM, Bidirectional, Multiply, Reshape
 from keras.models import Model, Sequential
 from keras import Input
 from keras.initializers import Constant
 
 import keras_module_for_fastText as kfT
 
+import parsing_module_2 as p2
 import parsing_module_3 as p3
 
 BATCH_SIZE = 128
@@ -48,9 +52,14 @@ p = Input(shape=(None, 2), dtype='int32', name='pos')
 l = Input(shape=(None, 1), dtype='int32', name='length')
 
 print(w, p, l)
+# print(backend.eval(l))
+print(backend.gather(w, 2))
+print(backend.gather(l, 2))
+print('\n')
+
 print(backend.int_shape(w))
 print(backend.int_shape(l))
-print(backend.eval(l))
+print('\n\n\n')
 
 embedding_layer1 = Embedding(len(words_matrix), W_VEC_SIZE,
                             embeddings_initializer=Constant(words_matrix))
@@ -62,28 +71,47 @@ ep1 = embedding_layer2(p)
 # print(backend.shape(w))
 # length = len(w)
 # print(length)
-print(ew1, ep1)
-ew1 = Flatten()(ew1)
-ep1 = Flatten()(ep1)
-print(ew1, ep1)
+print(ew1, ep1, '\n\n\n')
+# ew1 = Flatten()(ew1)
+# ep1 = Flatten()(ep1)
+# ew1 = backend.reshape(ew1, shape=(1, -1, W_VEC_SIZE*2))
+# ep1 = backend.reshape(ep1, shape=(1, -1, P_VEC_SIZE*2))
+ew1 = Reshape((-1, W_VEC_SIZE*2))(ew1)
+ep1 = Reshape((-1, P_VEC_SIZE*2))(ep1)
+print(ew1, ep1, '\n\n\n')
 es = layers.concatenate([ew1, ep1], axis=-1) ## es = embedded_sequences
-print(es)
+# print(es, '\n')
+# es = Reshape((1, None, W_VEC_SIZE*4))(es)
+print(es, '\n\n\n')
 
 x = Bidirectional(LSTM(128, return_sequences=True,
-                    input_shape=(1, length, 512)), merge_mode='concat')(es)
+                    input_shape=(1, None, 512)), merge_mode='concat')(es)
 
-print(x)
+print(backend.int_shape(x), '\n\n\n')
 x = Dropout(0.4)(x)
-a = layers.Dense(512, activation='relu')(x)
-b = layers.Dense(512, activation='relu')(x)
+a = layers.Dense(W_VEC_SIZE, activation='relu')(x)
+b = layers.Dense(W_VEC_SIZE, activation='relu')(x)
 
 b = backend.permute_dimensions(b, (0, 2, 1))
 
-x = layers.Dense((W_VEC_SIZE+1)*W_VEC_SIZE)(a)
-output_matrix = Multiply([x, b])
-result_matrix = p2.make_softmax(output_matrix)
+x = layers.Dense((W_VEC_SIZE)*W_VEC_SIZE)(a)
+x = Reshape((W_VEC_SIZE, W_VEC_SIZE))(x)
 
-network = Model([w, p], output_layer)
+print(backend.int_shape(a), '\n\n')
+print(backend.int_shape(b), '\n\n')
+print(backend.int_shape(x), '\n\n')
+
+x = backend.dot(a, x)
+print(backend.int_shape(x), '\n\n')
+
+output_matrix = backend.dot(x, b)
+print(backend.int_shape(output_matrix), '\n\n')
+
+result_matrix = softmax(output_matrix)
+print(result_matrix)
+print(backend.int_shape(result_matrix))
+
+network = Model([w, p], result_matrix)
 network.summary()
 
 # network.compile(optimizer='rmsprop', loss='categorical_crossentropy', metrics=['accuracy'])

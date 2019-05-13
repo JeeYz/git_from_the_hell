@@ -2,9 +2,11 @@
 # @Date:   2019-05-09T11:29:24+09:00
 # @Project: NLP
 # @Last modified by:   J.Y.
-# @Last modified time: 2019-05-10T10:58:17+09:00
+# @Last modified time: 2019-05-13T05:23:12+09:00
 # @License: JeeY
 # @Copyright: J.Y. JeeY
+
+import numpy as np
 
 trainfile = 'd:/Program_Data/raw_train_dataset_23.train'
 
@@ -28,9 +30,10 @@ def make_small_train_data():
                 continue
             word.append([line[1], line[2]])
             pos.append([line[3], line[4]])
-    print(word)
-    print(pos)
-    print(label)
+    print(word, '\n\n')
+    print(pos, '\n\n')
+    # label = np.array(label)
+    print(label, '\n\n')
     return word, pos, label
 
 
