@@ -2,7 +2,7 @@
 # @Date:   2019-05-09T11:28:21+09:00
 # @Project: NLP
 # @Last modified by:   J.Y.
-# @Last modified time: 2019-05-13T05:33:31+09:00
+# @Last modified time: 2019-05-13T18:06:18+09:00
 # @License: JeeY
 # @Copyright: J.Y. JeeY
 
@@ -25,6 +25,7 @@ from keras.layers import LSTM, Bidirectional, Multiply, Reshape
 from keras.models import Model, Sequential
 from keras import Input
 from keras.initializers import Constant
+from keras.backend import argmax
 
 import keras_module_for_fastText as kfT
 
@@ -52,7 +53,6 @@ p = Input(shape=(None, 2), dtype='int32', name='pos')
 l = Input(shape=(None, 1), dtype='int32', name='length')
 
 print(w, p, l)
-# print(backend.eval(l))
 print(backend.gather(w, 2))
 print(backend.gather(l, 2))
 print('\n')
@@ -68,48 +68,48 @@ embedding_layer2 = Embedding(len(pos_matrix), P_VEC_SIZE,
 
 ew1 = embedding_layer1(w)
 ep1 = embedding_layer2(p)
-# print(backend.shape(w))
-# length = len(w)
-# print(length)
+
 print(ew1, ep1, '\n\n\n')
-# ew1 = Flatten()(ew1)
-# ep1 = Flatten()(ep1)
+
 # ew1 = backend.reshape(ew1, shape=(1, -1, W_VEC_SIZE*2))
 # ep1 = backend.reshape(ep1, shape=(1, -1, P_VEC_SIZE*2))
 ew1 = Reshape((-1, W_VEC_SIZE*2))(ew1)
 ep1 = Reshape((-1, P_VEC_SIZE*2))(ep1)
 print(ew1, ep1, '\n\n\n')
 es = layers.concatenate([ew1, ep1], axis=-1) ## es = embedded_sequences
-# print(es, '\n')
-# es = Reshape((1, None, W_VEC_SIZE*4))(es)
+
 print(es, '\n\n\n')
 
 x = Bidirectional(LSTM(128, return_sequences=True,
-                    input_shape=(1, None, 512)), merge_mode='concat')(es)
+                    input_shape=(1, -1, 512)), merge_mode='concat')(es)
 
-print(backend.int_shape(x), '\n\n\n')
+print('x : ', backend.int_shape(x), x, '\n\n\n')
 x = Dropout(0.4)(x)
 a = layers.Dense(W_VEC_SIZE, activation='relu')(x)
 b = layers.Dense(W_VEC_SIZE, activation='relu')(x)
 
 b = backend.permute_dimensions(b, (0, 2, 1))
 
-x = layers.Dense((W_VEC_SIZE)*W_VEC_SIZE)(a)
-x = Reshape((W_VEC_SIZE, W_VEC_SIZE))(x)
+print('a : ', backend.int_shape(a), '\n\n')
+print('b : ', backend.int_shape(b), '\n\n')
 
-print(backend.int_shape(a), '\n\n')
-print(backend.int_shape(b), '\n\n')
-print(backend.int_shape(x), '\n\n')
-
+x = backend.random_uniform_variable((W_VEC_SIZE, W_VEC_SIZE), 0, 1, seed=1)
+print('x : ', backend.int_shape(x), x, '\n\n\n')
 x = backend.dot(a, x)
-print(backend.int_shape(x), '\n\n')
+print('x : ', backend.int_shape(x), x, '\n\n\n')
+output_matrix = backend.batch_dot(x, b)
+print('output_matrix : ', backend.int_shape(output_matrix), '\n\n')
 
-output_matrix = backend.dot(x, b)
-print(backend.int_shape(output_matrix), '\n\n')
 
-result_matrix = softmax(output_matrix)
-print(result_matrix)
-print(backend.int_shape(result_matrix))
+
+# result_matrix = argmax(softmax(output_matrix))
+# # result_matrix = Reshape((1, ))(result_matrix)
+# print(result_matrix)
+# print(backend.int_shape(result_matrix))
+#
+# result_matrix = backend.squeeze(result_matrix, 0)
+# print(result_matrix)
+# print(backend.int_shape(result_matrix))
 
 network = Model([w, p], result_matrix)
 network.summary()
