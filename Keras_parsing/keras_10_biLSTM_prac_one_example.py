@@ -2,7 +2,7 @@
 # @Date:   2019-05-09T11:28:21+09:00
 # @Project: NLP
 # @Last modified by:   J.Y.
-# @Last modified time: 2019-05-13T18:06:18+09:00
+# @Last modified time: 2019-05-14T16:10:56+09:00
 # @License: JeeY
 # @Copyright: J.Y. JeeY
 
@@ -59,6 +59,7 @@ print('\n')
 
 print(backend.int_shape(w))
 print(backend.int_shape(l))
+print(backend.get_value(l[2]))
 print('\n\n\n')
 
 embedding_layer1 = Embedding(len(words_matrix), W_VEC_SIZE,
@@ -97,10 +98,10 @@ x = backend.random_uniform_variable((W_VEC_SIZE, W_VEC_SIZE), 0, 1, seed=1)
 print('x : ', backend.int_shape(x), x, '\n\n\n')
 x = backend.dot(a, x)
 print('x : ', backend.int_shape(x), x, '\n\n\n')
-output_matrix = backend.batch_dot(x, b)
-print('output_matrix : ', backend.int_shape(output_matrix), '\n\n')
+x = backend.batch_dot(x, b)
+print('output_matrix : ', backend.int_shape(x), '\n\n')
 
-
+# x = Dense()
 
 # result_matrix = argmax(softmax(output_matrix))
 # # result_matrix = Reshape((1, ))(result_matrix)
@@ -126,6 +127,8 @@ for i in range(EPOCHS):
     network.fit({'words':word, 'pos':pos, 'length':len(word)}, label,
                     epochs=5, batch_size=1)
     network.save_weights(savepara_name, overwrite=True)
+
+
 
 
 
