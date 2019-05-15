@@ -2,7 +2,7 @@
 # @Date:   2019-05-09T11:28:21+09:00
 # @Project: NLP
 # @Last modified by:   J.Y.
-# @Last modified time: 2019-05-15T16:49:02+09:00
+# @Last modified time: 2019-05-15T17:13:50+09:00
 # @License: JeeY
 # @Copyright: J.Y. JeeY
 
@@ -56,7 +56,8 @@ print(w, p)
 print(backend.gather(w, 2))
 print('\n')
 print(backend.int_shape(w))
-print(backend.print_tensor(w))
+print(backend.get_value(w))
+
 print('\n\n\n')
 
 embedding_layer1 = Embedding(len(words_matrix), W_VEC_SIZE,
