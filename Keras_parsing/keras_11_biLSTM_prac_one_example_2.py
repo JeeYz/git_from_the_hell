@@ -2,7 +2,7 @@
 # @Date:   2019-05-09T11:28:21+09:00
 # @Project: NLP
 # @Last modified by:   J.Y.
-# @Last modified time: 2019-05-15T11:29:37+09:00
+# @Last modified time: 2019-05-15T11:36:49+09:00
 # @License: JeeY
 # @Copyright: J.Y. JeeY
 
@@ -50,9 +50,9 @@ word, pos, label = p3.make_small_train_data()
 
 w = Input(shape=(None, 2), dtype='int32', name='words')
 p = Input(shape=(None, 2), dtype='int32', name='pos')
-l = Input(shape=(None, 1), dtype='int32', name='length')
+# l = Input(shape=(None, 1), dtype='int32', name='length')
 
-print(w, p, l)
+print(w, p)
 print(backend.gather(w, 2))
 print(backend.gather(l, 2))
 print('\n')
@@ -81,7 +81,7 @@ es = layers.concatenate([ew1, ep1], axis=-1) ## es = embedded_sequences
 print(es, '\n\n\n')
 
 x = Bidirectional(LSTM(128, return_sequences=True,
-                    input_shape=(1, -1, 512)), merge_mode='concat')(es)
+                    input_shape=(1, 21, 512)), merge_mode='concat')(es)
 
 print('x : ', backend.int_shape(x), x, '\n\n\n')
 x = Dropout(0.4)(x)
@@ -100,7 +100,7 @@ print('x : ', backend.int_shape(x), x, '\n\n\n')
 x = backend.batch_dot(x, b)
 print('output_matrix : ', backend.int_shape(x), '\n\n')
 
-result_matrix = Dense(input_shape=(23, ), activation='softmax')(x)
+result_matrix = Dense(21, input_shape=(21, ), activation='softmax')(x)
 
 # result_matrix = argmax(softmax(output_matrix))
 # # result_matrix = Reshape((1, ))(result_matrix)
@@ -123,7 +123,7 @@ total_q = 0
 num = 0
 for i in range(EPOCHS):
     network.load_weights(savepara_name)
-    network.fit({'words':word, 'pos':pos, 'length':len(word)}, label,
+    network.fit({'words':word, 'pos':pos}, label,
                     epochs=5, batch_size=1)
     network.save_weights(savepara_name, overwrite=True)
 
