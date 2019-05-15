@@ -2,7 +2,7 @@
 # @Date:   2019-05-09T11:28:21+09:00
 # @Project: NLP
 # @Last modified by:   J.Y.
-# @Last modified time: 2019-05-15T17:13:50+09:00
+# @Last modified time: 2019-05-15T17:27:25+09:00
 # @License: JeeY
 # @Copyright: J.Y. JeeY
 
@@ -56,8 +56,7 @@ print(w, p)
 print(backend.gather(w, 2))
 print('\n')
 print(backend.int_shape(w))
-print(backend.get_value(w))
-
+# print(backend.print_tensor(w))
 print('\n\n\n')
 
 embedding_layer1 = Embedding(len(words_matrix), W_VEC_SIZE,
@@ -109,7 +108,7 @@ print(x, '\n\n')
 # x = Lambda(backend.argmax(x, axis=-1), output_shape=(1, 21))
 
 print(x, '\n\n')
-network = Model([w, p], *x)
+network = Model([w, p], x)
 network.summary()
 
 # network.compile(optimizer='rmsprop', loss='categorical_crossentropy', metrics=['accuracy'])
