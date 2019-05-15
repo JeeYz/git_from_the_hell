@@ -2,7 +2,7 @@
 # @Date:   2019-05-09T11:28:21+09:00
 # @Project: NLP
 # @Last modified by:   J.Y.
-# @Last modified time: 2019-05-15T11:36:49+09:00
+# @Last modified time: 2019-05-15T16:49:02+09:00
 # @License: JeeY
 # @Copyright: J.Y. JeeY
 
@@ -21,7 +21,7 @@ from keras import activations
 from keras.activations import softmax
 from keras.models import load_model
 from keras.layers import Input, Dense, Embedding, Flatten, Dropout
-from keras.layers import LSTM, Bidirectional, Multiply, Reshape
+from keras.layers import LSTM, Bidirectional, Multiply, Reshape, Lambda
 from keras.models import Model, Sequential
 from keras import Input
 from keras.initializers import Constant
@@ -48,17 +48,15 @@ pos_matrix = kfT.make_pos_fastText(P_VEC_SIZE)
 
 word, pos, label = p3.make_small_train_data()
 
-w = Input(shape=(None, 2), dtype='int32', name='words')
-p = Input(shape=(None, 2), dtype='int32', name='pos')
+w = Input(shape=(21, 2), dtype='int32', name='words')
+p = Input(shape=(21, 2), dtype='int32', name='pos')
 # l = Input(shape=(None, 1), dtype='int32', name='length')
 
 print(w, p)
 print(backend.gather(w, 2))
-print(backend.gather(l, 2))
 print('\n')
-
 print(backend.int_shape(w))
-print(backend.int_shape(l))
+print(backend.print_tensor(w))
 print('\n\n\n')
 
 embedding_layer1 = Embedding(len(words_matrix), W_VEC_SIZE,
@@ -98,20 +96,19 @@ print('x : ', backend.int_shape(x), x, '\n\n\n')
 x = backend.dot(a, x)
 print('x : ', backend.int_shape(x), x, '\n\n\n')
 x = backend.batch_dot(x, b)
+print(x, '\n')
 print('output_matrix : ', backend.int_shape(x), '\n\n')
 
-result_matrix = Dense(21, input_shape=(21, ), activation='softmax')(x)
+# x = Dense(21, input_shape=(21, ), activation='softmax')(x)
+# x = Dense(21, activation='softmax')(x)
+x = backend.argmax(x, axis=-1)
+print(x, '\n\n')
+# x = Lambda(x)
 
-# result_matrix = argmax(softmax(output_matrix))
-# # result_matrix = Reshape((1, ))(result_matrix)
-# print(result_matrix)
-# print(backend.int_shape(result_matrix))
-#
-# result_matrix = backend.squeeze(result_matrix, 0)
-# print(result_matrix)
-# print(backend.int_shape(result_matrix))
+# x = Lambda(backend.argmax(x, axis=-1), output_shape=(1, 21))
 
-network = Model([w, p], result_matrix)
+print(x, '\n\n')
+network = Model([w, p], *x)
 network.summary()
 
 # network.compile(optimizer='rmsprop', loss='categorical_crossentropy', metrics=['accuracy'])
