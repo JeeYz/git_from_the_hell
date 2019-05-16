@@ -2,7 +2,7 @@
 # @Date:   2019-05-09T11:29:24+09:00
 # @Project: NLP
 # @Last modified by:   J.Y.
-# @Last modified time: 2019-05-15T11:01:32+09:00
+# @Last modified time: 2019-05-16T10:01:49+09:00
 # @License: JeeY
 # @Copyright: J.Y. JeeY
 
@@ -34,7 +34,7 @@ def make_small_train_data():
     print(pos, '\n\n')
     # label = np.array(label)
     print(label, '\n\n')
-    return word, pos, label
+    return word, pos, [label]
 
 
 

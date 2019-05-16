@@ -2,7 +2,7 @@
 # @Date:   2019-05-09T11:28:21+09:00
 # @Project: NLP
 # @Last modified by:   J.Y.
-# @Last modified time: 2019-05-15T20:11:02+09:00
+# @Last modified time: 2019-05-16T10:30:30+09:00
 # @License: JeeY
 # @Copyright: J.Y. JeeY
 
@@ -26,6 +26,7 @@ from keras.models import Model, Sequential
 from keras import Input
 from keras.initializers import Constant
 from keras.backend import argmax
+from custom_layer_0 import Dozat
 
 import keras_module_for_fastText as kfT
 
@@ -88,24 +89,7 @@ b = layers.Dense(W_VEC_SIZE, activation='relu')(x)
 
 b = backend.permute_dimensions(b, (0, 2, 1))
 
-print('a : ', backend.int_shape(a), '\n\n')
-print('b : ', backend.int_shape(b), '\n\n')
-
-x = backend.random_uniform_variable((W_VEC_SIZE, W_VEC_SIZE), 0, 1, seed=1)
-print('x : ', backend.int_shape(x), x, '\n\n\n')
-x = backend.dot(a, x)
-print('x : ', backend.int_shape(x), x, '\n\n\n')
-x = backend.batch_dot(x, b)
-print(x, '\n')
-print('output_matrix : ', backend.int_shape(x), '\n\n')
-
-# x = Dense(21, input_shape=(21, ), activation='softmax')(x)
-# x = Dense(21, activation='softmax')(x)
-x = backend.argmax(x, axis=-1)
-print(x, '\n\n')
-# x = Lambda(x)
-
-# x = Lambda(backend.argmax(x, axis=-1), output_shape=(1, 21))
+x = Dozat(a, b, 21)
 
 print(x, '\n\n')
 network = Model([w, p], x)
