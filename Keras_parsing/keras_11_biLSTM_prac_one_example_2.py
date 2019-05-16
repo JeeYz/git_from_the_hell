@@ -2,7 +2,7 @@
 # @Date:   2019-05-09T11:28:21+09:00
 # @Project: NLP
 # @Last modified by:   J.Y.
-# @Last modified time: 2019-05-16T12:06:24+09:00
+# @Last modified time: 2019-05-16T15:52:23+09:00
 # @License: JeeY
 # @Copyright: J.Y. JeeY
 
@@ -32,6 +32,8 @@ import keras_module_for_fastText as kfT
 
 import parsing_module_2 as p2
 import parsing_module_3 as p3
+
+from parsing_module_3 import find_argmax
 
 BATCH_SIZE = 128
 EPOCHS = 10
@@ -83,7 +85,7 @@ x = Bidirectional(LSTM(128, return_sequences=True,
                     input_shape=(1, 21, 512)), merge_mode='concat')(es)
 
 print('x : ', backend.int_shape(x), x, '\n\n\n')
-x = Dropout(0.4)(x)
+x = Dropout(rate=0.4)(x)
 a = layers.Dense(W_VEC_SIZE, activation='relu')(x)
 b = layers.Dense(W_VEC_SIZE, activation='relu')(x)
 b = backend.permute_dimensions(b, (0, 2, 1))
@@ -93,14 +95,15 @@ x = Dozat(21)([a, b])
 # m = backend.random_uniform_variable((128, 128), 0, 1, seed=1)
 # x = backend.dot(a, m)
 # x = backend.batch_dot(x, b)
-# # x = Lambda(backend.argmax(x, axis=-1), output_shape=(1, 21))(x)
-# x = backend.argmax(x, axis=-1)
-# layer = Lambda(x, output_shape=(1, 21))
+# # x = backend.argmax(x, axis=-1)
+# # layer = Lambda(backend.argmax(x, axis=-1), output_shape=(1, 21))
+# layer = Lambda(find_argmax, output_shape=(1, 21))
+# # x = Lambda(x, output_shape=(1, 21))(x)
 # x = layer(x)
 
 print(x, '\n\n')
 
-network = Model([w, p], x)
+network = Model([w, p], [x])
 network.summary()
 
 # network.compile(optimizer='rmsprop', loss='categorical_crossentropy', metrics=['accuracy'])

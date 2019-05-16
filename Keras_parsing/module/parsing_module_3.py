@@ -2,11 +2,13 @@
 # @Date:   2019-05-09T11:29:24+09:00
 # @Project: NLP
 # @Last modified by:   J.Y.
-# @Last modified time: 2019-05-16T10:01:49+09:00
+# @Last modified time: 2019-05-16T14:10:38+09:00
 # @License: JeeY
 # @Copyright: J.Y. JeeY
 
 import numpy as np
+from keras.backend import argmax
+from keras import backend as K
 
 trainfile = 'd:/Program_Data/raw_train_dataset_23.train'
 
@@ -36,6 +38,14 @@ def make_small_train_data():
     print(label, '\n\n')
     return word, pos, [label]
 
+def find_argmax(x):
+    return K.argmax(x, axis=-1)
 
+
+
+
+
+if __name__ == '__main__':
+    print('hello, world~!')
 
 ## endl
