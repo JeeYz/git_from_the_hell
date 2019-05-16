@@ -2,7 +2,7 @@
 # @Date:   2019-05-09T11:28:21+09:00
 # @Project: NLP
 # @Last modified by:   J.Y.
-# @Last modified time: 2019-05-16T10:30:30+09:00
+# @Last modified time: 2019-05-16T12:06:24+09:00
 # @License: JeeY
 # @Copyright: J.Y. JeeY
 
@@ -86,12 +86,20 @@ print('x : ', backend.int_shape(x), x, '\n\n\n')
 x = Dropout(0.4)(x)
 a = layers.Dense(W_VEC_SIZE, activation='relu')(x)
 b = layers.Dense(W_VEC_SIZE, activation='relu')(x)
-
 b = backend.permute_dimensions(b, (0, 2, 1))
 
-x = Dozat(a, b, 21)
+x = Dozat(21)([a, b])
+
+# m = backend.random_uniform_variable((128, 128), 0, 1, seed=1)
+# x = backend.dot(a, m)
+# x = backend.batch_dot(x, b)
+# # x = Lambda(backend.argmax(x, axis=-1), output_shape=(1, 21))(x)
+# x = backend.argmax(x, axis=-1)
+# layer = Lambda(x, output_shape=(1, 21))
+# x = layer(x)
 
 print(x, '\n\n')
+
 network = Model([w, p], x)
 network.summary()
 
