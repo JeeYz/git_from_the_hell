@@ -2,7 +2,7 @@
 # @Date:   2019-05-09T11:28:21+09:00
 # @Project: NLP
 # @Last modified by:   J.Y.
-# @Last modified time: 2019-05-17T14:30:10+09:00
+# @Last modified time: 2019-05-20T01:57:29+09:00
 # @License: JeeY
 # @Copyright: J.Y. JeeY
 
@@ -11,6 +11,7 @@ from __future__ import print_function
 import os
 import sys
 import numpy as np
+import tensorflow as tf
 sys.path.append(r'./module')
 
 from keras import models
@@ -103,9 +104,17 @@ x = Dozat(21)(x)
 # x = layer(x)
 
 # print(backend.print_tensor(x[0]))
-print(x, '\n\n')
+print('x : ', x, '\n\n\n')
 
 network = Model([w, p], x)
+q = network.layers[8].output
+print(q)
+
+# get_3rd_layer_output = backend.function([network.layers[8].input],
+#                                   [network.layers[8].output])
+# layer_output = get_3rd_layer_output([x])[0]
+# print(layer_output)
+
 network.summary()
 
 # network.compile(optimizer='rmsprop', loss='categorical_crossentropy', metrics=['accuracy'])
