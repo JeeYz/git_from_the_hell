@@ -2,7 +2,7 @@
 # @Date:   2019-05-09T11:28:21+09:00
 # @Project: NLP
 # @Last modified by:   J.Y.
-# @Last modified time: 2019-05-20T01:57:29+09:00
+# @Last modified time: 2019-05-20T09:08:49+09:00
 # @License: JeeY
 # @Copyright: J.Y. JeeY
 
@@ -85,35 +85,27 @@ x = Bidirectional(LSTM(128, return_sequences=True,
                     input_shape=(1, 21, 512)), merge_mode='concat')(es)
 
 print('x : ', backend.int_shape(x), x, '\n\n\n')
-# x = Dropout(rate=0.4)(x)
-# a = layers.Dense(W_VEC_SIZE, activation='relu')(x)
-# b = layers.Dense(W_VEC_SIZE, activation='relu')(x)
-# b = backend.permute_dimensions(b, (0, 2, 1))
 
-# x = Dozat(a, b, 21)(x)
+x = Dozat(21)(x) # custom Lambda layer
 
-x = Dozat(21)(x)
+# x = backend.print_tensor(x)
 
-# m = backend.random_uniform_variable((128, 128), 0, 1, seed=1)
-# x = backend.dot(a, m)
-# x = backend.batch_dot(x, b)
-# # x = backend.argmax(x, axis=-1)
-# # layer = Lambda(backend.argmax(x, axis=-1), output_shape=(1, 21))
-# layer = Lambda(find_argmax, output_shape=(1, 21))
-# # x = Lambda(x, output_shape=(1, 21))(x)
-# x = layer(x)
+sess = tf.Session()
+with sess.as_default():
+    tensor = x
+    print_op = tf.print(tensor)
+    with tf.control_dependencies([print_op]):
+      out = tf.add(tensor, tensor)
+      sess.run(out)
+sess.close()
+# v = Dozat.get_output()
+# print(v, '\n\n\n')
 
-# print(backend.print_tensor(x[0]))
 print('x : ', x, '\n\n\n')
 
 network = Model([w, p], x)
 q = network.layers[8].output
 print(q)
-
-# get_3rd_layer_output = backend.function([network.layers[8].input],
-#                                   [network.layers[8].output])
-# layer_output = get_3rd_layer_output([x])[0]
-# print(layer_output)
 
 network.summary()
 
