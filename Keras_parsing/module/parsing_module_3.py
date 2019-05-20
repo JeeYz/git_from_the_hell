@@ -2,7 +2,7 @@
 # @Date:   2019-05-09T11:29:24+09:00
 # @Project: NLP
 # @Last modified by:   J.Y.
-# @Last modified time: 2019-05-20T00:43:17+09:00
+# @Last modified time: 2019-05-20T16:26:59+09:00
 # @License: JeeY
 # @Copyright: J.Y. JeeY
 
@@ -32,12 +32,25 @@ def make_small_train_data():
                 continue
             word.append([line[1], line[2]])
             pos.append([line[3], line[4]])
-    print(word, '\n\n')
-    print(pos, '\n\n')
+    # print(word, '\n\n')
+    # print(pos, '\n\n')
     # label = np.array(label)
     label.insert(0, 0)
-    print(label, '\n\n')
-    return word, pos, [label]
+    # print(label, '\n\n')
+
+    word = np.array([word])
+    pos = np.array([pos])
+    new_label = list()
+    for i in label:
+        new = list()
+        for j in range(len(label)):
+            if int(j) == int(i):
+                new.append(float(1))
+            else:
+                new.append(float(0))
+        new_label.append(new)
+    new_label = np.array([new_label])
+    return word, pos, new_label
 
 def find_argmax(x):
     return K.argmax(x, axis=-1)

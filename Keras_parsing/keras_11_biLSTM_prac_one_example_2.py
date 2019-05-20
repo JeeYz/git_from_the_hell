@@ -2,7 +2,7 @@
 # @Date:   2019-05-09T11:28:21+09:00
 # @Project: NLP
 # @Last modified by:   J.Y.
-# @Last modified time: 2019-05-20T09:21:40+09:00
+# @Last modified time: 2019-05-20T16:45:38+09:00
 # @License: JeeY
 # @Copyright: J.Y. JeeY
 
@@ -54,13 +54,13 @@ word, pos, label = p3.make_small_train_data()
 w = Input(shape=(21, 2), dtype='int32', name='words')
 p = Input(shape=(21, 2), dtype='int32', name='pos')
 # l = Input(shape=(None, 1), dtype='int32', name='length')
-
-print(w, p)
-print(backend.gather(w, 2))
-print('\n')
-print(backend.int_shape(w))
-# print(backend.print_tensor(w))
-print('\n\n\n')
+#
+# print(w, p)
+# print(backend.gather(w, 2))
+# print('\n')
+# print(backend.int_shape(w))
+# # print(backend.print_tensor(w))
+# print('\n\n\n')
 
 embedding_layer1 = Embedding(len(words_matrix), W_VEC_SIZE,
                             embeddings_initializer=Constant(words_matrix))
@@ -70,72 +70,34 @@ embedding_layer2 = Embedding(len(pos_matrix), P_VEC_SIZE,
 ew1 = embedding_layer1(w)
 ep1 = embedding_layer2(p)
 
-print(ew1, ep1, '\n\n\n')
+# print(ew1, ep1, '\n\n\n')
 
 # ew1 = backend.reshape(ew1, shape=(1, -1, W_VEC_SIZE*2))
 # ep1 = backend.reshape(ep1, shape=(1, -1, P_VEC_SIZE*2))
 ew1 = Reshape((-1, W_VEC_SIZE*2))(ew1)
 ep1 = Reshape((-1, P_VEC_SIZE*2))(ep1)
-print(ew1, ep1, '\n\n\n')
+# print(ew1, ep1, '\n\n\n')
 es = layers.concatenate([ew1, ep1], axis=-1) ## es = embedded_sequences
 
-print(es, '\n\n\n')
+# print(es, '\n\n\n')
 
 x = Bidirectional(LSTM(128, return_sequences=True,
                     input_shape=(1, 21, 512)), merge_mode='concat')(es)
 
-print('x : ', backend.int_shape(x), x, '\n\n\n')
+# print('x : ', backend.int_shape(x), x, '\n\n\n')
 
 x = Dozat(21)(x) # custom Lambda layer
 
-'''
-class Dozat(Layer):
-
-    def __init__(self, output_dim, **kwargs):
-        self.output_dim = output_dim
-        super(Dozat, self).__init__(**kwargs)
-
-    def call(self, x):
-        m = K.random_uniform_variable((128, 128), 0, 1, seed=1)
-
-        x = Dropout(rate=0.4)(x)
-        a = layers.Dense(W_VEC_SIZE, activation='relu')(x)
-        b = layers.Dense(W_VEC_SIZE, activation='relu')(x)
-        b = K.permute_dimensions(b, (0, 2, 1))
-        print('a : ', a, '\n')
-        print('b : ', b, '\n')
-        print('m : ', m, '\n\n\n')
-        x = K.dot(a, m)
-        x = K.batch_dot(x, b)
-        print('x : ', x, '\n\n\n')
-        x = Lambda(find_argmax, output_shape=output_of_lambda)(x)
-        print('x : ', x, '\n\n\n')
-
-        return x
-
-    def compute_output_shape(self, input_shape):
-        return (1, self.output_dim)
-'''
-
-# x = backend.print_tensor(x)
-
-sess = tf.Session()
-with sess.as_default():
-    sess.run(x)
-    tf.print(x)
-sess.close()
-# v = Dozat.get_output()
-# print(v, '\n\n\n')
-
-print('x : ', x, '\n\n\n')
+# print('x : ', x, '\n\n\n')
 
 network = Model([w, p], x)
-q = network.layers[8].output
-print(q)
+# q = network.layers[8].output
+# print(q)
 
 network.summary()
 
 # network.compile(optimizer='rmsprop', loss='categorical_crossentropy', metrics=['accuracy'])
+# network.compile(loss='categorical_crossentropy', optimizer='adam', metrics=['accuracy'])
 network.compile(loss='binary_crossentropy', optimizer='adam', metrics=['accuracy'])
 network.save_weights(savepara_name, overwrite=True)
 
@@ -146,6 +108,7 @@ for i in range(EPOCHS):
     network.load_weights(savepara_name)
     network.fit({'words':word, 'pos':pos}, label,
                     epochs=5, batch_size=1)
+    print(x)
     network.save_weights(savepara_name, overwrite=True)
 
 
