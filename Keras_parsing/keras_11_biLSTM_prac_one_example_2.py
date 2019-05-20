@@ -2,7 +2,7 @@
 # @Date:   2019-05-09T11:28:21+09:00
 # @Project: NLP
 # @Last modified by:   J.Y.
-# @Last modified time: 2019-05-20T09:08:49+09:00
+# @Last modified time: 2019-05-20T09:21:40+09:00
 # @License: JeeY
 # @Copyright: J.Y. JeeY
 
@@ -88,15 +88,41 @@ print('x : ', backend.int_shape(x), x, '\n\n\n')
 
 x = Dozat(21)(x) # custom Lambda layer
 
+'''
+class Dozat(Layer):
+
+    def __init__(self, output_dim, **kwargs):
+        self.output_dim = output_dim
+        super(Dozat, self).__init__(**kwargs)
+
+    def call(self, x):
+        m = K.random_uniform_variable((128, 128), 0, 1, seed=1)
+
+        x = Dropout(rate=0.4)(x)
+        a = layers.Dense(W_VEC_SIZE, activation='relu')(x)
+        b = layers.Dense(W_VEC_SIZE, activation='relu')(x)
+        b = K.permute_dimensions(b, (0, 2, 1))
+        print('a : ', a, '\n')
+        print('b : ', b, '\n')
+        print('m : ', m, '\n\n\n')
+        x = K.dot(a, m)
+        x = K.batch_dot(x, b)
+        print('x : ', x, '\n\n\n')
+        x = Lambda(find_argmax, output_shape=output_of_lambda)(x)
+        print('x : ', x, '\n\n\n')
+
+        return x
+
+    def compute_output_shape(self, input_shape):
+        return (1, self.output_dim)
+'''
+
 # x = backend.print_tensor(x)
 
 sess = tf.Session()
 with sess.as_default():
-    tensor = x
-    print_op = tf.print(tensor)
-    with tf.control_dependencies([print_op]):
-      out = tf.add(tensor, tensor)
-      sess.run(out)
+    sess.run(x)
+    tf.print(x)
 sess.close()
 # v = Dozat.get_output()
 # print(v, '\n\n\n')
