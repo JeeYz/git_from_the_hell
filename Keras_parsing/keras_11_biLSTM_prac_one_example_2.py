@@ -2,7 +2,7 @@
 # @Date:   2019-05-09T11:28:21+09:00
 # @Project: NLP
 # @Last modified by:   J.Y.
-# @Last modified time: 2019-05-22T16:25:05+09:00
+# @Last modified time: 2019-05-23T11:03:26+09:00
 # @License: JeeY
 # @Copyright: J.Y. JeeY
 
@@ -16,7 +16,7 @@ sys.path.append(r'./module')
 
 from keras import models
 from keras import layers
-from keras import backend
+from keras import backend as K
 from keras import activations
 from keras.activations import softmax
 from keras.models import load_model
@@ -40,8 +40,6 @@ P_VEC_SIZE = 128
 INPUT_SIZE = (18*W_VEC_SIZE*2 + 18*P_VEC_SIZE*2)
 
 fpath2 = 'd:/Program_Data/Parsing_Data/'
-filewrite = '00_result_training.result'
-trainfile = 'd:/Program_Data/raw_train_dataset_23.train'
 savepara_name = 'd:/Program_Data/model_weights_k_17_bi_LSTM_proto.h5'
 
 words_matrix = kfT.words_matrix_fastText(W_VEC_SIZE)
@@ -87,6 +85,7 @@ network.save_weights(savepara_name, overwrite=True)
 correct = 0
 total_q = 0
 num = 0
+
 for i in range(EPOCHS):
     network.load_weights(savepara_name)
     for i,j in enumerate(word_all):
@@ -95,7 +94,7 @@ for i in range(EPOCHS):
         pos = np.array([pos_all[i]])
         label = np.array([label_all[i]])
         network.fit({'words':word, 'pos':pos}, label,
-                        epochs=1, batch_size=1)
+                        epochs=10, batch_size=1)
     # word_all = np.array(word_all)
     # pos_all = np.array(pos_all)
     # label_all = np.array(label_all)

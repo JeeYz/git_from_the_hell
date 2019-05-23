@@ -2,7 +2,7 @@
 # @Date:   2019-05-16T10:16:28+09:00
 # @Project: NLP
 # @Last modified by:   J.Y.
-# @Last modified time: 2019-05-20T16:26:31+09:00
+# @Last modified time: 2019-05-23T14:08:36+09:00
 # @License: JeeY
 # @Copyright: J.Y. JeeY
 
@@ -32,7 +32,7 @@ class Dozat(Layer):
         super(Dozat, self).__init__(**kwargs)
 
     def call(self, x):
-        m = K.random_uniform_variable((128, 128), 0, 1, seed=1)
+        m = K.random_uniform_variable((129, 128), 0, 1, seed=1)
 
         x = Dropout(rate=0.4)(x)
         a = layers.Dense(W_VEC_SIZE, activation='relu')(x)
