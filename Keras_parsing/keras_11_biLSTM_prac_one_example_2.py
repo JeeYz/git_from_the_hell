@@ -2,7 +2,7 @@
 # @Date:   2019-05-09T11:28:21+09:00
 # @Project: NLP
 # @Last modified by:   J.Y.
-# @Last modified time: 2019-05-23T14:15:06+09:00
+# @Last modified time: 2019-05-25T10:24:20+09:00
 # @License: JeeY
 # @Copyright: J.Y. JeeY
 
@@ -14,16 +14,13 @@ import numpy as np
 import tensorflow as tf
 sys.path.append(r'./module')
 
-from keras import models
-from keras import layers
+from keras import models, layers, activations, Input
 from keras import backend as K
-from keras import activations
 from keras.activations import softmax
 from keras.models import load_model
-from keras.layers import Input, Dense, Embedding, Flatten, Dropout
-from keras.layers import LSTM, Bidirectional, Multiply, Reshape, Lambda
+from keras.layers import Input, Dense, Embedding, Dropout
+from keras.layers import LSTM, Bidirectional, Reshape, Lambda
 from keras.models import Model, Sequential
-from keras import Input
 from keras.initializers import Constant
 from keras.backend import argmax
 from custom_layer_0 import Dozat
