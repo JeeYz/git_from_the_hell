@@ -2,7 +2,7 @@
 # @Date:   2019-05-09T11:28:21+09:00
 # @Project: NLP
 # @Last modified by:   J.Y.
-# @Last modified time: 2019-05-25T10:24:20+09:00
+# @Last modified time: 2019-05-27T14:36:06+09:00
 # @License: JeeY
 # @Copyright: J.Y. JeeY
 
@@ -31,7 +31,7 @@ import parsing_module_2 as p2
 import parsing_module_3 as p3
 
 BATCH_SIZE = 128
-EPOCHS = 10
+EPOCHS = 1
 W_VEC_SIZE = 128
 P_VEC_SIZE = 128
 INPUT_SIZE = (18*W_VEC_SIZE*2 + 18*P_VEC_SIZE*2)
@@ -43,6 +43,7 @@ words_matrix = kfT.words_matrix_fastText(W_VEC_SIZE)
 pos_matrix = kfT.make_pos_fastText(P_VEC_SIZE)
 
 word_all, pos_all, label_all = p3.make_train_data()
+test_word, test_pos, test_label = p3.make_test_data()
 print('data loaded complete~!!')
 
 w = Input(shape=(None, 2), dtype='int32', name='words')
@@ -83,7 +84,7 @@ correct = 0
 total_q = 0
 num = 0
 
-for i in range(EPOCHS):
+for l in range(EPOCHS):
     network.load_weights(savepara_name)
     for i,j in enumerate(word_all):
         # print(word_all[i])
@@ -91,12 +92,20 @@ for i in range(EPOCHS):
         pos = np.array([pos_all[i]])
         label = np.array([label_all[i]])
         network.fit({'words':word, 'pos':pos}, label,
-                        epochs=10, batch_size=1)
-    # word_all = np.array(word_all)
-    # pos_all = np.array(pos_all)
-    # label_all = np.array(label_all)
-    # network.fit({'words':word_all, 'pos':pos_all}, label_all,
-    #                 epochs=5, batch_size=128)
+                        epochs=3, batch_size=1)
+    correct = 0
+    total_score = 0
+    total_num = 0
+    for m,n in enumerate(test_word):
+        word = np.array([test_word[m]])
+        pos = np.array([test_pos[m]])
+        label = np.array([test_label[m]])
+        test_result = network.predict({'words':word, 'pos':pos})
+        score = network.evaluate(x=test_result, y=label[m], batch_size=1)
+        total_score += score
+    print('\n\n\n')
+    print(total_score)
+    print('\n\n\n')
     network.save_weights(savepara_name, overwrite=True)
 
 
