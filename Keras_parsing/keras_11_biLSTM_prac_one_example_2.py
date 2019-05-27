@@ -2,7 +2,7 @@
 # @Date:   2019-05-09T11:28:21+09:00
 # @Project: NLP
 # @Last modified by:   J.Y.
-# @Last modified time: 2019-05-27T17:50:22+09:00
+# @Last modified time: 2019-05-27T18:01:13+09:00
 # @License: JeeY
 # @Copyright: J.Y. JeeY
 
@@ -37,6 +37,7 @@ P_VEC_SIZE = 128
 INPUT_SIZE = (18*W_VEC_SIZE*2 + 18*P_VEC_SIZE*2)
 
 fpath2 = 'd:/Program_Data/Parsing_Data/'
+filewrite = '00_result_training.result'
 savepara_name = 'd:/Program_Data/model_weights_k_17_bi_LSTM_proto.h5'
 
 words_matrix = kfT.words_matrix_fastText(W_VEC_SIZE)
@@ -80,6 +81,7 @@ network.summary()
 network.compile(loss='binary_crossentropy', optimizer='adam', metrics=['accuracy'])
 # network.save_weights(savepara_name, overwrite=True)
 
+fw = open(fpath2 + filewrite, 'a', encoding='utf-8')
 for l in range(EPOCHS):
     network.load_weights(savepara_name)
     for i,j in enumerate(word_all):
@@ -90,27 +92,30 @@ for l in range(EPOCHS):
         label = np.array([label_all[i]])
         network.fit({'words':word, 'pos':pos}, label,
                         epochs=1, batch_size=1)
-    # total_correct = 0
-    # total_num = 0
-    # for m,n in enumerate(test_word):
-    #     word = np.array([test_word[m]])
-    #     pos = np.array([test_pos[m]])
-    #     label = np.array([test_label[m]])
-    #     test_result = network.predict({'words':word, 'pos':pos})
-    #     # print(test_result)
-    #     # test_result = np.array(test_result)
-    #     # print(test_result)
-    #     # print(label)
-    #     a, b = p3.evaluate_result(test_result, label)
-    #     total_correct += a
-    #     total_num += b
-    # print('\n\n\n')
-    # print(total_correct/total_num)
-    # print('\n\n\n')
+    total_correct = 0
+    total_num = 0
+    for m,n in enumerate(test_word):
+        word = np.array([test_word[m]])
+        pos = np.array([test_pos[m]])
+        label = np.array([test_label[m]])
+        test_result = network.predict({'words':word, 'pos':pos})
+        # print(test_result)
+        # test_result = np.array(test_result)
+        # print(test_result)
+        # print(label)
+        a, b = p3.evaluate_result(test_result, label)
+        total_correct += a
+        total_num += b
+    print('\n\n\n')
+    fw.write('\n\n\n')
+    print(total_correct/total_num)
+    fw.write(str(total_correct/total_num) + '\n')
+    print('\n\n\n')
+    fw.write('\n\n\n')
     network.save_weights(savepara_name, overwrite=True)
 
 
-
+fw.close()
 
 
 
