@@ -2,7 +2,7 @@
 # @Date:   2019-05-09T11:28:21+09:00
 # @Project: NLP
 # @Last modified by:   J.Y.
-# @Last modified time: 2019-05-27T14:36:06+09:00
+# @Last modified time: 2019-05-27T17:50:22+09:00
 # @License: JeeY
 # @Copyright: J.Y. JeeY
 
@@ -31,7 +31,7 @@ import parsing_module_2 as p2
 import parsing_module_3 as p3
 
 BATCH_SIZE = 128
-EPOCHS = 1
+EPOCHS = 20
 W_VEC_SIZE = 128
 P_VEC_SIZE = 128
 INPUT_SIZE = (18*W_VEC_SIZE*2 + 18*P_VEC_SIZE*2)
@@ -78,34 +78,35 @@ network.summary()
 # network.compile(optimizer='rmsprop', loss='categorical_crossentropy', metrics=['accuracy'])
 # network.compile(loss='categorical_crossentropy', optimizer='adam', metrics=['accuracy'])
 network.compile(loss='binary_crossentropy', optimizer='adam', metrics=['accuracy'])
-network.save_weights(savepara_name, overwrite=True)
-
-correct = 0
-total_q = 0
-num = 0
+# network.save_weights(savepara_name, overwrite=True)
 
 for l in range(EPOCHS):
     network.load_weights(savepara_name)
     for i,j in enumerate(word_all):
+        print('%d th sentence' %(i+1), '\n')
         # print(word_all[i])
         word = np.array([word_all[i]])
         pos = np.array([pos_all[i]])
         label = np.array([label_all[i]])
         network.fit({'words':word, 'pos':pos}, label,
-                        epochs=3, batch_size=1)
-    correct = 0
-    total_score = 0
-    total_num = 0
-    for m,n in enumerate(test_word):
-        word = np.array([test_word[m]])
-        pos = np.array([test_pos[m]])
-        label = np.array([test_label[m]])
-        test_result = network.predict({'words':word, 'pos':pos})
-        score = network.evaluate(x=test_result, y=label[m], batch_size=1)
-        total_score += score
-    print('\n\n\n')
-    print(total_score)
-    print('\n\n\n')
+                        epochs=1, batch_size=1)
+    # total_correct = 0
+    # total_num = 0
+    # for m,n in enumerate(test_word):
+    #     word = np.array([test_word[m]])
+    #     pos = np.array([test_pos[m]])
+    #     label = np.array([test_label[m]])
+    #     test_result = network.predict({'words':word, 'pos':pos})
+    #     # print(test_result)
+    #     # test_result = np.array(test_result)
+    #     # print(test_result)
+    #     # print(label)
+    #     a, b = p3.evaluate_result(test_result, label)
+    #     total_correct += a
+    #     total_num += b
+    # print('\n\n\n')
+    # print(total_correct/total_num)
+    # print('\n\n\n')
     network.save_weights(savepara_name, overwrite=True)
 
 

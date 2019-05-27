@@ -2,7 +2,7 @@
 # @Date:   2019-05-09T11:29:24+09:00
 # @Project: NLP
 # @Last modified by:   J.Y.
-# @Last modified time: 2019-05-27T14:16:46+09:00
+# @Last modified time: 2019-05-27T17:47:10+09:00
 # @License: JeeY
 # @Copyright: J.Y. JeeY
 
@@ -146,6 +146,22 @@ def make_test_data():
     pos_all = np.array(pos_all)
     label_all = np.array(label_all)
     return word_all, pos_all, label_all
+
+
+def evaluate_result(sys, label):
+    new_sys = np.argmax(sys, axis=-1)
+    new_label = np.argmax(label, axis=-1)
+    # print(new_sys)
+    # print(new_label)
+    b = len(sys[0])
+    a = 0
+    for i, j in enumerate(new_sys[0]):
+        if int(new_label[0][i]) == int(j):
+            a += 1
+    print(a, b)
+    # time.sleep(10000)
+    return a, b
+
 
 
 
