@@ -2,7 +2,7 @@
 # @Date:   2019-05-09T11:28:21+09:00
 # @Project: NLP
 # @Last modified by:   J.Y.
-# @Last modified time: 2019-05-28T12:04:17+09:00
+# @Last modified time: 2019-05-28T17:20:29+09:00
 # @License: JeeY
 # @Copyright: J.Y. JeeY
 
@@ -95,8 +95,8 @@ for l in range(EPOCHS):
         word, pos, label = p4.make_train_data(filename)
         # print(word)
         # print(word.shape)
-        print(word)
-        time.sleep(10000)
+        print(word[0][0][0])
+        # time.sleep(10000)
         network.fit({'words':word, 'pos':pos}, label, epochs=1, batch_size=BATCH_SIZE)
         network.save_weights(savepara_name, overwrite=True)
     # print('%d th sentence' %(i+1), '\n')
