@@ -2,7 +2,7 @@
 # @Date:   2019-05-09T11:28:21+09:00
 # @Project: NLP
 # @Last modified by:   J.Y.
-# @Last modified time: 2019-05-28T17:23:29+09:00
+# @Last modified time: 2019-05-28T17:25:07+09:00
 # @License: JeeY
 # @Copyright: J.Y. JeeY
 
@@ -87,7 +87,7 @@ for l in range(EPOCHS):
     fw = open(w_filename, 'a', encoding='utf-8')
     network.load_weights(savepara_name)
     for i,j in enumerate(word_all):
-        print('%d th sentence' %(i+1), '\n')
+        print('%d th epoch  %d th sentence' %((l+1), (i+1)), '\n')
         # print(word_all[i])
         word = np.array([word_all[i]])
         pos = np.array([pos_all[i]])
