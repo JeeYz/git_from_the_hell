@@ -2,7 +2,7 @@
 # @Date:   2019-05-16T10:16:28+09:00
 # @Project: NLP
 # @Last modified by:   J.Y.
-# @Last modified time: 2019-05-23T15:36:19+09:00
+# @Last modified time: 2019-05-28T10:31:55+09:00
 # @License: JeeY
 # @Copyright: J.Y. JeeY
 
@@ -39,9 +39,9 @@ class Dozat(Layer):
         b = layers.Dense(W_VEC_SIZE, activation='relu')(x)
         b = K.permute_dimensions(b, (0, 2, 1))
 
-        print(K.int_shape(a))
+        # print(K.int_shape(a))
         K.expand_dims(a, axis=-1)
-        print(K.int_shape(a))
+        # print(K.int_shape(a))
         # print('a : ', a, '\n')
         # print('b : ', b, '\n')
         # print('m : ', m, '\n\n\n')

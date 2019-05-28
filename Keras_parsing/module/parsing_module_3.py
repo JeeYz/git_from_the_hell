@@ -2,7 +2,7 @@
 # @Date:   2019-05-09T11:29:24+09:00
 # @Project: NLP
 # @Last modified by:   J.Y.
-# @Last modified time: 2019-05-27T17:47:10+09:00
+# @Last modified time: 2019-05-28T10:51:24+09:00
 # @License: JeeY
 # @Copyright: J.Y. JeeY
 
@@ -151,8 +151,8 @@ def make_test_data():
 def evaluate_result(sys, label):
     new_sys = np.argmax(sys, axis=-1)
     new_label = np.argmax(label, axis=-1)
-    # print(new_sys)
-    # print(new_label)
+    print(new_sys)
+    print(new_label)
     b = len(sys[0])
     a = 0
     for i, j in enumerate(new_sys[0]):
