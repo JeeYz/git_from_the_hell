@@ -2,7 +2,7 @@
 # @Date:   2019-05-09T11:28:21+09:00
 # @Project: NLP
 # @Last modified by:   J.Y.
-# @Last modified time: 2019-05-29T16:57:11+09:00
+# @Last modified time: 2019-05-29T16:58:25+09:00
 # @License: JeeY
 # @Copyright: J.Y. JeeY
 
@@ -79,7 +79,7 @@ network.summary()
 # network.compile(optimizer='rmsprop', loss='categorical_crossentropy', metrics=['accuracy'])
 # network.compile(loss='categorical_crossentropy', optimizer='adam', metrics=['accuracy'])
 network.compile(loss='binary_crossentropy', optimizer='adam', metrics=['accuracy'])
-# network.save_weights(savepara_name, overwrite=True)
+network.save_weights(savepara_name, overwrite=True)
 
 
 for l in range(EPOCHS):
