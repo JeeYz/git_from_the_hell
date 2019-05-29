@@ -2,7 +2,7 @@
 # @Date:   2019-05-09T11:28:21+09:00
 # @Project: NLP
 # @Last modified by:   J.Y.
-# @Last modified time: 2019-05-28T17:25:07+09:00
+# @Last modified time: 2019-05-29T09:38:04+09:00
 # @License: JeeY
 # @Copyright: J.Y. JeeY
 
@@ -31,7 +31,7 @@ import parsing_module_2 as p2
 import parsing_module_3 as p3
 
 BATCH_SIZE = 128
-EPOCHS = 20
+EPOCHS = 1
 W_VEC_SIZE = 128
 P_VEC_SIZE = 128
 INPUT_SIZE = (18*W_VEC_SIZE*2 + 18*P_VEC_SIZE*2)
@@ -83,17 +83,17 @@ network.compile(loss='binary_crossentropy', optimizer='adam', metrics=['accuracy
 
 
 for l in range(EPOCHS):
-    w_filename = fpath2 + filewrite
-    fw = open(w_filename, 'a', encoding='utf-8')
+    # w_filename = fpath2 + filewrite
+    # fw = open(w_filename, 'a', encoding='utf-8')
     network.load_weights(savepara_name)
-    for i,j in enumerate(word_all):
-        print('%d th epoch  %d th sentence' %((l+1), (i+1)), '\n')
-        # print(word_all[i])
-        word = np.array([word_all[i]])
-        pos = np.array([pos_all[i]])
-        label = np.array([label_all[i]])
-        network.fit({'words':word, 'pos':pos}, label,
-                        epochs=1, batch_size=1)
+    # for i,j in enumerate(word_all):
+    #     print('%d th epoch  %d th sentence' %((l+1), (i+1)), '\n')
+    #     # print(word_all[i])
+    #     word = np.array([word_all[i]])
+    #     pos = np.array([pos_all[i]])
+    #     label = np.array([label_all[i]])
+    #     network.fit({'words':word, 'pos':pos}, label,
+    #                     epochs=1, batch_size=1)
     total_correct = 0
     total_num = 0
     for m,n in enumerate(test_word):
@@ -109,13 +109,13 @@ for l in range(EPOCHS):
         total_correct += a
         total_num += b
     print('\n\n\n')
-    fw.write('\n\n\n')
+    # fw.write('\n\n\n')
     print(total_correct/total_num)
-    fw.write(str(total_correct/total_num) + '\n')
+    # fw.write(str(total_correct/total_num) + '\n')
     print('\n\n\n')
-    fw.write('\n\n\n')
-    network.save_weights(savepara_name, overwrite=True)
-    fw.close()
+    # fw.write('\n\n\n')
+    # network.save_weights(savepara_name, overwrite=True)
+    # fw.close()
 
 
 
