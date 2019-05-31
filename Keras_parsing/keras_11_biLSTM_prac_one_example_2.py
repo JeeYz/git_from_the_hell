@@ -2,7 +2,7 @@
 # @Date:   2019-05-09T11:28:21+09:00
 # @Project: NLP
 # @Last modified by:   J.Y.
-# @Last modified time: 2019-05-31T16:28:52+09:00
+# @Last modified time: 2019-05-31T16:48:16+09:00
 # @License: JeeY
 # @Copyright: J.Y. JeeY
 
@@ -31,14 +31,14 @@ import parsing_module_2 as p2
 import parsing_module_3 as p3
 
 BATCH_SIZE = 128
-EPOCHS = 1
+EPOCHS = 6
 W_VEC_SIZE = 128
 P_VEC_SIZE = 128
 INPUT_SIZE = (18*W_VEC_SIZE*2 + 18*P_VEC_SIZE*2)
 
 fpath2 = 'd:/Program_Data/Parsing_Data/'
 filewrite = '01_result_training.result'
-savepara_name = 'd:/Program_Data/model_weights_k_17_bi_LSTM_proto.h5'
+savepara_name = 'd:/Program_Data/model_weights_k_20_bi_LSTM.h5'
 
 words_matrix = kfT.words_matrix_fastText(W_VEC_SIZE)
 pos_matrix = kfT.make_pos_fastText(P_VEC_SIZE)
@@ -79,21 +79,21 @@ network.summary()
 # network.compile(optimizer='rmsprop', loss='categorical_crossentropy', metrics=['accuracy'])
 # network.compile(loss='categorical_crossentropy', optimizer='adam', metrics=['accuracy'])
 network.compile(loss='binary_crossentropy', optimizer='adam', metrics=['accuracy'])
-# network.save_weights(savepara_name, overwrite=True)
+network.save_weights(savepara_name, overwrite=True)
 
 
 for l in range(EPOCHS):
-    # w_filename = fpath2 + filewrite
-    # fw = open(w_filename, 'a', encoding='utf-8')
+    w_filename = fpath2 + filewrite
+    fw = open(w_filename, 'a', encoding='utf-8')
     network.load_weights(savepara_name)
-    # for i,j in enumerate(word_all):
-    #     print('%d th epoch  %d th sentence' %((l+1), (i+1)), '\n')
-    #     # print(word_all[i])
-    #     word = np.array([word_all[i]])
-    #     pos = np.array([pos_all[i]])
-    #     label = np.array([label_all[i]])
-    #     network.fit({'words':word, 'pos':pos}, label,
-    #                     epochs=1, batch_size=1)
+    for i,j in enumerate(word_all):
+        print('%d th epoch  %d th sentence' %((l+1), (i+1)), '\n')
+        # print(word_all[i])
+        word = np.array([word_all[i]])
+        pos = np.array([pos_all[i]])
+        label = np.array([label_all[i]])
+        network.fit({'words':word, 'pos':pos}, label,
+                        epochs=1, batch_size=1)
     total_correct = 0
     total_num = 0
     for m,n in enumerate(test_word):
@@ -110,13 +110,13 @@ for l in range(EPOCHS):
         total_num += b
         print(total_correct, total_num)
     print('\n\n\n')
-    # fw.write('\n\n\n')
+    fw.write('\n\n\n')
     print(total_correct/total_num)
-    # fw.write(str(total_correct/total_num) + '\n')
+    fw.write(str(total_correct/total_num) + '\n')
     print('\n\n\n')
-    # fw.write('\n\n\n')
-    # network.save_weights(savepara_name, overwrite=True)
-    # fw.close()
+    fw.write('\n\n\n')
+    network.save_weights(savepara_name, overwrite=True)
+    fw.close()
 
 
 
