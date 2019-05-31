@@ -2,7 +2,7 @@
 # @Date:   2019-05-27T10:29:01+09:00
 # @Project: NLP
 # @Last modified by:   J.Y.
-# @Last modified time: 2019-05-31T11:23:49+09:00
+# @Last modified time: 2019-05-31T14:47:59+09:00
 # @License: JeeY
 # @Copyright: J.Y. JeeY
 
@@ -14,7 +14,10 @@ import copy
 class CYK_table():
     def __init__(self, result_matrix):
         self.sent_length = len(result_matrix)
+        self.result_matrix = result_matrix
         self.answer = self.main()
+
+
 
     def main(self):
         stack = list()
@@ -23,18 +26,21 @@ class CYK_table():
         for i in range(1, self.sent_length):
             for j in reversed(range(i, self.sent_length)):
                 temp_results = list()
-                for k in range(1, i):
+                for k in range(1, i+1):
                     temp_results.append(self.generate_nodes(i, j ,k, table))
                 table = self.select_max_value(temp_results, table)
 
         stack = self.retrieve_table(table)
         answer = self.make_answer(stack, table)
+
         return answer
+
 
 
     def make_answer(self, stack, table):
         answer = list()
         for one_node in stack:
+            print(table[one_node[0]][one_node[1]], print(one_node))
             answer.append(table[one_node[0]][one_node[1]].answer)
         return answer
 
@@ -42,36 +48,41 @@ class CYK_table():
 
     def make_stack(self, stack, table):
         for one in stack:
+            print('one : ', one)
+            print('stack : ', stack)
             if one[-1] == 2:
                 one[-1] = 1
                 x = table[one[0]][one[1]].first_score[0]
                 y = table[one[0]][one[1]].first_score[1]
-                if x == 0:
-                    continue
-                stack.append([x, y, 2])
-                self.make_stack(stack, table)
-            elif one[-1] == 1:
+                print('first : ', x, '          ', y)
+                if x != 0:
+                    stack.append([x, y, 2])
+                    self.make_stack(stack, table)
+            print('one : ', one)
+            print('stack : ', stack)
+            if one[-1] == 1:
                 one[-1] = 0
                 x = table[one[0]][one[1]].second_score[0]
                 y = table[one[0]][one[1]].second_score[1]
-                if x == 0:
-                    continue
-                stack.append([x, y, 2])
-                self.make_stack(stack, table)
+                print('second : ', x, '          ', y)
+                if x != 0:
+                    stack.append([x, y, 2])
+                    self.make_stack(stack, table)
+            # print(one)
         ## check the stack
-        for i in stack:
-            if i[-1] != 0:
-                print(stack)
-                time.sleep(10000)
+        # for i in stack:
+        #     if i[-1] != 0:
+        #         print(stack)
+        #         time.sleep(10000)
         return stack
 
 
 
     def retrieve_table(self, table):
-        stack = lsit()
+        stack = list()
         size_table = len(table)
-        x = size_table
-        y = size_table
+        x = size_table-1
+        y = size_table-1
         stack.append([x, y, 2])
         stack = self.make_stack(stack, table)
         return stack
@@ -86,15 +97,16 @@ class CYK_table():
         # [b, y]
         b = len_val - 1
         y = y_val
-        temp = CYK_one_node(a, c, b, y, table[c][y], table, x_val)
-        print(temp)
+
+        arc_val = self.result_matrix[c][y]
+        temp = CYK_one_node(a, c, b, y, arc_val, table, x_val)
         return temp
 
 
 
     def make_cyk_table(self):
-        table = list()
         table = np.zeros((self.sent_length, self.sent_length))
+        table = table.tolist()
         return table
 
 
@@ -107,9 +119,8 @@ class CYK_table():
             else:
                 if temp.total_score < one_node.total_score:
                     temp = copy.deepcopy(one_node)
-        print(temp)
-        print(temp_results)
-        table[temp.location[0]][temp.location[1]] = copy.deepcopy(temp)
+        m = copy.deepcopy(temp.location)
+        table[m[0]][m[1]] = copy.deepcopy(temp)
         return table
 
 
@@ -117,8 +128,17 @@ class CYK_table():
 class CYK_one_node():
     def __init__(self, a, c, b, y, arc_score, table, x):
         self.first_score = [a, c]
+        # print(self.first_score)
         self.second_score = [b, y]
-        self.total_score = table[a][c] + table[b][y] + arc_score
+        if a == 0:
+            t1 = 0.0
+        else:
+            t1 = float(table[a][c].total_score)
+        if b == 0:
+            t2 = 0.0
+        else:
+            t2 = float(table[b][y].total_score)
+        self.total_score = t1 + t2 + float(arc_score)
         self.location = [x, y]
         self.answer = [c, y]
 
@@ -129,8 +149,11 @@ class CYK_one_node():
 if __name__ == '__main__':
     print('hello, world~!')
     temp_result = np.random.uniform(0.0, 1.0, (20, 20))
+    # print(temp_result)
+    temp_result = temp_result.tolist()
     a = CYK_table(temp_result)
     print(a.answer)
+    print(len(a.answer))
 
 
 ## endl
