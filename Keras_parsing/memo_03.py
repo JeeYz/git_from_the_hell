@@ -2,7 +2,7 @@
 # @Date:   2019-05-30T10:22:12+09:00
 # @Project: NLP
 # @Last modified by:   J.Y.
-# @Last modified time: 2019-05-30T14:45:38+09:00
+# @Last modified time: 2019-05-31T11:00:35+09:00
 # @License: JeeY
 # @Copyright: J.Y. JeeY
 
@@ -17,7 +17,12 @@ import numpy as np
 for k in reversed(range(4, 10)):
     print(k)
 
+list1 = [1, 2, 3, 4, 5, 6 ,7]
 
+for i in list1:
+    # list1.append(i+7)
+    print(i)
+    # list1.append(i+7)
 
 
 
