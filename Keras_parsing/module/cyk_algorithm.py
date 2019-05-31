@@ -2,7 +2,7 @@
 # @Date:   2019-05-27T10:29:01+09:00
 # @Project: NLP
 # @Last modified by:   J.Y.
-# @Last modified time: 2019-05-31T14:47:59+09:00
+# @Last modified time: 2019-05-31T15:21:58+09:00
 # @License: JeeY
 # @Copyright: J.Y. JeeY
 
@@ -32,15 +32,25 @@ class CYK_table():
 
         stack = self.retrieve_table(table)
         answer = self.make_answer(stack, table)
+        return self.arrange_answer(answer)
 
-        return answer
+
+
+    def arrange_answer(self, answer):
+        res = np.zeros(len(answer)).tolist()
+        for one in answer:
+            res[one[0]] = one[1]
+        res[0] = 0
+        res.append(0)
+        # print(len(answer))
+        return res
 
 
 
     def make_answer(self, stack, table):
         answer = list()
         for one_node in stack:
-            print(table[one_node[0]][one_node[1]], print(one_node))
+            # print(table[one_node[0]][one_node[1]], print(one_node))
             answer.append(table[one_node[0]][one_node[1]].answer)
         return answer
 
@@ -48,23 +58,23 @@ class CYK_table():
 
     def make_stack(self, stack, table):
         for one in stack:
-            print('one : ', one)
-            print('stack : ', stack)
+            # print('one : ', one)
+            # print('stack : ', stack)
             if one[-1] == 2:
                 one[-1] = 1
                 x = table[one[0]][one[1]].first_score[0]
                 y = table[one[0]][one[1]].first_score[1]
-                print('first : ', x, '          ', y)
+                # print('first : ', x, '          ', y)
                 if x != 0:
                     stack.append([x, y, 2])
                     self.make_stack(stack, table)
-            print('one : ', one)
-            print('stack : ', stack)
+            # print('one : ', one)
+            # print('stack : ', stack)
             if one[-1] == 1:
                 one[-1] = 0
                 x = table[one[0]][one[1]].second_score[0]
                 y = table[one[0]][one[1]].second_score[1]
-                print('second : ', x, '          ', y)
+                # print('second : ', x, '          ', y)
                 if x != 0:
                     stack.append([x, y, 2])
                     self.make_stack(stack, table)
