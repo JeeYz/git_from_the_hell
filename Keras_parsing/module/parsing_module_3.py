@@ -2,7 +2,7 @@
 # @Date:   2019-05-09T11:29:24+09:00
 # @Project: NLP
 # @Last modified by:   J.Y.
-# @Last modified time: 2019-05-31T15:28:14+09:00
+# @Last modified time: 2019-05-31T16:28:51+09:00
 # @License: JeeY
 # @Copyright: J.Y. JeeY
 
@@ -157,15 +157,22 @@ def make_test_data():
 def evaluate_result(sys, label):
     # new_sys = np.argmax(sys, axis=-1)
     new_label = np.argmax(label, axis=-1)
+    # print(new_label)
     sys = sys.tolist()
     # print(sys)
     # time.sleep(10000)
     new_sys = CYK.CYK_table(sys[0]).answer
     # print(new_sys)
     # print(new_label)
-    b = len(sys[0])
+    b = len(new_sys)
     a = 0
     # print(new_sys)
+    print('system : ', new_sys)
+    print('label : ', new_label[0])
+    if len(new_sys) != len(new_label[0]):
+        print(new_sys)
+        print(new_label)
+        time.sleep(100000)
     for i, j in enumerate(new_sys):
         if int(new_label[0][i]) == int(j):
             a += 1

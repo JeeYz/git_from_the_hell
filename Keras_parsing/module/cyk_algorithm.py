@@ -2,7 +2,7 @@
 # @Date:   2019-05-27T10:29:01+09:00
 # @Project: NLP
 # @Last modified by:   J.Y.
-# @Last modified time: 2019-05-31T15:21:58+09:00
+# @Last modified time: 2019-05-31T16:21:05+09:00
 # @License: JeeY
 # @Copyright: J.Y. JeeY
 
@@ -158,7 +158,7 @@ class CYK_one_node():
 
 if __name__ == '__main__':
     print('hello, world~!')
-    temp_result = np.random.uniform(0.0, 1.0, (20, 20))
+    temp_result = np.random.uniform(0.0, 1.0, (15, 15))
     # print(temp_result)
     temp_result = temp_result.tolist()
     a = CYK_table(temp_result)

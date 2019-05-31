@@ -2,7 +2,7 @@
 # @Date:   2019-05-09T11:28:21+09:00
 # @Project: NLP
 # @Last modified by:   J.Y.
-# @Last modified time: 2019-05-31T15:26:38+09:00
+# @Last modified time: 2019-05-31T16:28:52+09:00
 # @License: JeeY
 # @Copyright: J.Y. JeeY
 
@@ -38,7 +38,7 @@ INPUT_SIZE = (18*W_VEC_SIZE*2 + 18*P_VEC_SIZE*2)
 
 fpath2 = 'd:/Program_Data/Parsing_Data/'
 filewrite = '01_result_training.result'
-savepara_name = 'd:/Program_Data/model_weights_k_19_bi_LSTM_proto.h5'
+savepara_name = 'd:/Program_Data/model_weights_k_17_bi_LSTM_proto.h5'
 
 words_matrix = kfT.words_matrix_fastText(W_VEC_SIZE)
 pos_matrix = kfT.make_pos_fastText(P_VEC_SIZE)
@@ -108,6 +108,7 @@ for l in range(EPOCHS):
         a, b = p3.evaluate_result(test_result, label)
         total_correct += a
         total_num += b
+        print(total_correct, total_num)
     print('\n\n\n')
     # fw.write('\n\n\n')
     print(total_correct/total_num)
