@@ -2,7 +2,7 @@
 # @Date:   2019-05-09T11:28:21+09:00
 # @Project: NLP
 # @Last modified by:   J.Y.
-# @Last modified time: 2019-05-31T16:48:16+09:00
+# @Last modified time: 2019-06-01T22:17:26+09:00
 # @License: JeeY
 # @Copyright: J.Y. JeeY
 
@@ -31,7 +31,7 @@ import parsing_module_2 as p2
 import parsing_module_3 as p3
 
 BATCH_SIZE = 128
-EPOCHS = 6
+EPOCHS = 2
 W_VEC_SIZE = 128
 P_VEC_SIZE = 128
 INPUT_SIZE = (18*W_VEC_SIZE*2 + 18*P_VEC_SIZE*2)
@@ -79,7 +79,7 @@ network.summary()
 # network.compile(optimizer='rmsprop', loss='categorical_crossentropy', metrics=['accuracy'])
 # network.compile(loss='categorical_crossentropy', optimizer='adam', metrics=['accuracy'])
 network.compile(loss='binary_crossentropy', optimizer='adam', metrics=['accuracy'])
-network.save_weights(savepara_name, overwrite=True)
+# network.save_weights(savepara_name, overwrite=True)
 
 
 for l in range(EPOCHS):
