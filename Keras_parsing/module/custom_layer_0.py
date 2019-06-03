@@ -2,7 +2,7 @@
 # @Date:   2019-05-16T10:16:28+09:00
 # @Project: NLP
 # @Last modified by:   J.Y.
-# @Last modified time: 2019-05-31T16:15:44+09:00
+# @Last modified time: 2019-06-03T10:04:32+09:00
 # @License: JeeY
 # @Copyright: J.Y. JeeY
 
@@ -34,7 +34,8 @@ class Dozat(Layer):
     def call(self, x):
         m = K.random_uniform_variable((128, 128), 0, 1, seed=1)
 
-        x = Dropout(rate=0.4)(x)
+        # x = Dropout(rate=0.4)(x)
+        x = Dropout(rate=0.3)(x)
         a = layers.Dense(W_VEC_SIZE, activation='relu')(x)
         b = layers.Dense(W_VEC_SIZE, activation='relu')(x)
         b = K.permute_dimensions(b, (0, 2, 1))

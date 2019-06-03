@@ -2,7 +2,7 @@
 # @Date:   2019-05-09T11:28:21+09:00
 # @Project: NLP
 # @Last modified by:   J.Y.
-# @Last modified time: 2019-06-01T22:17:26+09:00
+# @Last modified time: 2019-06-03T12:56:09+09:00
 # @License: JeeY
 # @Copyright: J.Y. JeeY
 
@@ -31,14 +31,14 @@ import parsing_module_2 as p2
 import parsing_module_3 as p3
 
 BATCH_SIZE = 128
-EPOCHS = 2
+EPOCHS = 3
 W_VEC_SIZE = 128
 P_VEC_SIZE = 128
 INPUT_SIZE = (18*W_VEC_SIZE*2 + 18*P_VEC_SIZE*2)
 
 fpath2 = 'd:/Program_Data/Parsing_Data/'
 filewrite = '01_result_training.result'
-savepara_name = 'd:/Program_Data/model_weights_k_20_bi_LSTM.h5'
+savepara_name = 'd:/Program_Data/model_weights_k_21_bi_LSTM_dropout_0.3.h5'
 
 words_matrix = kfT.words_matrix_fastText(W_VEC_SIZE)
 pos_matrix = kfT.make_pos_fastText(P_VEC_SIZE)
@@ -79,7 +79,7 @@ network.summary()
 # network.compile(optimizer='rmsprop', loss='categorical_crossentropy', metrics=['accuracy'])
 # network.compile(loss='categorical_crossentropy', optimizer='adam', metrics=['accuracy'])
 network.compile(loss='binary_crossentropy', optimizer='adam', metrics=['accuracy'])
-# network.save_weights(savepara_name, overwrite=True)
+network.save_weights(savepara_name, overwrite=True)
 
 
 for l in range(EPOCHS):
