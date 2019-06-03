@@ -2,7 +2,7 @@
 # @Date:   2019-05-09T11:29:24+09:00
 # @Project: NLP
 # @Last modified by:   J.Y.
-# @Last modified time: 2019-05-31T16:28:51+09:00
+# @Last modified time: 2019-06-03T17:54:34+09:00
 # @License: JeeY
 # @Copyright: J.Y. JeeY
 
@@ -167,8 +167,8 @@ def evaluate_result(sys, label):
     b = len(new_sys)
     a = 0
     # print(new_sys)
-    print('system : ', new_sys)
-    print('label : ', new_label[0])
+    # print('system : ', new_sys)
+    # print('label : ', new_label[0])
     if len(new_sys) != len(new_label[0]):
         print(new_sys)
         print(new_label)
