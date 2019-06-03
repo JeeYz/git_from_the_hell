@@ -2,7 +2,7 @@
 # @Date:   2019-05-09T11:28:21+09:00
 # @Project: NLP
 # @Last modified by:   J.Y.
-# @Last modified time: 2019-06-03T17:55:19+09:00
+# @Last modified time: 2019-06-03T18:00:50+09:00
 # @License: JeeY
 # @Copyright: J.Y. JeeY
 
@@ -34,11 +34,12 @@ BATCH_SIZE = 128
 EPOCHS = 3
 W_VEC_SIZE = 128
 P_VEC_SIZE = 128
+NUM_OF_CELLS = 512
 INPUT_SIZE = (18*W_VEC_SIZE*2 + 18*P_VEC_SIZE*2)
 
 fpath2 = 'd:/Program_Data/Parsing_Data/'
 filewrite = '01_result_training.result'
-savepara_name = 'd:/Program_Data/model_weights_k_21_bi_LSTM_dropout_0.3.h5'
+savepara_name = 'd:/Program_Data/model_weights_k_22_bi_LSTM_512_nuerons_and_512_cells.h5'
 
 words_matrix = kfT.words_matrix_fastText(W_VEC_SIZE)
 pos_matrix = kfT.make_pos_fastText(P_VEC_SIZE)
@@ -67,7 +68,7 @@ ep1 = Reshape((-1, P_VEC_SIZE*2))(ep1)
 # print(ew1, ep1, '\n\n\n')
 es = layers.concatenate([ew1, ep1], axis=-1) ## es = embedded_sequences
 
-x = Bidirectional(LSTM(128, return_sequences=True,
+x = Bidirectional(LSTM(NUM_OF_CELLS, return_sequences=True,
                     input_shape=(1, None, 512)), merge_mode='concat')(es)
 
 x = Dozat(None)(x) # custom Lambda layer
