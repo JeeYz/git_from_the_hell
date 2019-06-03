@@ -2,7 +2,7 @@
 # @Date:   2019-05-16T10:16:28+09:00
 # @Project: NLP
 # @Last modified by:   J.Y.
-# @Last modified time: 2019-06-03T18:00:37+09:00
+# @Last modified time: 2019-06-03T18:02:39+09:00
 # @License: JeeY
 # @Copyright: J.Y. JeeY
 
@@ -32,7 +32,7 @@ class Dozat(Layer):
         super(Dozat, self).__init__(**kwargs)
 
     def call(self, x):
-        m = K.random_uniform_variable((128, 128), 0, 1, seed=1)
+        m = K.random_uniform_variable((NUM_OF_NEURONS, NUM_OF_NEURONS), 0, 1, seed=1)
 
         # x = Dropout(rate=0.4)(x)
         x = Dropout(rate=0.4)(x)
