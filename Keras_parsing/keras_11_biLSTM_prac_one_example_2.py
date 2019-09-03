@@ -2,7 +2,7 @@
 # @Date:   2019-05-09T11:28:21+09:00
 # @Project: NLP
 # @Last modified by:   J.Y.
-# @Last modified time: 2019-09-02T09:50:30+09:00
+# @Last modified time: 2019-09-03T13:43:15+09:00
 # @License: JeeY
 # @Copyright: J.Y. JeeY
 
@@ -34,7 +34,7 @@ BATCH_SIZE = 128
 EPOCHS = 3
 W_VEC_SIZE = 128
 P_VEC_SIZE = 128
-NUM_OF_CELLS = 512
+NUM_OF_CELLS = 256
 INPUT_SIZE = (18*W_VEC_SIZE*2 + 18*P_VEC_SIZE*2)
 
 fpath2 = 'd:/Program_Data/Parsing_Data/'
@@ -69,7 +69,7 @@ ep1 = Reshape((-1, P_VEC_SIZE*2))(ep1)
 es = layers.concatenate([ew1, ep1], axis=-1) ## es = embedded_sequences
 
 x = Bidirectional(LSTM(NUM_OF_CELLS, return_sequences=True,
-                    input_shape=(1, None, 512)), merge_mode='concat')(es)
+                    input_shape=(1, None, 256)), merge_mode='concat')(es)
 
 x = Dozat(None)(x) # custom Lambda layer
 
