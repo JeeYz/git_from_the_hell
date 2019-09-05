@@ -2,7 +2,7 @@
 # @Date:   2019-09-05T13:36:43+09:00
 # @Project: NLP
 # @Last modified by:   J.Y.
-# @Last modified time: 2019-09-05T13:37:22+09:00
+# @Last modified time: 2019-09-05T17:43:58+09:00
 # @License: JeeY
 # @Copyright: J.Y. JeeY
 
@@ -14,6 +14,7 @@ def write_new_divided_train_data(filenum, sents):
     with open(fname, 'a', encoding='utf-8') as fw:
         for line in sents:
             fw.write('  '.join(line) + '\n')
+        fw.write('\n')
 
 trainfile1 = 'd:/Program_Data/raw_train_dataset_25.train'
 
@@ -29,6 +30,7 @@ with open(trainfile1, 'r', encoding='utf-8') as fr:
             print('%d sentences complete!!' %num)
             filenum += 1
             switch = 0
+            continue
         line = fr.readline()
         if not line:break
         line = line.split()
@@ -38,6 +40,7 @@ with open(trainfile1, 'r', encoding='utf-8') as fr:
             sents = list()
             if num != 0 and num%sents_num == 0:
                 switch = 1
+            continue
         sents.append(line)
 
 

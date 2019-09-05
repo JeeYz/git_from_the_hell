@@ -2,7 +2,7 @@
 # @Date:   2019-09-05T10:31:03+09:00
 # @Project: NLP
 # @Last modified by:   J.Y.
-# @Last modified time: 2019-09-05T12:59:47+09:00
+# @Last modified time: 2019-09-05T17:02:27+09:00
 # @License: JeeY
 # @Copyright: J.Y. JeeY
 
@@ -49,8 +49,9 @@ with open(trainfile, 'r', encoding='utf-8') as fr, open(trainfile2, 'w', encodin
                 # print(new2)
                 fw.write(new2)
                 fw.write('\n')
-            # fw.write('\n')
+            fw.write('\n')
             num = 0
+            continue
 
         new = list()
         new = '    '.join(line)
@@ -70,6 +71,7 @@ with open(trainfile2, 'r', encoding='utf-8') as fr:
             if num != max:
                 print(num)
             num = 0
+            continue
 
         num += 1
 

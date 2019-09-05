@@ -2,7 +2,7 @@
 # @Date:   2019-05-09T11:28:21+09:00
 # @Project: NLP
 # @Last modified by:   J.Y.
-# @Last modified time: 2019-09-05T16:20:48+09:00
+# @Last modified time: 2019-09-05T17:56:09+09:00
 # @License: JeeY
 # @Copyright: J.Y. JeeY
 
@@ -37,11 +37,12 @@ BATCH_SIZE = 128
 EPOCHS = 20
 W_VEC_SIZE = 128
 P_VEC_SIZE = 128
+MAX_SENT_SIZE = 41
 INPUT_SIZE = (18*W_VEC_SIZE*2 + 18*P_VEC_SIZE*2)
 
 fpath = 'd:/Program_Data/Parsing_Data_BiLSTM_batch/'
 filewrite = '01_result_training_BiLSTM_batch.result'
-savepara_name = 'd:/Program_Data/model_weights_k_19_BiLSTM_batch_proto_batch.h5'
+savepara_name = 'd:/Program_Data/model_weights_k_24_BiLSTM_batch_00.h5'
 
 filelist = k1.generate_file_list(fpath, '.train')
 
@@ -49,13 +50,13 @@ words_matrix = kfT.words_matrix_fastText(W_VEC_SIZE)
 pos_matrix = kfT.make_pos_fastText(P_VEC_SIZE)
 
 # word_all, pos_all, label_all = p3.make_train_data()
-# test_word, test_pos, test_label = p3.make_test_data()
+test_word, test_pos, test_label = p3.make_test_data()
 # print('data loaded complete~!!')
 
 # w = Input(shape=(None, 2), dtype='int32', name='words')
 # p = Input(shape=(None, 2), dtype='int32', name='pos')
-w = Input(batch_shape=(None, None, 2), dtype='int32', name='words')
-p = Input(batch_shape=(None, None, 2), dtype='int32', name='pos')
+w = Input(batch_shape=(None, MAX_SENT_SIZE, 2), dtype='int32', name='words')
+p = Input(batch_shape=(None, MAX_SENT_SIZE, 2), dtype='int32', name='pos')
 
 embedding_layer1 = Embedding(len(words_matrix), W_VEC_SIZE,
                             embeddings_initializer=Constant(words_matrix))
@@ -89,49 +90,48 @@ network.save_weights(savepara_name, overwrite=True)
 # fw = open(fpath + filewrite, 'a', encoding='utf-8')
 
 for l in range(EPOCHS):
+    w_filename = fpath + filewrite
+    network.load_weights(savepara_name)
+    fw = open(w_filename, 'a', encoding='utf-8')
+
     for k,j in enumerate(filelist):
-        network.load_weights(savepara_name)
         filename = fpath + j
         print('%d th epoch : ' %(l+1), filename)
         word, pos, label = p4.make_train_data(filename)
+
         # print(word)
-        print(word.shape)
+        # print(word.shape)
         # print(word[0][0][0])
         # time.sleep(10000)
+
         network.fit({'words':word, 'pos':pos}, label, epochs=1, batch_size=BATCH_SIZE)
         network.save_weights(savepara_name, overwrite=True)
 
+    total_correct = 0
+    total_num = 0
 
-    # print('%d th sentence' %(i+1), '\n')
-    # print(word_all[i])
-    # word = np.array(word_all)
-    # pos = np.array(pos_all)
-    # label = np.array(label_all)
-
-    # total_correct = 0
-    # total_num = 0
-    # for m,n in enumerate(test_word):
-    #     word = np.array([test_word[m]])
-    #     pos = np.array([test_pos[m]])
-    #     label = np.array([test_label[m]])
-    #     test_result = network.predict({'words':word, 'pos':pos})
-    #     # print(test_result)
-    #     # test_result = np.array(test_result)
-    #     # print(test_result)
-    #     # print(label)
-    #     a, b = p3.evaluate_result(test_result, label)
-    #     total_correct += a
-    #     total_num += b
-    # print('\n\n\n')
-    # fw.write('\n\n\n')
-    # print(total_correct/total_num)
-    # fw.write(str(total_correct/total_num) + '\n')
-    # print('\n\n\n')
-    # fw.write('\n\n\n')
-
-
-
+    for m,n in enumerate(test_word):
+        word = np.array([test_word[m]])
+        pos = np.array([test_pos[m]])
+        label = np.array([test_label[m]])
+        test_result = network.predict({'words':word, 'pos':pos})
+        # print(test_result)
+        # test_result = np.array(test_result)
+        # print(test_result)
+        # print(label)
+        a, b = p3.evaluate_result(test_result, label)
+        total_correct += a
+        total_num += b
+        print(total_correct, total_num)
+    print('\n\n\n')
+    fw.write('\n\n\n')
+    print(total_correct/total_num)
+    fw.write(str(total_correct/total_num) + '\n')
+    print('\n\n\n')
+    fw.write('\n\n\n')
     network.save_weights(savepara_name, overwrite=True)
+    fw.close()
+
 
 
 # fw.close()
