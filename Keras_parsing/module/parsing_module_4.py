@@ -2,7 +2,7 @@
 # @Date:   2019-05-28T10:46:18+09:00
 # @Project: NLP
 # @Last modified by:   J.Y.
-# @Last modified time: 2019-09-05T15:41:11+09:00
+# @Last modified time: 2019-09-05T16:20:47+09:00
 # @License: JeeY
 # @Copyright: J.Y. JeeY
 
@@ -22,8 +22,8 @@ def make_train_data(trainfile):
             if not line:break
             line = line.split()
             if line == []:
-                # word = np.array([word])
-                # pos = np.array([pos])
+                word = np.array(word)
+                pos = np.array(pos)
                 # word_all.append([word])
                 # pos_all.append([pos])
                 word_all.append(word)
@@ -44,15 +44,21 @@ def make_train_data(trainfile):
                 pos = list()
                 label = list()
                 continue
+
+            # word.append([line[3], line[4]])
+            # pos.append([line[5], line[6]])
+            # label.append(line[1])
+
             word.append([line[3], line[4]])
             pos.append([line[5], line[6]])
             label.append(line[1])
+
     # print(word_all)
     # time.sleep(100000)
     word_all = np.array(word_all)
     pos_all = np.array(pos_all)
     label_all = np.array(label_all)
-    print(word_all.shape)
+    # print(word_all.shape)
     # print(word_all[0])
     return word_all, pos_all, label_all
 

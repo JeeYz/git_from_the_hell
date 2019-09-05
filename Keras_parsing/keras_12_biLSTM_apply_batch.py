@@ -2,7 +2,7 @@
 # @Date:   2019-05-09T11:28:21+09:00
 # @Project: NLP
 # @Last modified by:   J.Y.
-# @Last modified time: 2019-09-05T15:52:12+09:00
+# @Last modified time: 2019-09-05T16:20:48+09:00
 # @License: JeeY
 # @Copyright: J.Y. JeeY
 
@@ -87,6 +87,7 @@ network.compile(loss='binary_crossentropy', optimizer='adam', metrics=['accuracy
 network.save_weights(savepara_name, overwrite=True)
 
 # fw = open(fpath + filewrite, 'a', encoding='utf-8')
+
 for l in range(EPOCHS):
     for k,j in enumerate(filelist):
         network.load_weights(savepara_name)
@@ -95,10 +96,12 @@ for l in range(EPOCHS):
         word, pos, label = p4.make_train_data(filename)
         # print(word)
         print(word.shape)
-        print(word[0][0][0])
+        # print(word[0][0][0])
         # time.sleep(10000)
         network.fit({'words':word, 'pos':pos}, label, epochs=1, batch_size=BATCH_SIZE)
         network.save_weights(savepara_name, overwrite=True)
+
+
     # print('%d th sentence' %(i+1), '\n')
     # print(word_all[i])
     # word = np.array(word_all)
@@ -125,10 +128,24 @@ for l in range(EPOCHS):
     # fw.write(str(total_correct/total_num) + '\n')
     # print('\n\n\n')
     # fw.write('\n\n\n')
+
+
+
     network.save_weights(savepara_name, overwrite=True)
 
 
 # fw.close()
+
+
+
+
+
+
+
+
+
+
+
 
 
 
