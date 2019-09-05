@@ -2,15 +2,18 @@
 # @Date:   2019-09-05T10:31:03+09:00
 # @Project: NLP
 # @Last modified by:   J.Y.
-# @Last modified time: 2019-09-05T17:02:27+09:00
+# @Last modified time: 2019-09-05T18:07:16+09:00
 # @License: JeeY
 # @Copyright: J.Y. JeeY
 
 
 import time
 
-trainfile = 'd:/Program_Data/raw_train_dataset_24.train'
-trainfile2 = 'd:/Program_Data/raw_train_dataset_25.train'
+# trainfile = 'd:/Program_Data/raw_train_dataset_24.train'
+# trainfile2 = 'd:/Program_Data/raw_train_dataset_25.train'
+
+trainfile = 'd:/Program_Data/raw_test_dataset_09.test'
+trainfile2 = 'd:/Program_Data/raw_test_dataset_10.test'
 
 with open(trainfile, 'r', encoding='utf-8') as fr:
     num = 0

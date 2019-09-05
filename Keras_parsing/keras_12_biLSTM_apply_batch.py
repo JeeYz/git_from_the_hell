@@ -2,7 +2,7 @@
 # @Date:   2019-05-09T11:28:21+09:00
 # @Project: NLP
 # @Last modified by:   J.Y.
-# @Last modified time: 2019-09-05T17:56:09+09:00
+# @Last modified time: 2019-09-05T18:32:59+09:00
 # @License: JeeY
 # @Copyright: J.Y. JeeY
 
@@ -24,7 +24,7 @@ from keras.layers import LSTM, Bidirectional, Reshape, Lambda
 from keras.models import Model, Sequential
 from keras.initializers import Constant
 from keras.backend import argmax
-from custom_layer_0 import Dozat
+from custom_layer_0 import Dozat, Dozat_t
 
 import keras_module_for_fastText as kfT
 
@@ -38,6 +38,7 @@ EPOCHS = 20
 W_VEC_SIZE = 128
 P_VEC_SIZE = 128
 MAX_SENT_SIZE = 41
+NUM_OF_CELLS = 128
 INPUT_SIZE = (18*W_VEC_SIZE*2 + 18*P_VEC_SIZE*2)
 
 fpath = 'd:/Program_Data/Parsing_Data_BiLSTM_batch/'
@@ -53,8 +54,8 @@ pos_matrix = kfT.make_pos_fastText(P_VEC_SIZE)
 test_word, test_pos, test_label = p3.make_test_data()
 # print('data loaded complete~!!')
 
-# w = Input(shape=(None, 2), dtype='int32', name='words')
-# p = Input(shape=(None, 2), dtype='int32', name='pos')
+w_t = Input(shape=(None, 2), dtype='int32', name='words')
+p_t = Input(shape=(None, 2), dtype='int32', name='pos')
 w = Input(batch_shape=(None, MAX_SENT_SIZE, 2), dtype='int32', name='words')
 p = Input(batch_shape=(None, MAX_SENT_SIZE, 2), dtype='int32', name='pos')
 
@@ -66,21 +67,35 @@ embedding_layer2 = Embedding(len(pos_matrix), P_VEC_SIZE,
 ew1 = embedding_layer1(w)
 ep1 = embedding_layer2(p)
 
+ew1_t = embedding_layer1(w_t)
+ep1_t = embedding_layer2(p_t)
+
 # ew1 = backend.reshape(ew1, shape=(1, -1, W_VEC_SIZE*2))
 # ep1 = backend.reshape(ep1, shape=(1, -1, P_VEC_SIZE*2))
 ew1 = Reshape((-1, W_VEC_SIZE*2))(ew1)
 ep1 = Reshape((-1, P_VEC_SIZE*2))(ep1)
+
+ew1_t = Reshape((-1, W_VEC_SIZE*2))(ew1_t)
+ep1_t = Reshape((-1, P_VEC_SIZE*2))(ep1_t)
 # print(ew1, ep1, '\n\n\n')
 es = layers.concatenate([ew1, ep1], axis=-1) ## es = embedded_sequences
+es_t = layers.concatenate([ew1_t, ep1_t], axis=-1) ## es = embedded_sequences
 
-x = Bidirectional(LSTM(128, return_sequences=True,
+x = Bidirectional(LSTM(NUM_OF_CELLS, return_sequences=True,
                     input_shape=(BATCH_SIZE, None, 512)), merge_mode='concat')(es)
+
+x_t = Bidirectional(LSTM(NUM_OF_CELLS, return_sequences=True,
+                    input_shape=(BATCH_SIZE, None, 512)), merge_mode='concat')(es_t)
 
 x = Dozat(None)(x) # custom Lambda layer
 
+x_t = Dozat_t(None)(x_t) # custom Lambda layer
+
 network = Model([w, p], x)
+network_t = Model([w_t, p_t], x_t)
 
 network.summary()
+network_t.summary()
 
 # network.compile(optimizer='rmsprop', loss='categorical_crossentropy', metrics=['accuracy'])
 # network.compile(loss='categorical_crossentropy', optimizer='adam', metrics=['accuracy'])
@@ -114,7 +129,7 @@ for l in range(EPOCHS):
         word = np.array([test_word[m]])
         pos = np.array([test_pos[m]])
         label = np.array([test_label[m]])
-        test_result = network.predict({'words':word, 'pos':pos})
+        test_result = network_t.predict({'words':word, 'pos':pos})
         # print(test_result)
         # test_result = np.array(test_result)
         # print(test_result)
@@ -122,7 +137,8 @@ for l in range(EPOCHS):
         a, b = p3.evaluate_result(test_result, label)
         total_correct += a
         total_num += b
-        print(total_correct, total_num)
+        # print(total_correct, total_num)
+    print(total_correct, total_num)
     print('\n\n\n')
     fw.write('\n\n\n')
     print(total_correct/total_num)
