@@ -2,7 +2,7 @@
 # @Date:   2019-05-09T11:28:21+09:00
 # @Project: NLP
 # @Last modified by:   J.Y.
-# @Last modified time: 2019-09-04T17:46:01+09:00
+# @Last modified time: 2019-09-05T15:52:30+09:00
 # @License: JeeY
 # @Copyright: J.Y. JeeY
 
@@ -34,7 +34,7 @@ BATCH_SIZE = 128
 EPOCHS = 3
 W_VEC_SIZE = 128
 P_VEC_SIZE = 128
-NUM_OF_CELLS = 256
+NUM_OF_CELLS = 128
 INPUT_SIZE = (18*W_VEC_SIZE*2 + 18*P_VEC_SIZE*2)
 
 fpath2 = 'd:/Program_Data/Parsing_Data/'

@@ -2,7 +2,7 @@
 # @Date:   2019-05-28T10:46:18+09:00
 # @Project: NLP
 # @Last modified by:   J.Y.
-# @Last modified time: 2019-05-28T11:40:47+09:00
+# @Last modified time: 2019-09-05T15:41:11+09:00
 # @License: JeeY
 # @Copyright: J.Y. JeeY
 
@@ -58,10 +58,19 @@ def make_train_data(trainfile):
 
 
 
-
-
 if __name__ == '__main__':
     print('hello, world~!')
+
+
+
+
+
+
+
+
+
+
+
 
 
 ## endl

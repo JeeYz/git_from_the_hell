@@ -2,7 +2,7 @@
 # @Date:   2019-05-09T11:28:21+09:00
 # @Project: NLP
 # @Last modified by:   J.Y.
-# @Last modified time: 2019-09-03T09:29:11+09:00
+# @Last modified time: 2019-09-05T15:52:12+09:00
 # @License: JeeY
 # @Copyright: J.Y. JeeY
 
@@ -39,9 +39,9 @@ W_VEC_SIZE = 128
 P_VEC_SIZE = 128
 INPUT_SIZE = (18*W_VEC_SIZE*2 + 18*P_VEC_SIZE*2)
 
-fpath = 'd:/Program_Data/Parsing_Data_BiLSTM/'
-filewrite = '00_result_training.result'
-savepara_name = 'd:/Program_Data/model_weights_k_18_bi_LSTM_proto_batch.h5'
+fpath = 'd:/Program_Data/Parsing_Data_BiLSTM_batch/'
+filewrite = '01_result_training_BiLSTM_batch.result'
+savepara_name = 'd:/Program_Data/model_weights_k_19_BiLSTM_batch_proto_batch.h5'
 
 filelist = k1.generate_file_list(fpath, '.train')
 
@@ -52,10 +52,10 @@ pos_matrix = kfT.make_pos_fastText(P_VEC_SIZE)
 # test_word, test_pos, test_label = p3.make_test_data()
 # print('data loaded complete~!!')
 
-w = Input(shape=(None, 2), dtype='int32', name='words')
-p = Input(shape=(None, 2), dtype='int32', name='pos')
-# w = Input(batch_shape=(None, None, 2), dtype='int32', name='words')
-# p = Input(batch_shape=(None, None, 2), dtype='int32', name='pos')
+# w = Input(shape=(None, 2), dtype='int32', name='words')
+# p = Input(shape=(None, 2), dtype='int32', name='pos')
+w = Input(batch_shape=(None, None, 2), dtype='int32', name='words')
+p = Input(batch_shape=(None, None, 2), dtype='int32', name='pos')
 
 embedding_layer1 = Embedding(len(words_matrix), W_VEC_SIZE,
                             embeddings_initializer=Constant(words_matrix))
@@ -94,7 +94,7 @@ for l in range(EPOCHS):
         print('%d th epoch : ' %(l+1), filename)
         word, pos, label = p4.make_train_data(filename)
         # print(word)
-        # print(word.shape)
+        print(word.shape)
         print(word[0][0][0])
         # time.sleep(10000)
         network.fit({'words':word, 'pos':pos}, label, epochs=1, batch_size=BATCH_SIZE)
