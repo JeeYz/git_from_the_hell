@@ -2,7 +2,7 @@
 # @Date:   2019-05-16T10:16:28+09:00
 # @Project: NLP
 # @Last modified by:   J.Y.
-# @Last modified time: 2019-09-05T18:22:31+09:00
+# @Last modified time: 2019-09-06T10:08:25+09:00
 # @License: JeeY
 # @Copyright: J.Y. JeeY
 
@@ -35,7 +35,7 @@ class Dozat(Layer):
         m = K.random_uniform_variable((NUM_OF_NEURONS, NUM_OF_NEURONS), 0, 1, seed=1)
 
         # x = Dropout(rate=0.4)(x)
-        x = Dropout(rate=0.4)(x)
+        x = Dropout(rate=0.8)(x)
         a = layers.Dense(NUM_OF_NEURONS, activation='relu')(x)
         b = layers.Dense(NUM_OF_NEURONS, activation='relu')(x)
         b = K.permute_dimensions(b, (0, 2, 1))

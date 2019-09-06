@@ -2,7 +2,7 @@
 # @Date:   2019-04-18T15:19:10+09:00
 # @Project: NLP
 # @Last modified by:   J.Y.
-# @Last modified time: 2019-04-23T09:40:57+09:00
+# @Last modified time: 2019-09-06T10:46:05+09:00
 # @License: JeeY
 # @Copyright: J.Y. JeeY
 
@@ -38,8 +38,8 @@ P_VEC_SIZE = 128
 INPUT_SIZE = (18*W_VEC_SIZE*2 + 18*P_VEC_SIZE*2)
 
 fpath2 = 'd:/Program_Data/Parsing_Data/'
-filewrite = '00_result_training.result'
-savepara_name = 'd:/Program_Data/model_weights_k_16_dim_128_fT_pos_128dim_Dropout.h5'
+filewrite = '02_result_training.result'
+savepara_name = 'd:/Program_Data/model_weights_k_25_chen_manning_Dropout.h5'
 
 # fw1 = open(fpath2 + filewrite, 'a', encoding='utf-8')
 filelist = k1.generate_file_list(fpath2, '.train')
@@ -62,8 +62,15 @@ embedding_layer2 = Embedding(len(pos_matrix), P_VEC_SIZE,
 w = Input(batch_shape=(None, 36), dtype='int32', name='words')
 p = Input(batch_shape=(None, 36), dtype='int32', name='pos')
 
+w_t = Input(batch_shape=(None, 36), dtype='int32', name='words')
+p_t = Input(batch_shape=(None, 36), dtype='int32', name='pos')
+
 ew1 = embedding_layer1(w)
 ep1 = embedding_layer2(p)
+
+ew1_t = embedding_layer1(w_t)
+ep1_t = embedding_layer2(p_t)
+
 embedded_sequences = layers.concatenate([ew1, ep1], axis=-1)
 embedded_sequences = Flatten()(embedded_sequences)
 embedded_sequences = Dropout(0.4)(embedded_sequences)
@@ -71,26 +78,38 @@ x = layers.Dense(512, activation='relu')(embedded_sequences)
 x = Dropout(0.4)(x)
 output_layer = layers.Dense(3, activation='softmax')(x)
 
+embedded_sequences_t = layers.concatenate([ew1_t, ep1_t], axis=-1)
+embedded_sequences_t = Flatten()(embedded_sequences_t)
+x_t = layers.Dense(512, activation='relu')(embedded_sequences_t)
+output_layer_t = layers.Dense(3, activation='softmax')(x_t)
+
 network = Model([w, p], output_layer)
+network_t = Model([w_t, p_t], output_layer_t)
+
 network.summary()
+network_t.summary()
 
 # network.compile(optimizer='rmsprop', loss='categorical_crossentropy', metrics=['accuracy'])
 network.compile(loss='binary_crossentropy', optimizer='adam', metrics=['accuracy'])
-network.save_weights(savepara_name, overwrite=True)
 
 correct = 0
 total_q = 0
 num = 0
+network.save_weights(savepara_name, overwrite=True)
+
 for i in range(EPOCHS):
+    network.load_weights(savepara_name)
     for k,j in enumerate(filelist):
         network.load_weights(savepara_name)
 
         filename1 = fpath2 + j
         print('%d th epoch : ' %(i+1), filename1)
         word_data, pos_data, train_labels = k3.generate_train_data_3(filename1)
-        network.fit({'words':word_data, 'pos':pos_data}, train_labels, epochs=1, batch_size=BATCH_SIZE)
+        network.fit({'words':word_data, 'pos':pos_data}, train_labels, epochs=5, batch_size=BATCH_SIZE)
 
         network.save_weights(savepara_name, overwrite=True)
+
+    network_t.load_weights(savepara_name)
 
     for m,n in enumerate(all_sents):
         condition = 1
@@ -98,7 +117,8 @@ for i in range(EPOCHS):
         stack, buffer = p0.make_stack_buffer_list(n)
         a = all_init_test[m][0]
         b = all_init_test[m][1]
-        init_result = network.predict({'words':a, 'pos':b})
+        # init_result = network.predict({'words':a, 'pos':b})
+        init_result = network_t.predict({'words':a, 'pos':b})
         act = p0.select_action(init_result)
         while True:
             data, condition, stack, buffer, action_stack = p1.generate_data_of_test(act, stack,
@@ -115,7 +135,8 @@ for i in range(EPOCHS):
                 print(b, len(b[0]))
             a = np.array(a)
             b = np.array(b)
-            result = network.predict({'words':a, 'pos':b})
+            # result = network.predict({'words':a, 'pos':b})
+            result = network_t.predict({'words':a, 'pos':b})
             act = p0.select_action(result)
             if buffer == [] and len(stack) == 2:
                 break

@@ -2,7 +2,7 @@
 # @Date:   2019-05-09T11:28:21+09:00
 # @Project: NLP
 # @Last modified by:   J.Y.
-# @Last modified time: 2019-09-05T18:45:55+09:00
+# @Last modified time: 2019-09-06T10:44:09+09:00
 # @License: JeeY
 # @Copyright: J.Y. JeeY
 
@@ -100,9 +100,10 @@ network_t.summary()
 # network.compile(optimizer='rmsprop', loss='categorical_crossentropy', metrics=['accuracy'])
 # network.compile(loss='categorical_crossentropy', optimizer='adam', metrics=['accuracy'])
 network.compile(loss='binary_crossentropy', optimizer='adam', metrics=['accuracy'])
-network.save_weights(savepara_name, overwrite=True)
 
 # fw = open(fpath + filewrite, 'a', encoding='utf-8')
+
+network.save_weights(savepara_name, overwrite=True)
 
 for l in range(EPOCHS):
     w_filename = fpath + filewrite
@@ -119,16 +120,19 @@ for l in range(EPOCHS):
         # print(word[0][0][0])
         # time.sleep(10000)
 
-        network.fit({'words':word, 'pos':pos}, label, epochs=1, batch_size=BATCH_SIZE)
+        network.fit({'words':word, 'pos':pos}, label, epochs=5, batch_size=BATCH_SIZE)
         network.save_weights(savepara_name, overwrite=True)
 
     total_correct = 0
     total_num = 0
 
+    network_t.load_weights(savepara_name)
+
     for m,n in enumerate(test_word):
         word = np.array([test_word[m]])
         pos = np.array([test_pos[m]])
         label = np.array([test_label[m]])
+        # test_result = network.predict({'words':word, 'pos':pos})
         test_result = network_t.predict({'words':word, 'pos':pos})
         # print(test_result)
         # test_result = np.array(test_result)
@@ -145,7 +149,6 @@ for l in range(EPOCHS):
     fw.write(str(total_correct/total_num) + '\n')
     print('\n\n\n')
     fw.write('\n\n\n')
-    network.save_weights(savepara_name, overwrite=True)
     fw.close()
 
 
