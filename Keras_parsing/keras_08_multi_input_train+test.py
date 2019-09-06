@@ -2,7 +2,7 @@
 # @Date:   2019-04-18T15:19:10+09:00
 # @Project: NLP
 # @Last modified by:   J.Y.
-# @Last modified time: 2019-09-06T10:46:05+09:00
+# @Last modified time: 2019-09-06T16:58:35+09:00
 # @License: JeeY
 # @Copyright: J.Y. JeeY
 
@@ -105,7 +105,7 @@ for i in range(EPOCHS):
         filename1 = fpath2 + j
         print('%d th epoch : ' %(i+1), filename1)
         word_data, pos_data, train_labels = k3.generate_train_data_3(filename1)
-        network.fit({'words':word_data, 'pos':pos_data}, train_labels, epochs=5, batch_size=BATCH_SIZE)
+        network.fit({'words':word_data, 'pos':pos_data}, train_labels, epochs=2, batch_size=BATCH_SIZE)
 
         network.save_weights(savepara_name, overwrite=True)
 
