@@ -2,7 +2,7 @@
 # @Date:   2019-05-09T11:28:21+09:00
 # @Project: NLP
 # @Last modified by:   J.Y.
-# @Last modified time: 2019-09-06T10:44:09+09:00
+# @Last modified time: 2019-09-09T14:17:56+09:00
 # @License: JeeY
 # @Copyright: J.Y. JeeY
 
@@ -34,11 +34,11 @@ import parsing_module_3 as p3
 import parsing_module_4 as p4
 
 BATCH_SIZE = 128
-EPOCHS = 20
+EPOCHS = 1
 W_VEC_SIZE = 128
 P_VEC_SIZE = 128
 MAX_SENT_SIZE = 41
-NUM_OF_CELLS = 128
+NUM_OF_CELLS = 256
 INPUT_SIZE = (18*W_VEC_SIZE*2 + 18*P_VEC_SIZE*2)
 
 fpath = 'd:/Program_Data/Parsing_Data_BiLSTM_batch/'
@@ -120,7 +120,7 @@ for l in range(EPOCHS):
         # print(word[0][0][0])
         # time.sleep(10000)
 
-        network.fit({'words':word, 'pos':pos}, label, epochs=5, batch_size=BATCH_SIZE)
+        network.fit({'words':word, 'pos':pos}, label, epochs=1, batch_size=BATCH_SIZE)
         network.save_weights(savepara_name, overwrite=True)
 
     total_correct = 0
@@ -138,7 +138,7 @@ for l in range(EPOCHS):
         # test_result = np.array(test_result)
         # print(test_result)
         # print(label)
-        a, b = p3.evaluate_result(test_result, label)
+        a, b = p3.evaluate_result(test_result, label, m)
         total_correct += a
         total_num += b
         # print(total_correct, total_num)

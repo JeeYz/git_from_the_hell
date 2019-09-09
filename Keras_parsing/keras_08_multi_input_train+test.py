@@ -2,7 +2,7 @@
 # @Date:   2019-04-18T15:19:10+09:00
 # @Project: NLP
 # @Last modified by:   J.Y.
-# @Last modified time: 2019-09-06T16:58:35+09:00
+# @Last modified time: 2019-09-09T09:21:35+09:00
 # @License: JeeY
 # @Copyright: J.Y. JeeY
 
@@ -32,7 +32,7 @@ import parsing_module_0 as p0
 import parsing_module_1 as p1
 
 BATCH_SIZE = 128
-EPOCHS = 10
+EPOCHS = 5
 W_VEC_SIZE = 128
 P_VEC_SIZE = 128
 INPUT_SIZE = (18*W_VEC_SIZE*2 + 18*P_VEC_SIZE*2)
