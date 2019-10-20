@@ -2,7 +2,7 @@
 # @Date:   2019-05-27T10:29:01+09:00
 # @Project: NLP
 # @Last modified by:   J.Y.
-# @Last modified time: 2019-10-03T20:42:17+09:00
+# @Last modified time: 2019-10-18T07:42:54+09:00
 # @License: JeeY
 # @Copyright: J.Y. JeeY
 
@@ -26,7 +26,7 @@ class CYK_table():
         for i in range(1, self.sent_length):
             for j in reversed(range(i, self.sent_length)):
                 temp_results = list()
-                for k in range(1, i+1):
+                for k in range(1, i):
                     temp_results.append(self.generate_nodes(i, j ,k, table))
                 table = self.select_max_value(temp_results, table)
 
